@@ -1,0 +1,21 @@
+Communication tool for seniors (think Grandmum and Grandad)
+
+Very simple signup process (either set up a community [your name, your password, community name], or join one [your name, community name and password])
+
+Could have everything as global to start with (makes it easier to understand too - and encourages small communities) - can still add a live filter on so you can type in someone's or your name or some word to see it all filter in realtime. So just one main page - the news feed (but call it something simple)
+
+Make sure all buttons have the same style, so you know what you can click on (i.e. black text on orange background, or within a circle, or something)
+
+You then have a button to click to add content, gives you very simple options:
+Which of the following do you want to add?
+- WORDS (--> you can use typing or speech recognition)
+- PICTURE (--> a photo from your webcam, a picture of something[we'll pick the options from google so you don't have to leave the page])
+- SOMETHING ELSE  (--> you can then choose between youtube video or grooveshark(?) link)
+
+Probably need an 'about me' page too, where you can just have your name, password, photo
+
+Default have a set of X characters for the community (picture-wise), e.g. a set of 15 animal cartoons, which are spread around the community by default. You can replace with your own photo
+
+Maaaybe if you click on someone else's picture it adds their name to the filter so you see only their posts and posts mentioning them
+
+http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
