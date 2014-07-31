@@ -1,0 +1,23 @@
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	{% block head %}
+		<title>
+			{% block title %}
+			This is the base title
+			{% endblock %}
+		</title>
+	{% endblock %}
+</head>
+<body>
+	{% block body %}
+	This is the base body
+	{% endblock %}
+
+	<script>
+		{% block script %}
+		{% endblock %}
+	</script>
+
+</body>
+</html>
