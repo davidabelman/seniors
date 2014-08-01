@@ -1,13 +1,16 @@
 
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask.ext.script import Manager
+from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
 import mongo
 import json
+import datetime
 
 app = Flask(__name__)
 app.config.from_object('config')
 manager = Manager(app)
+moment = Moment(app)
 
 
 #MONGO
@@ -20,8 +23,9 @@ def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	if session.get('name'):
-		return render_template('feed.html')
+	if session.get('name') and session.get('network'):
+		posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=10, skip=0)
+		return render_template('feed.html', initial_posts=posts)
 	else:
 		return render_template('info.html')
 
@@ -66,24 +70,52 @@ def check_network_username_password():
 	network = request.json['network']
 	username = request.json['username']
 	password = request.json['password']
-	print "Information received:",network, username, password
+	
 	user = Users.find_one({'name':username, 'network':network})
 	known_password_hash = user['password_hash']
 	response = check_password_hash(known_password_hash, password)
-	print "Password submit", password
-	print "Generated from submit", generate_password_hash(password)
-	print "Stored in database", known_password_hash
-	print "Try check_password_hash(known_password_hash, password)..."
-	print "Response is", response
+	
 	if response==True:
 		session['name'] = username
 		session['network'] = network
 		session['picture'] = user['picture']
-		print "Password matched"
 	else:
 		session['name'] = None
 		session['network'] = None
-		print "Password failed to match"
+
+	if app.debug:
+		print "Information received:",network, username, password
+		print "Password submit", password
+		print "Generated from submit", generate_password_hash(password)
+		print "Stored in database", known_password_hash
+		print "Try check_password_hash(known_password_hash, password)..."
+		print "Response is", response
+
+	return json.dumps(int(response))
+
+@app.route('/_submit_feed_entry', methods=['GET', 'POST'])
+def submit_feed_entry():
+	"""
+	Given a feed entry, this will check user is signed in, then add to database and return success or fail statement
+	On the client side the entry is added to the top of the page
+	"""
+	message = request.json['message']
+	if session.get('name') and session.get('network'):
+		to_add ={ 	
+					'name':session['name'],
+					'posted' : datetime.datetime.utcnow(),
+					'body' : message,
+					'network' : session['network']
+				}
+		Posts.insert(to_add)
+		response = 1
+	else:
+		response = 0
+	
+	if app.debug:
+		print "Information received:", message
+		print "Response:", response
+	
 	return json.dumps(int(response))
 
 

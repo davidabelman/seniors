@@ -15,6 +15,15 @@ def start_up_mongo():
 def show_all_users(db):
 	print list(db.users.find())
 
+def show_all_posts(db):
+	print list(db.posts.find())
+
+def return_last_X_posts(Posts, network, limit=10, skip=0):
+	"""
+	Given a Posts collection, and a network name, returns the last X posts, with optional skip parameter
+	"""
+	return Posts.find({'network':network}).sort([('posted',-1)]).skip(skip).limit(limit)
+
 def create_fake_users(db):
 	import datetime
 	import random
@@ -133,3 +142,6 @@ if __name__ == '__main__':
 	print "Printing users..."
 	for x in show_all_users(db):
 		print x
+	print "Printing posts..."
+	for y in show_all_posts(db):
+		print y

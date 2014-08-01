@@ -11,9 +11,27 @@ Feed
 
 <h2>You are in the '{{session.get('network')}}' room. Add your comment:</h2>
 
-<form>
-	<input type="text" name="inputBox" placeholder="enter your text here"></input>
-	<input type="submit" value="Submit">
-</form>
+<div id='feed_submit'>
+	<form>
+		<input type="text" name="inputBox" placeholder="enter your text here" id='feed_input'></input>
+		<input type="submit" value="Submit">
+	</form>
+</div>
+
+<div id='feed_content'>
+	<ul>
+	{% for post in initial_posts %}
+		<li>{{post.name}} said: {{post.body}}
+			<br>
+			{{ moment(post.posted).fromNow(refresh=True) }} <!-- ({{ moment(post.posted).format('LLL') }}) -->
+			<br><br>
+
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+
+
+<script src="{{url_for('static', filename = 'js/feed.js', _external=True)}}"></script>
 
 {% endblock %}

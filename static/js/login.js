@@ -53,5 +53,5 @@ $('#password_entry').submit( function(evt) {
                 alert('Server error')
               }
 
-            })
+            }) // end ajax
 }); // end submit
