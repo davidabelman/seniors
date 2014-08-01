@@ -2,6 +2,8 @@
 <head>
 	{% block head %}
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/lang/en-gb.min.js"></script>-->
+		<script src="{{url_for('static', filename = 'js/moment.js', _external=True)}}"></script>
 		{{ moment.include_moment() }}
 		<title>
 			{% block title %}

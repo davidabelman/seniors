@@ -19,14 +19,7 @@ Feed
 </div>
 
 <div id='post_list'>
-	{% for post in initial_posts %}
-	<div = 'post_entry' id='{{post._id}}'>
-		{{post.name}} said: {{post.body}}
-		<br>
-		{{ moment(post.posted).fromNow(refresh=True) }} <!-- ({{ moment(post.posted).format('LLL') }}) -->
-		<br>
-	</div>
-	{% endfor %}
+	<p>Get posts</p>
 </div>
 
 <script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>

@@ -18,14 +18,24 @@ db = mongo.start_up_mongo()
 Users = db.users
 Posts = db.posts
 
+# JSON ENCODING
+from bson.objectid import ObjectId
+class Encoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        elif isinstance(obj, datetime.datetime):
+        	return obj.isoformat()
+        else:
+            return obj
+
 @app.route('/')
 def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
 	if session.get('name') and session.get('network'):
-		posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=10, skip=0)
-		return render_template('posts.html', initial_posts=posts)
+		return render_template('posts.html')
 	else:
 		return render_template('info.html')
 
@@ -103,7 +113,7 @@ def submit_feed_entry():
 	if session.get('name') and session.get('network'):
 		to_add ={ 	
 					'name':session['name'],
-					'posted' : datetime.datetime.utcnow(),
+					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : message,
 					'network' : session['network']
 				}
@@ -121,8 +131,15 @@ def submit_feed_entry():
 
 @app.route('/_get_posts')
 def get_posts():
-	posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=10, skip=0)
-	return None
+	"""
+	Pulls posts from the server
+	"""
+	limit = int(request.args.get('limit', 10))
+	skip = int(request.args.get('skip', 0))
+	if session.get('name') and session.get('network'):
+		posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=limit, skip=skip)
+	return json.dumps(list(posts), cls=Encoder)
+
 
 ###################### START ######################
 if __name__ == '__main__':
