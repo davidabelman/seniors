@@ -25,7 +25,7 @@ def home():
 	"""
 	if session.get('name') and session.get('network'):
 		posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=10, skip=0)
-		return render_template('feed.html', initial_posts=posts)
+		return render_template('posts.html', initial_posts=posts)
 	else:
 		return render_template('info.html')
 
@@ -93,7 +93,7 @@ def check_network_username_password():
 
 	return json.dumps(int(response))
 
-@app.route('/_submit_feed_entry', methods=['GET', 'POST'])
+@app.route('/_submit_post_entry', methods=['GET', 'POST'])
 def submit_feed_entry():
 	"""
 	Given a feed entry, this will check user is signed in, then add to database and return success or fail statement
@@ -118,6 +118,11 @@ def submit_feed_entry():
 	
 	return json.dumps(int(response))
 
+
+@app.route('/_get_posts')
+def get_posts():
+	posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=10, skip=0)
+	return None
 
 ###################### START ######################
 if __name__ == '__main__':

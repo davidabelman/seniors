@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+Feed
+{% endblock %}
+
+{% block body %}
+<h1>Welcome {{session.get('name')}}!</h1>
+
+<a href = "logout">Not {{session.get('name')}}? Change user.</a>
+
+<h2>You are in the '{{session.get('network')}}' room. Add your comment:</h2>
+
+<div id='post_submit'>
+	<form>
+		<input type="text" name="inputBox" placeholder="enter your text here" id='post_input'></input>
+		<input type="submit" value="Submit">
+	</form>
+</div>
+
+<div id='post_list'>
+	{% for post in initial_posts %}
+	<div = 'post_entry' id='{{post._id}}'>
+		{{post.name}} said: {{post.body}}
+		<br>
+		{{ moment(post.posted).fromNow(refresh=True) }} <!-- ({{ moment(post.posted).format('LLL') }}) -->
+		<br>
+	</div>
+	{% endfor %}
+</div>
+
+<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
+
+{% endblock %}
