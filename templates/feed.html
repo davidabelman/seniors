@@ -5,5 +5,15 @@ Feed
 {% endblock %}
 
 {% block body %}
-<h1>This is where the whole of the action will happen</h1>
+<h1>Welcome {{session.get('name')}}!</h1>
+
+<a href = "logout">Not {{session.get('name')}}? Change user.</a>
+
+<h2>You are in the '{{session.get('network')}}' room. Add your comment:</h2>
+
+<form>
+	<input type="text" name="inputBox" placeholder="enter your text here"></input>
+	<input type="submit" value="Submit">
+</form>
+
 {% endblock %}

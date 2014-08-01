@@ -6,13 +6,23 @@ Login
 
 {% block body %}
 <h1>This is where the user will pick their group, then their name, then enter password</h1>
-<!-- {{users[0]}} -->
 <p>Type in your network</p>
-<form>
+<form id='choose_network'>
 network: <input type="text" name="firstname" id='network'><br>
 submit: <input type="submit" value="Submit">
 </form>
-<script src="{{url_for('static', filename = 'js/get_users.js', _external=True)}}"></script>
+<div id='user_grid'>
+<!-- User list goes here -->
+</div>
+
+<div id='password_entry' style="display:none">
+	<form>
+		enter your password:: <input type="password" id='password_enter_field'><br>
+		submit: <input type="submit" value="Submit">
+	</form>
+</div>
+
+<script src="{{url_for('static', filename = 'js/login.js', _external=True)}}"></script>
 {% endblock %}
 
 
