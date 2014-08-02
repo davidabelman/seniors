@@ -6,9 +6,14 @@ Login
 
 {% block body %}
 <h1>This is where the user will pick their group, then their name, then enter password</h1>
-<p>Type in your network</p>
+
+{% if network %}
+<p>Press 'Enter' to enter the {{network}} group.</p>
+{% else %}
+<p>Type in your network name, then press 'Enter'.</p>
+{% endif %}
 	<form id='choose_network'>
-	network: <input type="text" name="firstname" id='network'><br>
+	network: <input type="text" name="network" id='network' value='{{network}}'><br>
 	submit: <input type="submit" value="Submit">
 	</form>
 <div id='user_grid'>

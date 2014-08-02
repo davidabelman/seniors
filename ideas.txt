@@ -19,3 +19,19 @@ Default have a set of X characters for the community (picture-wise), e.g. a set 
 Maaaybe if you click on someone else's picture it adds their name to the filter so you see only their posts and posts mentioning them
 
 http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
+
+///////////////////////////////
+Backend:
+
+1 register by creating user already
+forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
+try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
+settings page within the app
+
+
+2 Frontend:
+
+design front page
+create bootstrap based mockup of pages
+convert actual app to mockup
+add javascript form validation

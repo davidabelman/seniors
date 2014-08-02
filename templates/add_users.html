@@ -11,10 +11,12 @@ Add users
 <h1>Invite by email</h1>
 <p>The user will receive a link inviting them to the group, and can choose their own username and password</p>
 <form id='email_invite'>
+	<input type="hidden" value="{{session.get('network')}}" id='network_hidden'>
+
 	<label for="email">Email address:</label>
 	<input type="email" name="email" id='email' /required><br>
 
-	<label for="email">First name:</label>
+	<label for="firstname">First name:</label>
 	<input type="firstname" name="firstname" id='firstname' /required><br>
 
 	<label for="admin">Make this user an admin:</label>
@@ -25,9 +27,9 @@ Add users
 <h3>or</h3>
 <h1>Sign them up yourself</h1>
 <p>This is best for people without email, or for whom it would be easier if you create their login details so they can get going right away.</p>
-<form id='choose_network'>
-	<label for="name">Their first name (or username):</label>
-	<input type="text" name="name" id="name" required />
+<form id='add_user_on_behalf'>
+	<label for="initial_name">Their first name (or username):</label>
+	<input type="text" name="initial_name" id="initial_name" required />
 	<br>
 
 	<label for="password">Password:</label>

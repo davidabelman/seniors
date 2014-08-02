@@ -48,12 +48,19 @@ def home():
 	else:
 		return render_template('info.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/enter', methods=['GET', 'POST'])
+def enter():
 	"""
 	This is where you enter group name, then choose your group member name, then type your password
 	"""
-	return render_template('login.html')
+	return render_template('login.html', network='')
+
+@app.route('/enter/<network>', methods=['GET', 'POST'])
+def enter_with_network_name(network):
+	"""
+	Same as enter, but network name already filled in and different instructions
+	"""
+	return render_template('login.html', network=network)
 
 @app.route('/logout')
 def logout():
@@ -75,7 +82,10 @@ def add_users():
 	"""
 	This is where an admin can add other group members
 	"""
-	if session.get('name') and session.get('network'):
+	network = session.get('network')
+	admin_name = session.get('name')
+	admin_role = Users.find_one({'network':network, 'name':admin_name})['role']
+	if admin_name and network and admin_role==1:
 		return render_template('add_users.html')
 	else:
 		return redirect(url_for('home'))
@@ -255,8 +265,8 @@ def create_account_create_network():
 	password = request.json['password']
 
 	# Could run server checks here to ensure all info OK
-	u1 = list(Users.find({'network':network}))
-	u2 = list(Users.find({'email':email}))
+	u1 = list(Users.find_one({'network':network}))
+	u2 = list(Users.find_one({'email':email}))
 
 	if not u1 and not u2:
 		to_add = { 	
@@ -286,11 +296,48 @@ def create_account_create_network():
 	else:
 		return json.dumps("Email or network already in use.")
 
-@app.route('/_add_user_to_db', methods=['GET', 'POST'])
-def add_user_to_db():
+@app.route('/_add_user_on_behalf', methods=['GET', 'POST'])
+def add_user_on_behalf():
 	"""
-	Creates a new user (needs to check that current session is by user who is able to do this, and they're adding to correct network)
+	Creates a new user 
+	(needs to check that current session is by user who is able to do this, and they're adding to correct network)
 	"""
+	name = request.json['name']
+	password = request.json['password']
+	network = session.get('network')
+	admin_name = session.get('name')
+	admin_role = Users.find_one({'network':network, 'name':admin_name})['role']
+
+	# Check someone is logged in and is an admin for that group
+	if admin_name and network and admin_role==1:
+		# Check that username does not exist already within this network
+		existing = Users.find_one({'network':network, 'name':name})
+		if not existing:
+			# No user exists with this username, we can add them
+			to_add = { 	
+						'name':name,
+						'email':"",
+						'password_hash': generate_password_hash(password),
+						'register' : datetime.datetime.now(),
+						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+						'online' : False, #TODO
+						'network' : network,
+						'role' : 0, # i.e. admin
+					}	
+			Users.insert(to_add)
+			return json.dumps(1)
+		else:
+			message =  "User already exists in network"
+			if app.debug:
+				print message
+			return json.dumps(message)
+	else:
+		message = "Authentication error, you are not logged in to your network."
+		return json.dumps(message)
+
+
+
+
 	return None
 
 @app.route('/_add_user_via_access_token', methods=['GET', 'POST'])
