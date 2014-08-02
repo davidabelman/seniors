@@ -181,7 +181,7 @@ def submit_feed_entry():
 	if session.get('name') and session.get('network'):
 		to_add ={ 	
 					'name':session.get('name'),
-					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : message,
 					'network' : session.get('network')
 				}

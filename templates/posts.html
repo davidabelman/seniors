@@ -1,31 +1,101 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+{% endblock %}
+
 {% block title %}
-Feed
+{{ super() }}{{session.get('network')}} room
 {% endblock %}
 
 {% block body %}
-<h1>Welcome {{session.get('name')}}!</h1>
+{{ super() }}
+<div class='container-fluid'>
+	<div class="row">
+		
+		<div class='col-md-5 grey-panel' id='left-panel'>
+			<div class='padded-container'>
+				
+				
+				<div id='welcome-messages' class='can-fade'>
+					<h1>Welcome {{session.get('name')}}!</h1>
+					<h2>How are you feeling today?<br>Join the conversation!</h2>
+				</div> <!-- end welcome-messages -->
+				
 
-<h2>You are in the '{{session.get('network')}}' room. Add your comment:</h2>
+				<div id='add-a-text-post'>
+					<textarea
+							wrap="hard"
+							name="inputBox"
+							placeholder="Type here..."
+							id='post_input'
+							class="big-input"></textarea>
+					</input>
+					<a href='#' class='a-button inline disabled' id='post_submit_button' style='opacity:0';>Click when finished!</a>
+					<!--
+					<row>
+						<div class='col-xs-6'>
+							<a href='#' class='a-button inline' id='post_submit_button'>Finished typing!</a>
+						</div>
+						<div class='col-xs-6'>
+							<a href='#' class='a-button inline' id='post_submit_button'>Dictate </a>
+						</div>
+					</row>
+					-->
+				</div>
 
-<div id='post_submit'>
-	<form>
-		<input type="text" name="inputBox" placeholder="enter your text here" id='post_input'></input>
-		<input type="submit" value="Submit">
-	</form>
-</div>
+				<div id='other-options'>
+					<h2 class='can-fade'>Or click to:</h2>
+					<row>
+						<div class='col-xs-6'>
+							<p><a href = "#" class='a-button can-fade inline'>Add a photo</a></p>
+							<p><a href = "#" class='a-button can-fade inline'>Add a video</a></p>
+							<p><a href = "#" class='a-button can-fade inline'>Dictate</a></p>
+							
+						</div>
+						<div class='col-xs-6'>
+							<p><a href = "help" class='a-button can-fade inline'>Get help</a></p>
+							<p><a href = "settings" class='a-button can-fade inline'>See settings</a></p>
+							<p><a href = "logout" class='a-button can-fade inline'>Leave room</a></p>
+						</div>
+					</row>
+					<row>
+						<div class='col-xs-12'>
+							
+						</div>
+					</row>
+				</div>
 
-Or:
-<p><a href = "#">Add a photo</a></p>
-<p><a href = "#">Add a video</a></p>
-<p><a href = "help">Not sure? Click for help!</a></p>
-<p><a href = "logout">Not {{session.get('name')}}? Click to change!</a></p>
 
-<div id='post_list'>
-	<p>Retrieving posts...</p>
-</div>
+			</div> <!-- end left panel container -->
+			
+		</div> <!-- end left panel -->
+		<div class='col-md-7' id='right-panel'>
+			
+			<a class='navigation-arrow navigation-arrow-up'>
+				<span class='glyphicon glyphicon-arrow-up' id='scrollUp'></span>
+				<p>Newer</p>
+			</a>
+			<a class='navigation-arrow navigation-arrow-down'>
+				<span class='glyphicon glyphicon-arrow-down' id='scrollDown'></span>
+				<p>Older</p>
+			</a>
 
-<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
+			<div > <!-- could be a padded container?-->
+				<div id='post-list-area'>
+					<p>Retrieving posts...</p>
+
+
+				</div>
+			</div> <!-- end div holding post list -->
+		</div> <!-- end right panel -->
+	</div> <!-- end row -->
+</div> <!-- end container -->
+	
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/jquery.scrollTo.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
+{% endblock %}
 
 {% endblock %}

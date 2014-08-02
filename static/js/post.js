@@ -21,13 +21,18 @@ function all_posts_to_dom(posts) {
   // This replaces all posts currently shown in the DOM with a refreshed set
   html = ""
   $.each(posts, function(index, post) {
-    html += "<div class='post' id="+post._id+" posted="+moment(post.posted).unix()+">"
-    html += "<div class='post-name'>"+post.name+"</div>"
-    html += "<div class='post-body'>"+post.body+"</div>"
-    html += "<div class='post-time'>"+moment(post.posted).fromNow()+"</div>"
-    html += "<br></div>"
+    html += "<section class='post' id="+post._id+" posted="+moment(post.posted).unix()+">"
+    html += "<div class='post-img'>"
+    html += "<img src='/static/img/icon.png' width='70', height='70'>"
+    html += "</div> <!-- end img part -->"
+    html += "<div class='post-alltext'>"
+    html += "<h2 class='post-name'>"+post.name+"</h2>"
+    html += "<span class='post-time'>"+moment(post.posted).fromNow()+"</span>"
+    html += "<p class='post-body'>"+post.body+"</p>"
+    html += "</div> <!-- end text part -->"    
+    html += "</section> <!-- end post --><hr>"
   }) // end each
-    $('#post_list').html(html)
+    $('#post-list-area').html(html)
 }
 
 
@@ -44,21 +49,22 @@ function add_new_posts_only(posts) {
         html += "<div class='post-name'>"+post.name+"</div>"
         html += "<div class='post-body'>"+post.body+"</div>"
         html += "<div class='post-time'>"+moment(post.posted).fromNow()+"</div>"
-        html += "<br></div>"
+        html += "</div>"
       }
     }) // end each
-    $('#post_list').prepend(html)
+    $('#post-list-area').prepend(html)
   } // end if
   else{ console.log(moment().unix(), 'no new posts') }
 }
 
 
 function submit_posts_button_ready() {
-  $('#post_submit').submit( function(evt) {
+  $('#post_submit_button').click( function(evt) {
       evt.preventDefault();
-      console.log('clicked')
+      evt.stopImmediatePropagation();
+      console.log('Clicked submit')
       var message = $('#post_input').val();
-      console.log(message)
+      hide_submit_button();
       $.ajax({
                 url:'/_submit_post_entry',
                 data: JSON.stringify({
@@ -69,6 +75,7 @@ function submit_posts_button_ready() {
                 success: function(result) { 
                   console.log ('This is the result and type of result:',result,typeof(result))
                   get_posts(full_refresh=true, 10,0)
+                  remove_text_from_input();
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -85,8 +92,75 @@ function recursive_check_for_new_posts(){
     setTimeout(recursive_check_for_new_posts, delay)
 }
 
+function show_submit_button_when_typing() {
+  $('#post_input').bind('keyup', function() { 
+    if ($('#post_input').val().length > 0) {
+      $('#post_submit_button').css('opacity',1).removeClass( "disabled" );
+      switch_the_can_fade_elements('fade');
+    }
+    else {
+      hide_submit_button();
+    }
+}); // end keyup function
+} // end function
+
+function hide_submit_button() {
+  $('#post_submit_button').css('opacity',0).css('visibility','hidden').css('visibility','visible').addClass( "disabled" );
+  switch_the_can_fade_elements('unfade');
+} // end function
+
+function remove_text_from_input() {
+  $('#post_input').val('')
+  $('#post_input').attr("placeholder", "Your message has been added!\nType another here...");
+}
+
+function switch_the_can_fade_elements(fade_control) {
+  if (fade_control == 'fade') {
+    $('.can-fade').css('opacity',0.4);
+    console.log('fading!')
+  }
+  else {
+    $('.can-fade').css('opacity',1);
+  }
+  
+};
+
+function get_scroll_navs_ready() {
+  // Scroll down
+  $('#scrollDown').click( function() {
+    // Get current position
+    var pos = $('html body').scrollTop()
+    pos = pos+=200
+    // Update position
+    $('html body').animate({scrollTop: pos}, 200);
+  })
+ 
+  // Scroll up
+  $('#scrollUp').click( function() {
+    // Get current position
+    var pos = $('html body').scrollTop()
+    pos = pos-=200
+    // Update position
+    $('html body').animate({scrollTop: pos}, 200);
+  })
+
+  //Hide when mouse not over posts
+  $('#right-panel').hover (
+    //handler in
+    function() {
+      $('.navigation-arrow').show()
+    },
+    // handler out
+    function() {
+      $('.navigation-arrow').hide()
+    }
+    )
+}
+
 // START OF SCRIPT ON PAGE LOAD
 get_posts(full_refresh=true, 30,0)
 recursive_check_for_new_posts()
 submit_posts_button_ready()
+show_submit_button_when_typing()
+get_scroll_navs_ready()
 
