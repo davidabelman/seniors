@@ -1,15 +1,18 @@
-/* GENERAL */
+/*========================================================================*/
+/*GENERAL*/
+/*========================================================================*/
 a:hover {
     text-decoration: none;
 }
 body {
 	font-size: 200%;
 }
-
+.centered-page {
+	text-align: center;
+}
 body, html {
   height: 100%;
 }
-
 a.disabled {
    pointer-events: none;
    cursor: default;
@@ -202,11 +205,6 @@ a.disabled {
 /*========================================================================*/
 /*LOGIN PAGE*/
 /*========================================================================*/
-.centered-page {
-	text-align: center;
-}
-
-
 .horizontal-header {
 	background: #eee;
 	width: 100%;
@@ -223,7 +221,7 @@ a.disabled {
 	padding: 30px;
 }
 
-.page-main-subheading h2{
+.page-main-subsubheading h2{
 	font-size: 160%;
 	padding: 30px;
 }
@@ -296,4 +294,79 @@ a.disabled {
 
 #password_enter_field {
 	margin-top: 20px;
+}
+
+/*========================================================================*/
+/*FRONT PAGE*/
+/*========================================================================*/
+
+#home-logo {
+	background: black;
+	font-size: 400%;
+	font-weight: bolder;
+	color: white;
+	padding: 30px;
+	height: 190px;
+}
+
+
+.verticalLine {
+    border-left: thick solid #ff0000;
+}
+
+{
+    padding: 0;
+    margin: 0;
+}
+
+#home-container, #home-right-content
+{
+    height: calc(100% - 110px);
+    overflow: auto;
+}
+#home-left, #home-right
+{
+    height: 100%;
+}
+#home-left
+{
+	width: 50%;
+    float: left;
+    background-color: #eee;
+    color: black;
+}
+#home-right
+{
+	border-left: 1px solid #ddd;
+    overflow: auto;
+}
+
+#home-left-content {
+	padding: 40px;
+}
+#home-left-content h1, #home-right-content h1 {
+	font-weight: bold;
+	font-size: 300%;
+}
+#home-left-content h2 {
+	font-weight: 200;
+	font-size: 150%;
+	line-height: 140%;
+}
+#home-right-content {
+	padding: 40px;
+}
+
+#new-group-button, #join-group-button {
+	padding: 20px;
+	font-size: 200%;
+	font-weight: 666;
+	margin-top: 40px;
+}
+
+#new-group-button {
+	background: #3ac98d;
+}
+#new-group-button:hover {
+	background: #3ae98d;
 }

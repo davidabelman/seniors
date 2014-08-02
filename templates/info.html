@@ -1,11 +1,56 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+{% endblock %}
+
 {% block title %}
-Info
+{{ super() }}
+log in to group
 {% endblock %}
 
 {% block body %}
-	<h1>Homepage for logged out people</h1>
+{{ super() }}
+	<!-- <div id= 'home-top-bar'>
+		<row>
+			<div id="home-logo" class="col-sm-6">
+				<span id='salt-main'>Salt</span>&amp;<span id='pepper-main'>Pepper</span>
+			</div> -->
+			<!-- <div id='home-top-bar-desc' class='col-sm-6'>
+				<span>The easiest way for everyone - aged 9 to 90 - to chat, share photos, and have fun!</span>
+			</div> -->
+<!-- 		</row>
+	</div>
+
+	<div>
+		<div class="verticalLine">
+
+		some other content
+
+		</div>
+	</div>
+
+	<h1>Homepage for logged out peoples</h1>
 	<a href='signup'>Create a new group</a>
-	<a href='enter'>Enter an existing group</a>
+	<a href='enter'>Enter an existing group</a> -->
+
+<header id="home-logo">
+				<span id='salt-main'>Salt</span>&amp;<span id='pepper-main'>Pepper</span>
+</header>
+<div id="home-container">
+    <div id="home-left">
+    	<div id="home-left-content">
+    		<h1>For everyone</h1>
+    		<h2><strong>Salt&amp;Pepper</strong> allows small groups of friends and family to chat and share content amongst themselves. We pride ourselves on being suitable for those with very little confidence or experience with computers.</h2>
+    	</div>
+    </div>
+    <div id="home-right">
+        <div id="home-right-content">
+        	<h1>Get started</h1>
+        		<a href='signup' class='a-button' id='new-group-button'>Create a new group</a>
+				<a href='enter' class='a-button' id='join-group-button'>Enter an existing group</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
