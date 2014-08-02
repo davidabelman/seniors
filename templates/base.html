@@ -1,26 +1,9 @@
-<html>
-<head>
-	{% block head %}
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/lang/en-gb.min.js"></script>-->
-		<script src="{{url_for('static', filename = 'js/moment.js', _external=True)}}"></script>
-		{{ moment.include_moment() }}
-		<title>
-			{% block title %}
-			This is the base title
-			{% endblock %}
-		</title>
-	{% endblock %}
-</head>
-<body>
-	{% block body %}
-	This is the base body
-	{% endblock %}
+{% extends "bootstrap.html" %}
 
-	<script>
-		{% block script %}
-		{% endblock %}
-	</script>
+{% block title %}
+FineTime - 
+{% endblock %}
 
-</body>
-</html>
+{% block body %}
+Common page content will go here
+{% endblock %}

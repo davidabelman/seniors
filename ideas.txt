@@ -23,7 +23,6 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-1 register by creating user already
 forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
 try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
 settings page within the app
