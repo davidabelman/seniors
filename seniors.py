@@ -265,8 +265,8 @@ def create_account_create_network():
 	password = request.json['password']
 
 	# Could run server checks here to ensure all info OK
-	u1 = list(Users.find_one({'network':network}))
-	u2 = list(Users.find_one({'email':email}))
+	u1 = Users.find_one({'network':network})
+	u2 = Users.find_one({'email':email})
 
 	if not u1 and not u2:
 		to_add = { 	

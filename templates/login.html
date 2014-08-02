@@ -1,33 +1,132 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+{% endblock %}
+
 {% block title %}
-Login
+{{ super() }}
+log in to group
 {% endblock %}
 
 {% block body %}
-<h1>This is where the user will pick their group, then their name, then enter password</h1>
+{{ super() }}
 
-{% if network %}
-<p>Press 'Enter' to enter the {{network}} group.</p>
-{% else %}
-<p>Type in your network name, then press 'Enter'.</p>
-{% endif %}
-	<form id='choose_network'>
-	network: <input type="text" name="network" id='network' value='{{network}}'><br>
-	submit: <input type="submit" value="Submit">
-	</form>
-<div id='user_grid'>
-<!-- User list goes here -->
-</div>
+<div class='centered-page'>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div id='logotemp'>
+	  	<span id='salt'>Salt </span><span id='pepper'>Pepper</span>
+	  </div><!-- end navbar container -->
+	</nav><!-- end navbar -->
 
-<div id='password_entry' style="display:none">
-	<form>
-		enter your password:: <input type="password" id='password_enter_field'><br>
-		submit: <input type="submit" value="Submit">
-	</form>
-</div>
 
-<script src="{{url_for('static', filename = 'js/login.js', _external=True)}}"></script>
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				{% if network %}
+				Enter the {{network}} group
+				{% else %}
+				Enter your group
+				{% endif %}
+			</h1>
+			
+			<h1 class='page2of2'>Choose your user</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<!-- Page 1 of 2, i.e. enter network -->
+	<div class='container-fluid page1of2'>
+		<div class='page-main-subheading'>
+			{% if network %}
+			<h2>Press 'Enter' to enter the {{network}} group.</h2>
+			{% else %}
+			<h2>Type in your network name, then press 'Enter'.</h2>
+			{% endif %}
+		</div>
+
+		<div class='one_line_entry_box_50pc'>
+			<input type="text" name="network" id='network' value='{{network}}' class='big-input'>
+		</div>
+		<div class='centered_20pc_width'>
+			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
+		</div>
+
+		<div class='error-message' id='network_does_not_exist_message'>
+			<h2>I'm sorry, it appears this network does not exist. Please try again.</h2>
+		</div>
+	</div>
+
+	<div class='container-fluid page2of2'>
+		<row>
+			<div class='col-sm-8' id='user_grid'>
+				<!-- User list goes here -->
+				<row>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>
+						<img src='/static/img/icon.png' class='img-responsive user-icon-img'>
+						<span class='user-icon-span'>Grandmum</span>
+					</div>
+					
+					
+				</row>
+			</div>
+
+			<div id='password_entry' style="display:none" class='col-sm-4'>
+					
+				<div class='page-main-subsubheading'>
+					<h2>Welcome <span id='chosen_name'>X</span>! <br><br>Please enter your password to enter the room.</h2>
+				</div>
+				
+				<input type="password" id='password_enter_field' class='big-input' /required>
+				
+				<div class='centered_50pc_width'>
+					<a href='#' id='password_submit' class='a-button' >Enter</a>
+				</div>
+			</div>
+
+
+	</div> <!-- end main body container -->
+
+				
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/login.js', _external=True)}}"></script>
 {% endblock %}
 
+{% endblock %}
 

@@ -31,18 +31,10 @@
 							id='post_input'
 							class="big-input"></textarea>
 					</input>
-					<a href='#' class='a-button inline disabled' id='post_submit_button' style='opacity:0';>Click when finished!</a>
-					<!--
-					<row>
-						<div class='col-xs-6'>
-							<a href='#' class='a-button inline' id='post_submit_button'>Finished typing!</a>
-						</div>
-						<div class='col-xs-6'>
-							<a href='#' class='a-button inline' id='post_submit_button'>Dictate </a>
-						</div>
-					</row>
-					-->
 				</div>
+					<a href='#' class='a-button inline disabled' id='post_submit_button' style='opacity:0'>Click when finished!</a>
+
+				
 
 				<div id='other-options'>
 					<h2 class='can-fade'>Or click to:</h2>
@@ -94,7 +86,6 @@
 	
 {% block scripts_bottom %}
 	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/jquery.scrollTo.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
 {% endblock %}
 
