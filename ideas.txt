@@ -30,7 +30,11 @@ settings page within the app
 
 2 Frontend:
 
-design front page
-create bootstrap based mockup of pages
-convert actual app to mockup
-add javascript form validation
+design main page 
+- update moment js every now and again
+- add notification for new messages
+- colour new messages as they pop up
+
+create other pages
+
+add javascript form validation for password, limit usernames, etc.

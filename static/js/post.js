@@ -111,7 +111,7 @@ function hide_submit_button() {
 
 function remove_text_from_input() {
   $('#post_input').val('')
-  $('#post_input').attr("placeholder", "Your message has been added!\nType another here...");
+  $('#post_input').attr("placeholder", "Your message has been added! \nType another here...");
 }
 
 function switch_the_can_fade_elements(fade_control) {
@@ -129,30 +129,30 @@ function get_scroll_navs_ready() {
   // Scroll down
   $('#scrollDown').click( function() {
     // Get current position
-    var pos = $('html body').scrollTop()
+    var pos = $('body').scrollTop()
     pos = pos+=200
     // Update position
-    $('html body').animate({scrollTop: pos}, 200);
+    $('body').animate({scrollTop: pos}, 200);
   })
  
   // Scroll up
   $('#scrollUp').click( function() {
     // Get current position
-    var pos = $('html body').scrollTop()
+    var pos = $('body').scrollTop()
     pos = pos-=200
     // Update position
-    $('html body').animate({scrollTop: pos}, 200);
+    $('body').animate({scrollTop: pos}, 200);
   })
 
   //Hide when mouse not over posts
   $('#right-panel').hover (
     //handler in
     function() {
-      $('.navigation-arrow').show()
+      $('.navigation-arrow').fadeIn()
     },
     // handler out
     function() {
-      $('.navigation-arrow').hide()
+      $('.navigation-arrow').fadeOut()
     }
     )
 }
