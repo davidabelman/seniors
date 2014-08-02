@@ -41,7 +41,8 @@ def create_fake_users(db):
 					'register' : datetime.datetime(2014,4,5), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
 					'online' : False,
-					'network' : 'abelman'
+					'network' : 'abelman',
+					'role' : 1
 				},
 				{ 	
 					'name':'Ben',
@@ -50,7 +51,8 @@ def create_fake_users(db):
 					'register' : datetime.datetime(2014,4,9), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
 					'online' : False,
-					'network' : 'abelman'
+					'network' : 'abelman',
+					'role' : 0
 				},
 				{ 	
 					'name':'Annie',
@@ -59,7 +61,8 @@ def create_fake_users(db):
 					'register' : datetime.datetime(2014,4,30), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
 					'online' : False,
-					'network' : 'abelman'
+					'network' : 'abelman',
+					'role' : 0
 				},
 				{ 	
 					'name':'Jack',
@@ -68,7 +71,19 @@ def create_fake_users(db):
 					'register' : datetime.datetime(2014,4,10), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
 					'online' : False,
-					'network' : 'smith'
+					'network' : 'smith',
+					'role' : 0
+				},
+				{ 	
+					'name':'brenda_old_username',
+					'email':'davidabelman+brenda@gmail.com',
+					'password_hash': '',
+					'register' : '', #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'online' : False,
+					'network' : 'abelman',
+					'role' : 0,
+					'token' : 'exampletoken123'
 				},
 				]		
 	collection = db.users
@@ -133,13 +148,51 @@ def create_fake_posts(db):
 	collection = db.posts
 	collection.insert(to_add)
 
+def create_fake_tokens(db):
+	import datetime
+
+	u = raw_input("Do you wish to delete all existing first? (Type 'y' to delete...) ")
+
+	if u=='y':
+		db.tokens.remove()
+
+	to_add =  	[{ 	
+					'token' : 'exampletoken123',
+					'recipient_name' : 'Brenda',
+					'recipient_email' : 'davidabelman+brenda@gmail.com',
+					'token_sent' : datetime.datetime(2014,8,1),
+					'network' : 'abelman',
+					'token_not_used':True
+				},
+				{ 	
+					'token' : 'exampletoken456',
+					'recipient_name' : 'Martha',
+					'recipient_email' : 'davidabelman+martha@gmail.com',
+					'token_sent' : datetime.datetime(2014,6,1),
+					'network' : 'smith',
+					'token_not_used':True
+				},
+				{ 	
+					'token' : 'exampletoken789',
+					'recipient_name' : 'Wilma',
+					'recipient_email' : 'davidabelman+wilma@gmail.com',
+					'token_sent' : datetime.datetime(2014,8,1),
+					'network' : 'smith',
+					'token_not_used':False
+				}
+				]		
+	collection = db.tokens
+	collection.insert(to_add)
+
 if __name__ == '__main__':
 	db = start_up_mongo()
 	print "Creating users..."
 	create_fake_users(db)
 	print "Creating posts..."
 	create_fake_posts(db)
-	print "Printing users..."
+	print "Creating tokens..."
+	create_fake_tokens(db)
+	# print "Printing users..."
 	# for x in show_all_users(db):
 	# 	print x
 	# print "Printing posts..."

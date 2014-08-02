@@ -1,27 +1,20 @@
 {% extends "base.html" %}
 
 {% block title %}
-Signup
+Add users
 {% endblock %}
 
 {% block body %}
-<h1>This is where a new user will signup</h1>
-
+<h1>Welcome to the '{{network}}' group!</h1>
+<p>Sign up with your first name and password</p>
 <div id='error_messages'></div>
 <br><br>
 
 <div >
 	<form id='signup_form'>
-	  <label for="network">Name of group:</label> 
-	  <input type="text" name="network" id="network" required />
-	  <br>
 
 	  <label for="name">Your first name (or username):</label>
-	  <input type="text" name="name" id="name" required />
-	  <br>
-
-	  <label for="email">Your email:</label>
-	  <input type="email" name="email" id="email" required/>
+	  <input type="text" name="name" id="name" value='{{name}}' required />
 	  <br>
 
 	  <label for="password">Password:</label>
@@ -36,9 +29,5 @@ Signup
 	  <br>
 	</form>
 </div>
-
-<p id='tester'>CLICK TO TEST</p>
-
-<script src="{{url_for('static', filename = 'js/signup.js', _external=True)}}"></script>
+<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
 {% endblock %}
-

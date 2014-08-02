@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add users
+{% endblock %}
+
+{% block body %}
+<h1>Add a user</h1>
+<h3>Either:</h3>
+
+<h1>Invite by email</h1>
+<p>The user will receive a link inviting them to the group, and can choose their own username and password</p>
+<form id='email_invite'>
+	<label for="email">Email address:</label>
+	<input type="email" name="email" id='email' /required><br>
+
+	<label for="email">First name:</label>
+	<input type="firstname" name="firstname" id='firstname' /required><br>
+
+	<label for="admin">Make this user an admin:</label>
+	<input type="checkbox" name="admin" id='admin'><br>
+
+	<input type="submit" value="Submit">
+</form>
+<h3>or</h3>
+<h1>Sign them up yourself</h1>
+<p>This is best for people without email, or for whom it would be easier if you create their login details so they can get going right away.</p>
+<form id='choose_network'>
+	<label for="name">Their first name (or username):</label>
+	<input type="text" name="name" id="name" required />
+	<br>
+
+	<label for="password">Password:</label>
+	<input type="text" name="password" id="password" required/>
+	<br>
+
+	<input type="submit" value="Submit">
+	<br>
+</form>
+
+<script src="{{url_for('static', filename = 'js/add_users.js', _external=True)}}"></script>
+{% endblock %}
+

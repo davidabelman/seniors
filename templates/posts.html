@@ -7,8 +7,6 @@ Feed
 {% block body %}
 <h1>Welcome {{session.get('name')}}!</h1>
 
-<a href = "logout">Not {{session.get('name')}}? Change user.</a>
-
 <h2>You are in the '{{session.get('network')}}' room. Add your comment:</h2>
 
 <div id='post_submit'>
@@ -18,9 +16,11 @@ Feed
 	</form>
 </div>
 
-<div id='check_for_posts'>
-	<p>Check for new posts</p>
-</div>
+Or:
+<p><a href = "#">Add a photo</a></p>
+<p><a href = "#">Add a video</a></p>
+<p><a href = "help">Not sure? Click for help!</a></p>
+<p><a href = "logout">Not {{session.get('name')}}? Click to change!</a></p>
 
 <div id='post_list'>
 	<p>Retrieving posts...</p>

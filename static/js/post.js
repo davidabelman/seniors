@@ -1,6 +1,6 @@
-// This requests new posts from the server
-// Appends to DOM if called with full_refresh, or checks for new posts if not
-var get_posts = function(full_refresh, limit, skip) {
+function get_posts(full_refresh, limit, skip) {
+  // This requests new posts from the server
+  // Appends to DOM if called with full_refresh, or only appends new posts if not
     $.getJSON('/_get_posts',
               { 
                 "limit":limit,
@@ -16,8 +16,9 @@ var get_posts = function(full_refresh, limit, skip) {
               }) // end JSON
 } // end get_posts
 
-// This replaces all posts currently shown in the DOM with a refreshed set
-var all_posts_to_dom = function(posts) {
+
+function all_posts_to_dom(posts) {
+  // This replaces all posts currently shown in the DOM with a refreshed set
   html = ""
   $.each(posts, function(index, post) {
     html += "<div class='post' id="+post._id+" posted="+moment(post.posted).unix()+">"
@@ -29,8 +30,9 @@ var all_posts_to_dom = function(posts) {
     $('#post_list').html(html)
 }
 
-// This checks if there are any new posts to display given a set of latest posts from the server
-var add_new_posts_only = function(posts) {
+
+function add_new_posts_only(posts) {
+  // This checks if there are any new posts to display given a set of latest posts from the server
   var newest_post_displayed = parseInt($('.post').first().attr('posted'))
   var newest_post_on_server = moment(posts[0].posted).unix()
   if (newest_post_displayed < newest_post_on_server) {
@@ -48,43 +50,43 @@ var add_new_posts_only = function(posts) {
     $('#post_list').prepend(html)
   } // end if
   else{ console.log(moment().unix(), 'no new posts') }
-
 }
 
 
-$('#post_submit').submit( function(evt) {
-    evt.preventDefault();
-    console.log('clicked')
-    var message = $('#post_input').val();
-    console.log(message)
-    $.ajax({
-              url:'/_submit_post_entry',
-              data: JSON.stringify({
-                "message":message
-              }, null, '\t'), // end data
-              contentType: 'application/json;charset=UTF-8',
-              type: "POST",
-              success: function(result) { 
-                console.log ('This is the result and type of result:',result,typeof(result))
-                get_posts(full_refresh=true, 10,0)
-              }, // end success
-              error: function() {
-                alert('Server error')
-              }
+function submit_posts_button_ready() {
+  $('#post_submit').submit( function(evt) {
+      evt.preventDefault();
+      console.log('clicked')
+      var message = $('#post_input').val();
+      console.log(message)
+      $.ajax({
+                url:'/_submit_post_entry',
+                data: JSON.stringify({
+                  "message":message
+                }, null, '\t'), // end data
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                success: function(result) { 
+                  console.log ('This is the result and type of result:',result,typeof(result))
+                  get_posts(full_refresh=true, 10,0)
+                }, // end success
+                error: function() {
+                  alert('Server error')
+                }
 
-            }) // end ajax
-}); // end submit
-
-// Function to get latest 10 posts
-$('#check_for_posts p').click( function(evt) {
-    posts = get_posts(full_refresh=false, 30,0)
-}); // end submit
+              }) // end ajax
+  }); // end submit
+}
 
 function recursive_check_for_new_posts(){
+    // Loops the poll on server via AJAX to check for new posts
+    delay = 30000;
     get_posts(full_refresh=false, 30,0)
-    setTimeout(recursive_check_for_new_posts, 5000)
+    setTimeout(recursive_check_for_new_posts, delay)
 }
 
+// START OF SCRIPT ON PAGE LOAD
 get_posts(full_refresh=true, 30,0)
 recursive_check_for_new_posts()
+submit_posts_button_ready()
 

@@ -3,20 +3,24 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from flask.ext.script import Manager
 from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
+from secret import SECRET_KEY
+from mailgun import send_access_token_email
 import mongo
 import json
 import datetime
+import random
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.secret_key = SECRET_KEY
 manager = Manager(app)
 moment = Moment(app)
-
 
 #MONGO
 db = mongo.start_up_mongo()
 Users = db.users
 Posts = db.posts
+Tokens = db.tokens
 
 # JSON ENCODING
 from bson.objectid import ObjectId
@@ -28,6 +32,11 @@ class Encoder(json.JSONEncoder):
         	return obj.isoformat()
         else:
             return obj
+
+# TOKENS
+token_expiry_days = 30
+base_url = "http://localhost:5000/invite/"
+
 
 @app.route('/')
 def home():
@@ -51,16 +60,65 @@ def logout():
 	"""
 	Resets the cookies etc. so the user is logged out
 	"""
-	session['name'] = None
-	session['network'] = None
+	session.clear()
 	return redirect(url_for('home'))
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	"""
 	This is where one person creates the group, he/she is then the admin(?)
 	"""
 	return render_template('signup.html')
+
+@app.route('/add_users', methods=['GET', 'POST'])
+def add_users():
+	"""
+	This is where an admin can add other group members
+	"""
+	if session.get('name') and session.get('network'):
+		return render_template('add_users.html')
+	else:
+		return redirect(url_for('home'))
+
+@app.route('/invite/<token>', methods=['GET', 'POST'])
+def accept_invite(token):
+	"""
+	Screen on which a user can join a group (only would reach this through secret access token)
+	"""
+	token = long(token)
+	result = Tokens.find_one({'token':token})
+	# return str(result)
+	if result:
+		if result.get('token_not_used'):
+			# Token not yet used
+			if (datetime.datetime.now() - result.get('token_sent')).days < token_expiry_days:
+				# We have an unused token, and it is not yet expired.
+				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
+				session.clear()
+				session['network']=result.get('network')
+				session['email']=result.get('recipient_email')
+				session['token']=token
+				return render_template('valid_token.html',
+					name=result.get('recipient_name'), network=session['network'])
+			else:
+				# We have a token, but it has expired
+				return render_template('expired_token.html')
+		else:
+			# Token has been used already
+			return render_template('used_token.html')
+	else:
+		# The link was invalid
+		return render_template('invalid_token.html')
+
+
+@app.route('/help')
+def help():
+	"""
+	This is a static help page with simple instructions
+	"""
+	return render_template('help.html')
+
+###################### AJAX REPONDERS ######################
 
 @app.route('/_network_users_list')
 def network_users_list():
@@ -88,10 +146,10 @@ def check_network_username_password():
 	if response==True:
 		session['name'] = username
 		session['network'] = network
-		session['picture'] = user['picture']
+		session['picture'] = user.get('picture')
+		session['email'] = user.get('email')
 	else:
-		session['name'] = None
-		session['network'] = None
+		session.clear()
 
 	if app.debug:
 		print "Information received:",network, username, password
@@ -112,10 +170,10 @@ def submit_feed_entry():
 	message = request.json['message']
 	if session.get('name') and session.get('network'):
 		to_add ={ 	
-					'name':session['name'],
+					'name':session.get('name'),
 					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : message,
-					'network' : session['network']
+					'network' : session.get('network')
 				}
 		Posts.insert(to_add)
 		response = 1
@@ -137,11 +195,168 @@ def get_posts():
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
 	if session.get('name') and session.get('network'):
-		posts = mongo.return_last_X_posts(Posts, network=session['network'], limit=limit, skip=skip)
-	return json.dumps(list(posts), cls=Encoder)
+		posts = mongo.return_last_X_posts(Posts, network=session.get('network'), limit=limit, skip=skip)
+		return json.dumps(list(posts), cls=Encoder)
+	else:
+		return "Error: no user logged in"
+		
 
+@app.route('/_network_exists')
+def network_exists():
+	"""
+	Determines whether network already exists
+	"""
+	network = request.args.get('network')
+	print network
+	users = list(Users.find({'network':network}))
+	if users:
+		response = 1
+	else:
+		response = 0
+	return json.dumps(response)
+
+
+@app.route('/_create_account_join_network', methods=['GET', 'POST'])
+def create_account_join_network():
+	"""
+	Creates a new user joining an exiting group (based off an invite)
+	"""
+	name = request.json['name']
+	password = request.json['password']
+	token = long(session['token'])
+
+	object_id = Users.find_one({'token':token}).get('_id')
+
+	if object_id:
+		# Update user data with login data
+		Users.update({'_id':object_id}, {"$set": {
+														'name':name,
+														'password':generate_password_hash(password),
+														'register' : datetime.datetime.now(),
+														}}, upsert=False)
+		session['name'] = name
+		
+		# Update token to 'used'
+		Posts.update({'token':token}, {"$set": {'token_not_used':False} })
+		return json.dumps('[1]')
+		
+	else:
+		print "Can't find user - though should be able to as they were created when token was."
+
+
+@app.route('/_create_account_create_network', methods=['GET', 'POST'])
+def create_account_create_network():
+	"""
+	Creates a new user (with admin status) and group
+	"""
+	name = request.json['name']
+	email = request.json['email']
+	network = request.json['network']
+	password = request.json['password']
+
+	# Could run server checks here to ensure all info OK
+	u1 = list(Users.find({'network':network}))
+	u2 = list(Users.find({'email':email}))
+
+	if not u1 and not u2:
+		to_add = { 	
+						'name':name,
+						'email':email,
+						'password_hash': generate_password_hash(password),
+						'register' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+						'online' : False, #TODO
+						'network' : network,
+						'role' : 1 # i.e. admin
+				}
+		# Add user to DB		
+		Users.insert(to_add)
+
+		# Sign user in
+		session['name'] = name
+		session['network'] = network
+		session['email'] = email
+
+		if app.debug:
+			print "Added user (%s, %s) to database." %(name, network)
+			print to_add
+
+		return json.dumps(1)
+
+	else:
+		return json.dumps("Email or network already in use.")
+
+@app.route('/_add_user_to_db', methods=['GET', 'POST'])
+def add_user_to_db():
+	"""
+	Creates a new user (needs to check that current session is by user who is able to do this, and they're adding to correct network)
+	"""
+	return None
+
+@app.route('/_add_user_via_access_token', methods=['GET', 'POST'])
+def add_user_via_access_token():
+	"""
+	Creates a new user (needs to check that current session is by user who is able to do this, and they're adding to correct network)
+	This user then needs to accept by email via some access token to be taken to a page to decide on their username and password
+	"""
+	email = request.json['email']
+	firstname = request.json['firstname']
+	admin = request.json['admin']
+	if session.get('name') and session.get('network'):
+		network = session.get('network')
+		
+		# Generate access token and add to token dictionary
+		token = random.getrandbits(32)
+		to_add = {
+					'token' : token,
+					'recipient_name' : firstname,
+					'recipient_email' : email,
+					'token_sent' : datetime.datetime.now(),
+					'network' : network,
+					'token_not_used':True
+				}
+		Tokens.insert(to_add)
+
+		# Create user account and add to DB
+		to_add = { 	
+						'name':firstname,
+						'email':email,
+						'password_hash': "",
+						'register' : "",
+						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+						'online' : False, #TODO
+						'network' : network,
+						'role' : admin, # i.e. admin
+						'token' : token
+					}	
+		Users.insert(to_add)
+
+		# Send user an access token type of link
+		access_url = base_url+str(token)
+		send_access_token_email(
+				sender=session['name'],
+				sender_email=session['email'],
+				network=session['network'],
+				recipient=firstname,
+				recipient_email=email,
+				url=access_url
+			)
+
+		return json.dumps(1)
+	else:
+		return json.dumps("Authentication error.")
+
+###################### ERRORS ######################
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('error.html'), 404
+
+@app.errorhandler(500)
+def page_not_found(e):
+	return render_template('error.html'), 500
 
 ###################### START ######################
 if __name__ == '__main__':
+	manager.secret_key = SECRET_KEY
 	manager.run()
 	
