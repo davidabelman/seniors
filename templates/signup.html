@@ -5,40 +5,119 @@ Signup
 {% endblock %}
 
 {% block body %}
-<h1>This is where a new user will signup</h1>
 
-<div id='error_messages'></div>
-<br><br>
+<div class='centered-page'>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div id='logotemp'>
+	  	<span id='salt'>Salt </span><span id='pepper'>Pepper</span>
+	  </div><!-- end navbar container -->
+	</nav><!-- end navbar -->
 
-<div >
-	<form id='signup_form'>
-	  <label for="network">Name of group:</label> 
-	  <input type="text" name="network" id="network" required />
-	  <br>
 
-	  <label for="name">Your first name (or username):</label>
-	  <input type="text" name="name" id="name" required />
-	  <br>
 
-	  <label for="email">Your email:</label>
-	  <input type="email" name="email" id="email" required/>
-	  <br>
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				Create your group
+			</h1>
+			
+			<h1 class='page2of2'>Choose your user</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
 
-	  <label for="password">Password:</label>
-	  <input type="password" name="password" id="password" required/>
-	  <br>
+	<div class='container-fluid'>
+		<!-- <div class='page-main-subheading'>
+			{% if network %}
+			<h2>Press 'Enter' to enter the {{network}} group.</h2>
+			{% else %}
+			<h2>Type in your network name, then press 'Enter'.</h2>
+			{% endif %}
+		</div>
 
-	  <label for="password_confirm">Confirm password:</label>
-	  <input type="password" name="password_confirm" id="password_confirm" required/>
-	  <br>
+		<div class='one_line_entry_box_50pc'>
+			<input type="text" name="network" id='network' value='{{network}}' class='big-input'>
+		</div>
+		<div class='centered_20pc_width'>
+			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
+		</div>
 
-	  <input type="submit" value="Submit">
-	  <br>
-	</form>
-</div>
+		<div class='error-message' id='network_does_not_exist_message'>
+			<h2>I'm sorry, it appears this network does not exist. Please try again.</h2>
+		</div> -->
+		<row>
+			<div class='col-sm-10' id='form-container'>
+				<row>
+					<div class='col-sm-5 form-line'>
+					<label for="network">Name of group</label> 
+					</div>
+			  		<div class='col-sm-7 form-line'>
+			  		<input class=' big-input big-input-multiline-adjust' type="text" name="network" id="network" required />
+			  		</div>
+				</row>
+				<row>
+					<div class='col-sm-5 form-line'>
+					<label for="name">Your first name</label>
+					</div>
+					<div class='col-sm-7 form-line'>
+			 		 <input class=' big-input big-input-multiline-adjust' type="text" name="name" id="name" required />
+			 		 </div>
+				</row>
+				<row>
+					<div class='col-sm-5 form-line'>
+					<label for="email">Your email</label>
+					</div>
+					<div class='col-sm-7 form-line'>
+			  		<input class=' big-input big-input-multiline-adjust' type="email" name="email" id="email" required/>
+			  		</div>
+				</row>
+				<row>
+					<div class='col-sm-5 form-line'>
+			  		<label for="password">Password</label>
+			  		</div>
+			  		<div class='col-sm-7 form-line'>
+			 		 <input class=' big-input big-input-multiline-adjust' type="password" name="password" id="password" required/>
+			 		</div>
+				</row>
+				<row>
+					<div class='col-sm-5 form-line'>
+			  		<label for="password_confirm">Confirm password</label>
+			  		</div>
+			  		<div class='col-sm-7 form-line'>
+			  		<input class='big-input big-input-multiline-adjust' type="password" name="password_confirm" id="password_confirm" required/>
+			  		</div>
+				</row>
+				<row>
+			  		<div class='col-sm-5' for=""></div>
+			  		<div class='col-sm-7 form-line'>
+			  		<a class='a-button' href='#' id='registration_submit'>I'm finished, let's go!</a>
+			  		</div>
+				</row>
+				
+			</div> <!-- end form container -->
 
-<p id='tester'>CLICK TO TEST</p>
+			<div class='col-sm-2' id='hints-container'>
+				<div id='network-name-status'>
+					<span id='network-ok'>Group name<br>is OK!</span>
+					<span id='network-taken'>Group name<br>already taken</span>
+				</div>
+				<div class='filler'> <br></div>
+				<div id='hints-div'>
+					<h1><!-- Hint title --></h1>
+					<p><!--Hint body--></p>
+				</div>
+			</div> <!-- end hints container -->
+	
+		<div id='error_messages'></div>
+	</div> <!-- end fluid container -->
+	
 
-<script src="{{url_for('static', filename = 'js/signup.js', _external=True)}}"></script>
+</div> <!-- end centred page -->
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/signup.js', _external=True)}}"></script>
+{% endblock %}
+
 {% endblock %}
 

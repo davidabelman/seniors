@@ -20,6 +20,12 @@ a.disabled {
 .padded-container {
 	padding: 4%;
 }
+.filler {
+	height: 40px;
+	display: block;
+	color: white;
+	background: white;
+}
 
 /*DIVS*/
 .grey-panel {
@@ -369,4 +375,48 @@ a.disabled {
 }
 #new-group-button:hover {
 	background: #3ae98d;
+}
+
+/*========================================================================*/
+/*SIGN-UP FORM*/
+/*========================================================================*/
+.hints-div {
+	display: none;
+}
+
+.form-line {
+	padding: 5px;
+}
+
+#form-container label {
+	font-size: 150%;
+	font-weight: 700;
+	margin-top:13px;
+	margin-right: 10px;
+}
+
+#form-container {
+	text-align: right;
+}
+
+.big-input-multiline-adjust {
+	padding: 5px;
+	margin:3px;
+}
+
+#network-name-status {
+	padding-top: 18px;
+	margin-left: -10px;
+	text-align: left;
+	font-weight: 700;
+	line-height: 90%;
+}
+
+#network-taken {
+	color: red;
+	display:none;
+}
+#network-ok {
+	color: green;
+	display:none;
 }

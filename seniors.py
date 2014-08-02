@@ -266,9 +266,8 @@ def create_account_create_network():
 
 	# Could run server checks here to ensure all info OK
 	u1 = Users.find_one({'network':network})
-	u2 = Users.find_one({'email':email})
 
-	if not u1 and not u2:
+	if not u1:
 		to_add = { 	
 						'name':name,
 						'email':email,
