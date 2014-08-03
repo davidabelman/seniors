@@ -86,6 +86,7 @@ a.disabled {
 	opacity: 0;
 }
 
+
 /*DIVS*/
 .grey-panel {
 	background-image: -webkit-gradient(
@@ -500,5 +501,12 @@ a.disabled {
 }
 
 .page2a {
+	display: none;
+}
+
+/*========================================================================*/
+/*ADD AN IMAGE*/
+/*========================================================================*/
+.webcam-content, .imgurl-content, .upload-content /*.bing-search-content */{
 	display: none;
 }

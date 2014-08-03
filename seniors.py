@@ -132,6 +132,13 @@ def help():
 	"""
 	return render_template('help.html')
 
+@app.route('/add_image')
+def add_image():
+	"""
+	Temporary - this will probably be within main page?
+	"""
+	return render_template('add_image.html')
+
 ###################### AJAX REPONDERS ######################
 
 @app.route('/_network_users_list')
@@ -435,10 +442,11 @@ def get_bing_image_urls():
 	user = Users.find_one({'network':session.get('network')})
 	if user:
 
-		query = int(request.json['query'])
+		query = request.json['query']
 		funny = int(request.json['funny'])
 		cartoon = int(request.json['cartoon'])
 		animated = int(request.json['animated'])
+		max_results = int(request.json['max_results'])
 
 		urls = bing_search_and_return_urls( query=query,
 											funny=funny,
@@ -448,7 +456,7 @@ def get_bing_image_urls():
 											maxsize=250,
 											testing=True)
 
-		return json.dumps({"status":1, "data":urls})
+		return json.dumps({"status":1, "data":urls[0:max_results]})
 	else: 
 		return json.dumps({"status":0, "data":"Authorization error"})
 

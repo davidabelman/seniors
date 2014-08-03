@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+log in to group
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page'>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div id='logotemp'>
+	  	<span id='saltandpepper'>Salt&Pepper</span><span id='beta'> beta</span>
+	  </div><!-- end navbar container -->
+	</nav><!-- end navbar -->
+
+
+	<!-- Page 1 of 2, i.e. enter network -->
+	<div class='container-fluid'>
+
+		<row>
+			
+			<div class='col-md-6'> <!-- left panel -->
+				<div class='page-main-subheading shift-down-3 padded-container-1'>
+					<h2>How would you like to add your photo?</h2>
+				</div> 
+
+				<div class='centered_80pc_width  shift-down-3'>
+					<a href='#' id='bing-search-button' class='a-button' >By typing in a word</a>
+				</div>
+
+				<div class='centered_80pc_width  shift-down-3'>
+					<a href='#' id='webcam-button' class='a-button shift-down-3' >Using my computer's camera</a>
+				</div>
+
+				<div class='centered_80pc_width shift-down-3'>
+					<a href='#' id='upload-button' class='a-button shift-down-3' >Using a photo on my computer</a>
+				</div>
+
+				<div class='centered_80pc_width shift-down-3'>
+					<a href='#' id='imgurl-button' class='a-button shift-down-3' >A link from the internet</a>
+				</div>
+
+			</div> <!-- end left panel -->
+
+			<div class='col-md-6'> <!-- right panel -->
+				<div class='page-main-subheading shift-down-3 padded-container-1'>
+					<h2 id='bing-search-hint' class=' bing-search-content'>Type one or more words into the box describing your desired photo:</h2>
+					<h2 id='webcam-hint' class='webcam-content'>Click 'take photo' to take a photo!</h2><p class='webcam-content'>Note your computer may ask you for permission to use your camera. You will need to press 'OK', or 'Accept' or 'Allow'</p>
+					<h2 id='upload-hint' class='upload-content'>Click 'upload a photo' to upload a photo from your computer</h2>
+					<h2 id='url-hint' class='imgurl-content'>Copy and paste the web address to the image you would like to add. The link must end in 'jpg', 'jpeg', 'png' or 'gif'</h2>
+				</div> 
+
+				<div id='bing-search-body' class='bing-search-content'>
+					<!-- Bing to go here -->
+					<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+						<input type="text" name="img-input" id='img-input' placeholder='Type here...' class='big-input'>
+					</div>
+					<div id='img-grid'>
+						<row>
+							<div class='col-sm-6'>
+								<img src='http://thumbs.gograph.com/gg58323490.jpg' height='100px'>
+								<img src='http://thumbs.gograph.com/gg58323490.jpg' width='70%'>
+								<img src='/static/img/icon.png' width='70%'>
+							</div>
+							<div class='col-sm-6'>
+								<img src='/static/img/icon.png' width='70%'>
+								<img src='/static/img/icon.png' width='70%'>
+								<img src='/static/img/icon.png' width='70%'>							</div>
+						</row>
+					</div>
+
+				</div>
+				<div id='webcam-body' class='webcam-content'>
+					<!-- webcam to go here -->
+				</div>
+				<div id='upload-body' class='upload-content'>
+					<!-- upload to go here -->
+				</div>
+				<div id='imgurl-body' class='imgurl-content'>
+					<!-- url to go here -->
+				</div>
+
+			</div>
+
+
+		</row>
+
+
+	</div> <!-- end container -->
+</div> <!-- end centred page -->
+
+
+				
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
+{% endblock %}
+
+{% endblock %}
+
