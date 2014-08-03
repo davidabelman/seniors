@@ -5,6 +5,7 @@ from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
 from secret import SECRET_KEY
 from mailgun import send_access_token_email
+from tools.bing_search import bing_search_and_return_urls
 import mongo
 import json
 import datetime
@@ -424,6 +425,34 @@ def add_user_via_access_token():
 	else:
 		message = "Authentication error: you are not logged in to your group."
 		return json.dumps(message)
+
+
+@app.route('/_get_bing_image_urls', methods=['GET', 'POST'])
+def get_bing_image_urls():
+	"""
+	Given a query string and extra parameters (e.g. cartoon, funny), requests results from Bing and returns top X URLs
+	"""
+	user = Users.find_one({'network':session.get('network')})
+	if user:
+
+		query = int(request.json['query'])
+		funny = int(request.json['funny'])
+		cartoon = int(request.json['cartoon'])
+		animated = int(request.json['animated'])
+
+		urls = bing_search_and_return_urls( query=query,
+											funny=funny,
+											cartoon=cartoon,
+											search_type='Image',
+											minsize=150,
+											maxsize=250,
+											testing=True)
+
+		return json.dumps({"status":1, "data":urls})
+	else: 
+		return json.dumps({"status":0, "data":"Authorization error"})
+
+
 
 ###################### ERRORS ######################
 @app.errorhandler(404)

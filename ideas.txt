@@ -35,6 +35,6 @@ design main page
 - add notification for new messages
 - colour new messages as they pop up
 
-create other pages
+make new group create page nicer
 
 add javascript form validation for password, limit usernames, etc.
