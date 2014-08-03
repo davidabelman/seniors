@@ -1,8 +1,9 @@
 function get_ajax_handlers_ready() {
 
   // This will add a user by email (either admin or not) when the user submits an email address
-  $('#email_invite').submit( function(evt) {
+  $('#submit_email_invitation').click( function(evt) {
     evt.preventDefault();
+    evt.stopImmediatePropagation();
     console.log('clicked');
 
     // Admin variable
@@ -20,8 +21,11 @@ function get_ajax_handlers_ready() {
       type: "POST",
       success: function(response) {
         if (response=='1') {
-          console.log('Added user successfully, will send them an email')
-          redraw_screen()
+          // We will show a message to user saying successful (clear page 1, show page 2a)
+          redraw_screen(page_1_or_2='2', page_2a_or_2b='2a', name=$('#firstname').val())
+        }
+        else {
+          display_error(response, '#email_invitation_error')
         }
       },
       fail: function() {
@@ -31,8 +35,10 @@ function get_ajax_handlers_ready() {
   }) // end submit
 
   // This will just add the user to the database, can then show them how to log on at ..com/enter/networkname
-  $('#add_user_on_behalf').submit( function(evt) {
+  $('#create_account_on_behalf').click( function(evt) {
+    console.log("CLICK")
     evt.preventDefault();
+    evt.stopImmediatePropagation();
     console.log('clicked');
 
     $.ajax( {
@@ -45,13 +51,17 @@ function get_ajax_handlers_ready() {
       type: "POST",
       success: function(response) {
         if (response=='1') {
-          console.log('Added user successfully to database')
-          network = $('#network_hidden').val()
-          alert('Show this user how to log in at http://www.thiswebsite.com/enter/'+network);
-          redraw_screen()
+
+          // We will show a message to user saying successful (clear page 1, show page 2b)
+          console.log('Added user successfully to database');
+          network = $('#network_hidden').val();
+
+          // Now redraw screen
+          redraw_screen(page_1_or_2='2', page_2a_or_2b='2b', name=$('#initial_name').val())
+
           } // end if
         else {
-          alert (response)
+          display_error(response, '#create_account_error')
         }
       } // end success callback
     }) // end ajax
@@ -59,4 +69,76 @@ function get_ajax_handlers_ready() {
   }) // end submit
 }
 
+function get_page2_links_ready() {
+  $('#add_another_user').click( function(evt) {
+    console.log('Add another user button pressed')
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    redraw_screen(page_1_or_2='1')
+  }) // end add another user
+
+  $('#go_to_group').click( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    window.location.href = "/";
+  })
+}
+
+
+function redraw_screen(page_1_or_2, page_2a_or_2b, name) {
+  // This function switches between the 'add user' screen and the confirmation messages (2 variations)
+
+  if (page_1_or_2 == '2') {
+    // Fill in page 2 with the correct values
+    $('.invited-name').text(name)
+
+    // Show the correct version of page 2
+    if (page_2a_or_2b == '2b') {
+      $('.page2a').hide();
+      $('.page2b').show(); 
+    }
+    else {
+      $('.page2a').show();
+      $('.page2b').hide();  
+    }
+    
+    // Fade out page 1 and show page 2
+    $('.page1of2').fadeOut( function() {
+      $('.page2of2').fadeIn();
+    })
+  } // end if
+  else {
+    // Clear all values on page 1
+    $('input').val('')
+
+    // Show page 1
+    $('.page2of2').fadeOut ( function () {
+      $('.page1of2').fadeIn();
+    })
+  }
+}
+
+function display_error(message, id) {
+  // id should be #create_account_error or #email_invitation_error, i.e. shows where to place the error message
+  console.log('DISPLAYING ERROR')
+  message_stripped = message.substring(1, message.length-1)
+  $(id+' h2').text(message_stripped)
+  $(id).fadeIn()
+}
+
+function hide_error_message_when_input_active() {
+  $('input').focus( function() {
+      $('.error-message').fadeOut();
+    })
+  $('input').keyup( function() {
+      $('.error-message').fadeOut();
+    })
+  // And when user clicks submit
+  $('.a-button').click( function(evt) {
+    $('.error-message').fadeOut();
+    })
+}
+
+hide_error_message_when_input_active()
 get_ajax_handlers_ready()
+get_page2_links_ready()

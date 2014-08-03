@@ -15,7 +15,8 @@
       <link href="{{url_for('static', filename = 'css/seniors.css')}}" rel="stylesheet">
 
       {% block scripts_top %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+        <script src="{{url_for('static', filename = 'js/jquery-2.1.1.min.js', _external=True)}}"></script>
         <script src="{{url_for('static', filename = 'js/moment.js', _external=True)}}"></script>
       {% endblock %}
 

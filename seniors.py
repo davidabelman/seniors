@@ -305,7 +305,7 @@ def add_user_on_behalf():
 	password = request.json['password']
 	network = session.get('network')
 	admin_name = session.get('name')
-	admin_role = Users.find_one({'network':network, 'name':admin_name})['role']
+	admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
 
 	# Check someone is logged in and is an admin for that group
 	if admin_name and network and admin_role==1:
@@ -326,12 +326,12 @@ def add_user_on_behalf():
 			Users.insert(to_add)
 			return json.dumps(1)
 		else:
-			message =  "User already exists in network"
+			message =  "Error: Name already exists in group. Please pick another name."
 			if app.debug:
 				print message
 			return json.dumps(message)
 	else:
-		message = "Authentication error, you are not logged in to your network."
+		message = "Authentication error: you are not logged in to your group."
 		return json.dumps(message)
 
 
@@ -348,49 +348,59 @@ def add_user_via_access_token():
 	email = request.json['email']
 	firstname = request.json['firstname']
 	admin = request.json['admin']
+	# Check if allowed to add people
 	if session.get('name') and session.get('network'):
 		network = session.get('network')
-		
-		# Generate access token and add to token dictionary
-		token = random.getrandbits(32)
-		to_add = {
-					'token' : token,
-					'recipient_name' : firstname,
-					'recipient_email' : email,
-					'token_sent' : datetime.datetime.now(),
-					'network' : network,
-					'token_not_used':True
-				}
-		Tokens.insert(to_add)
 
-		# Create user account and add to DB
-		to_add = { 	
-						'name':firstname,
-						'email':email,
-						'password_hash': "",
-						'register' : "",
-						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
-						'online' : False, #TODO
+		# Check that username does not exist already within this network
+		existing = Users.find_one({'network':network, 'name':firstname})
+		if not existing:
+			# Generate access token and add to token dictionary
+			token = random.getrandbits(32)
+			to_add = {
+						'token' : token,
+						'recipient_name' : firstname,
+						'recipient_email' : email,
+						'token_sent' : datetime.datetime.now(),
 						'network' : network,
-						'role' : admin, # i.e. admin
-						'token' : token
-					}	
-		Users.insert(to_add)
+						'token_not_used':True
+					}
+			Tokens.insert(to_add)
 
-		# Send user an access token type of link
-		access_url = base_url+str(token)
-		send_access_token_email(
-				sender=session['name'],
-				sender_email=session['email'],
-				network=session['network'],
-				recipient=firstname,
-				recipient_email=email,
-				url=access_url
-			)
+			# Create user account and add to DB
+			to_add = { 	
+							'name':firstname,
+							'email':email,
+							'password_hash': "",
+							'register' : "",
+							'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+							'online' : False, #TODO
+							'network' : network,
+							'role' : admin, # i.e. admin
+							'token' : token
+						}	
+			Users.insert(to_add)
 
-		return json.dumps(1)
+			# Send user an access token type of link
+			access_url = base_url+str(token)
+			# send_access_token_email(
+			# 		sender=session['name'],
+			# 		sender_email=session['email'],
+			# 		network=session['network'],
+			# 		recipient=firstname,
+			# 		recipient_email=email,
+			# 		url=access_url
+			# 	)
+			# All OK, return status 1
+			return json.dumps(1)
+		
+		else:
+			message = "Error: Name already exists in group. Please pick another name."
+			return json.dumps(message)
+			
 	else:
-		return json.dumps("Authentication error.")
+		message = "Authentication error: you are not logged in to your group."
+		return json.dumps(message)
 
 ###################### ERRORS ######################
 @app.errorhandler(404)
