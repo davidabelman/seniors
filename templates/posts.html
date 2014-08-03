@@ -10,33 +10,32 @@
 
 {% block body %}
 {{ super() }}
-<div class='container-fluid'>
+<div class='container-fluid quick-fade quick-fade-1' id='whole-content'>
 	<div class="row">
 		
-		<div class='col-sm-4 grey-panel' id='left-panel'>
+		<div class='col-sm-4 grey-panel quick-fade quick-fade-2' id='left-panel'>
 			<div class='padded-container'>
 				
 				
-				<div id='welcome-messages' class='can-fade'>
+				<div id='welcome-messages' class='can-fade quick-fade quick-fade-2'>
 					<h1>Welcome {{session.get('name')}}!</h1>
-					<h2>Join the conversation!</h2>
 				</div> <!-- end welcome-messages -->
 				
 
-				<div id='add-a-text-post'>
+				<div id='add-a-text-post' class='quick-fade quick-fade-5'>
 					<textarea
 							wrap="hard"
 							name="inputBox"
-							placeholder="Type here..."
+							placeholder="Join the conversation - type your message here!"
 							id='post_input'
 							class="big-input"></textarea>
 					</input>
 				</div>
-					<a href='#' class='a-button inline disabled' id='post_submit_button' style='opacity:0'>Click when finished!</a>
+					<a href='#' class='a-button disabled' id='post_submit_button' style='opacity:0'>Click when finished!</a>
 
 				
 
-				<div id='other-options'>
+				<div id='other-options' class=' quick-fade quick-fade-8'>
 					<h2 class='can-fade'>Or click to:</h2>
 					<row>
 						<div class='col-xs-6'>
@@ -48,7 +47,7 @@
 						<div class='col-xs-6'>
 							<p><a href = "help" class='a-button can-fade'>Get help</a></p>
 							<p><a href = "settings" class='a-button can-fade'>See settings</a></p>
-							<p><a href = "logout" class='a-button can-fade'>Leave room</a></p>
+							<p><a href = "logout" class='a-button can-fade' id='logout-button'>Leave room</a></p>
 						</div>
 					</row>
 					<row>
@@ -62,7 +61,7 @@
 			</div> <!-- end left panel container -->
 			
 		</div> <!-- end left panel -->
-		<div class='col-sm-8' id='right-panel'>
+		<div class='col-sm-8  quick-fade quick-fade-8' id='right-panel'>
 			
 			<a class='navigation-arrow navigation-arrow-up'>
 				<span class='glyphicon glyphicon-arrow-up' id='scrollUp'></span>
@@ -87,6 +86,7 @@
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/quick_fade.js', _external=True)}}"></script>
 {% endblock %}
 
 {% endblock %}

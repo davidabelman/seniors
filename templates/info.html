@@ -34,23 +34,33 @@ log in to group
 	<a href='signup'>Create a new group</a>
 	<a href='enter'>Enter an existing group</a> -->
 
-<header id="home-logo">
+<header id="home-logo" class='quick-fade quick-fade-1'>
+	<div class='quick-fade quick-fade-3'>
 				<span id='salt-main'>Salt</span>&amp;<span id='pepper-main'>Pepper</span>
+	</div>
 </header>
-<div id="home-container">
-    <div id="home-left">
-    	<div id="home-left-content">
+<div id="home-container" >
+    <div id="home-left" class='quick-fade quick-fade-5'>
+    	<div id="home-left-content" class='quick-fade quick-fade-6'>
     		<h1>For everyone</h1>
-    		<h2><strong>Salt&amp;Pepper</strong> allows small groups of friends and family to chat and share content amongst themselves. We pride ourselves on being suitable for those with very little confidence or experience with computers.</h2>
+    		<h2><strong>Salt&amp;Pepper</strong> allows small groups of friends and family to chat and share content amongst themselves. The experience has been desiged for those with very little confidence or experience with computers.</h2>
     	</div>
     </div>
-    <div id="home-right">
-        <div id="home-right-content">
+    <div id="home-right" class='quick-fade quick-fade-8'>
+        <div id="home-right-content" class='quick-fade quick-fade-8'>
         	<h1>Get started</h1>
         		<a href='signup' class='a-button' id='new-group-button'>Create a new group</a>
 				<a href='enter' class='a-button' id='join-group-button'>Enter an existing group</a>
         </div>
     </div>
 </div>
+
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/info.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/quick_fade.js', _external=True)}}"></script>
+{% endblock %}
 
 {% endblock %}

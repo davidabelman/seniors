@@ -90,6 +90,17 @@ function submit_posts_button_ready() {
   }); // end submit
 }
 
+function logout_button_ready() {
+  $('#logout-button').click( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    $('#whole-content').fadeOut(
+      function() {
+        window.location.href = "logout";
+      }, 50)
+  })
+}
+
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts
     delay = 30000;
@@ -184,4 +195,5 @@ recursive_check_for_new_posts()
 submit_posts_button_ready()
 show_submit_button_when_typing()
 get_scroll_navs_ready()
+logout_button_ready()
 

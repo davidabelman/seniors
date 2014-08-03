@@ -101,6 +101,9 @@ def accept_invite(token):
 	if result:
 		if result.get('token_not_used'):
 			# Token not yet used
+			print 'Token not yet used:', result.get('token_not_used')
+			print 'Days left:', token_expiry_days - ((datetime.datetime.now() - result.get('token_sent')).days )
+
 			if (datetime.datetime.now() - result.get('token_sent')).days < token_expiry_days:
 				# We have an unused token, and it is not yet expired.
 				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
@@ -225,6 +228,21 @@ def network_exists():
 		response = 0
 	return json.dumps(response)
 
+@app.route('/_name_in_network_exists')
+def name_in_network_exists():
+	"""
+	Determines whether network already exists
+	"""
+	network = request.args.get('network')
+	name = request.args.get('name')
+	users = list(Users.find({'network':network, 'name':name}))
+	if users:
+		response = 1
+		print "There were already users with this name"
+	else:
+		response = 0
+		print "No users with this name"
+	return json.dumps(response)
 
 @app.route('/_create_account_join_network', methods=['GET', 'POST'])
 def create_account_join_network():
@@ -239,15 +257,20 @@ def create_account_join_network():
 
 	if object_id:
 		# Update user data with login data
-		Users.update({'_id':object_id}, {"$set": {
-														'name':name,
-														'password':generate_password_hash(password),
-														'register' : datetime.datetime.now(),
-														}}, upsert=False)
+		Users.update(
+			{'_id':object_id}, {"$set": {
+													'name':name,
+													'password_hash':generate_password_hash(password),
+													'register' : datetime.datetime.now(),
+													}
+										}, upsert=False
+					)
+
+		# Add session name as we didn't add it when they clicked on link (we didn't know name yet)
 		session['name'] = name
 		
 		# Update token to 'used'
-		Posts.update({'token':token}, {"$set": {'token_not_used':False} })
+		Tokens.update({'token':token}, {"$set": {'token_not_used':False} })
 		return json.dumps('[1]')
 		
 	else:
@@ -383,14 +406,14 @@ def add_user_via_access_token():
 
 			# Send user an access token type of link
 			access_url = base_url+str(token)
-			# send_access_token_email(
-			# 		sender=session['name'],
-			# 		sender_email=session['email'],
-			# 		network=session['network'],
-			# 		recipient=firstname,
-			# 		recipient_email=email,
-			# 		url=access_url
-			# 	)
+			send_access_token_email(
+					sender=session['name'],
+					sender_email=session['email'],
+					network=session['network'],
+					recipient=firstname,
+					recipient_email=email,
+					url=access_url
+				)
 			# All OK, return status 1
 			return json.dumps(1)
 		

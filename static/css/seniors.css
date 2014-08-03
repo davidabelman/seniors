@@ -78,6 +78,13 @@ a.disabled {
 .white-space {
 	height: 100px;
 }
+.fix-300 {
+/*Fixes 300px from top of screen*/
+	position:fixed; top:120px; right: 2%; !important; 
+}
+.quick-fade {
+	opacity: 0;
+}
 
 /*DIVS*/
 .grey-panel {
@@ -286,8 +293,10 @@ a.disabled {
 
 .navbar {min-height:25px !important}
 #logotemp {text-align:left; padding-left:10px;}
-#salt { color: white; background:black; font-size:70%;vertical-align:text-top;}
-#pepper { color: black; background:white; font-size:68%;vertical-align:text-bottom;}
+#saltandpepper {font-size: 17px; vertical-align: text-top; color: #eee;}
+#beta {font-size: 10px; vertical-align: text-top; color: #eee;}
+/*#salt { color: white; background:black; font-size:70%;vertical-align:text-top;}
+#pepper { color: black; background:white; font-size:68%;vertical-align:text-bottom;}*/
 
 .one_line_entry_box {
 	font-size: 120%;
@@ -477,7 +486,7 @@ a.disabled {
 	line-height: 90%;
 }
 
-#network-taken, #network-ok {
+#network-taken, #network-ok, #name-taken {
 	display:none;
 }
 

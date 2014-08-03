@@ -1,10 +1,102 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+{% endblock %}
+
 {% block title %}
-Add users
+{{ super() }}
+log in to group
 {% endblock %}
 
 {% block body %}
+{{ super() }}
+
+<div class='centered-page'>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div id='logotemp'>
+	  	<span id='saltandpepper'>Salt&Pepper</span><span id='beta'> beta</span>
+	  </div><!-- end navbar container -->
+	</nav><!-- end navbar -->
+
+
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				Welcome {{name}}!
+			</h1>
+			<h1 class='page2of2'>
+				Set your password
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<!-- Page 1 of 2, i.e. confirm name -->
+	<div class='container-fluid page1of2'>
+		<div class='page-main-subheading'>
+			<h2>
+				Please confirm we are using your correct name:
+			</h2>
+			
+		</h2>
+		</div>
+
+		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
+			<!--hidden fields-->
+			<input type="hidden" id="name_initial" value='{{name}}'  />
+			<input type="hidden" id="network" value='{{network}}'  />
+
+			<input type="text" name="name" id="name" value='{{name}}' class='big-input' required />
+		</div>
+		<div class='centered_50pc_width'>
+			<a href='#' id='confirm_name' class='a-button' >Click here if the name is correct!</a>
+		</div>
+		
+		<!-- Hidden unless error -->
+		<div id='name-status'>
+					<span id='name-taken' class='color-fail'><br>
+						<strong>This name is already taken by someone. Please try another.</strong>
+					</span>
+		</div>
+
+		<div class='padded-container'>
+			<p>(If not, you can click on it to change it.)</p>
+		</div>
+	</div> <!-- end page 1 of 2 fluid container -->
+
+	<div class='container-fluid page2of2'>
+		<div class='page-main-subheading'>
+			<h2>
+				Please make up your password and type it below.
+			</h2>
+			
+		</h2>
+		</div>
+
+		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
+			<input type="password" name="password" id="password" placeholder='Type password here...' class='big-input' required />
+		</div>
+		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
+			<input type="password" name="password" id="password" placeholder='Re-type it, just to confirm...' class='big-input' required />
+		</div>
+		<div class='centered_50pc_width shift-down-3'>
+			<a href='#' id='submit_all_form_data' class='a-button' >Click here to join the group!</a>
+		</div>
+		
+		<!-- Hidden unless error -->
+<!-- 		<div id='name-status'>
+					<span id='name-taken' class='color-fail'><br>
+						<strong>This name is already taken by someone. Please try another.</strong>
+					</span>
+		</div> -->
+
+		
+	</div> <!-- end page 1 of 2 fluid container -->
+ 
+
+<!-- 
 <h1>Welcome to the '{{network}}' group!</h1>
 <p>Sign up with your first name and password</p>
 <div id='error_messages'></div>
@@ -28,6 +120,14 @@ Add users
 	  <input type="submit" value="Submit">
 	  <br>
 	</form>
-</div>
-<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
+</div> -->
+
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
 {% endblock %}
+
+{% endblock %}
+
