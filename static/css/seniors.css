@@ -85,6 +85,10 @@ a.disabled {
 .quick-fade {
 	opacity: 0;
 }
+.border-light {
+	border: solid 1px #bbb;
+	padding: 15px;
+}
 
 
 /*DIVS*/
@@ -507,6 +511,19 @@ a.disabled {
 /*========================================================================*/
 /*ADD AN IMAGE*/
 /*========================================================================*/
-.webcam-content, .imgurl-content, .upload-content /*.bing-search-content */{
+.webcam-content, .imgurl-content, .upload-content, .bing-search-content {
+	display: none;
+}
+
+.img-in-img-grid {
+	height: 190px;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+.div-in-img-grid {
+	display: inline !important;
+}
+
+#bing-search-results {
 	display: none;
 }

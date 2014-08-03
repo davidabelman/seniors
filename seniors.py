@@ -7,7 +7,7 @@ from secret import SECRET_KEY
 from mailgun import send_access_token_email
 from tools.bing_search import bing_search_and_return_urls
 import mongo
-import json
+import json, urllib, urllib2
 import datetime
 import random
 

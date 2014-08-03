@@ -34,6 +34,9 @@ def bing_search_api(query='funny cats', search_type='Image', number_results='20'
     """
     Calls Bing via API using key. 5000 requests allowed per month.
     """
+    import urllib
+    import urllib2
+    import json
     # See https://datamarket.azure.com/dataset/explore/5ba839f1-12ce-4cce-bf57-a49d98d29a44
     # And http://www.guguncube.com/2771/python-using-the-bing-search-api
     # Search_type: Web, Image, News, Video
