@@ -55,8 +55,9 @@ def bing_search_api(query='funny cats', search_type='Image', number_results='20'
     response_data = response.read()
     json_result = json.loads(response_data)
     result_list = json_result['d']['results']
-    print url
-    print result_list
+    if False:
+        print url
+        print result_list
     return result_list
  
 

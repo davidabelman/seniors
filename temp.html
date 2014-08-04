@@ -1,0 +1,465 @@
+<html lang="en"><head>
+    
+
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>
+        
+
+S&amp;P - 
+abelman room
+
+      </title>
+
+      <!-- Bootstrap and my own themes -->
+      <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/static/css/seniors.css" rel="stylesheet">
+
+      
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+        <script src="http://localhost:5000/static/js/jquery-2.1.1.min.js"></script>
+        <script src="http://localhost:5000/static/js/moment.js"></script>
+      
+
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    
+
+  </head>
+  <body cz-shortcut-listen="true"><div id="StayFocusd-infobar" style="display:none;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+    
+
+
+<div class="container-fluid quick-fade quick-fade-1" id="whole-content" style="opacity: 1;">
+	<div class="row">
+		
+		<div class="col-sm-4 grey-panel quick-fade quick-fade-2" id="left-panel" style="opacity: 1;">
+			<div class="padded-container">
+				
+				
+				<div id="welcome-messages" class="can-fade quick-fade quick-fade-2" style="opacity: 1;">
+					<h1>Welcome Ben!</h1>
+				</div> <!-- end welcome-messages -->
+				
+
+				<div id="add-a-text-post" class="quick-fade quick-fade-5" style="opacity: 1;">
+					<textarea wrap="hard" name="inputBox" placeholder="Join the conversation - type your message here!" id="post_input" class="big-input"></textarea>
+					
+				</div>
+					<a href="#" class="a-button disabled" id="post_submit_button" style="opacity:0">Click when finished!</a>
+
+				
+
+				<div id="other-options" class=" quick-fade quick-fade-8" style="opacity: 1;">
+					<h2 class="can-fade">Or click to:</h2>
+					<row>
+						<div class="col-xs-6">
+							<p><a href="#" class="a-button can-fade">Add a photo</a></p>
+							<p><a href="#" class="a-button can-fade">Add a video</a></p>
+							<p><a href="#" class="a-button can-fade">Dictate</a></p>
+							
+						</div>
+						<div class="col-xs-6">
+							<p><a href="help" class="a-button can-fade">Get help</a></p>
+							<p><a href="settings" class="a-button can-fade">See settings</a></p>
+							<p><a href="logout" class="a-button can-fade" id="logout-button">Leave room</a></p>
+						</div>
+					</row>
+					<row>
+						<div class="col-xs-12">
+							
+						</div>
+					</row>
+				</div>
+
+
+			</div> <!-- end left panel container -->
+			
+		</div> <!-- end left panel -->
+		<div class="col-sm-8  quick-fade quick-fade-8" id="right-panel" style="opacity: 1;">
+			
+			<a class="navigation-arrow navigation-arrow-up">
+				<span class="glyphicon glyphicon-arrow-up" id="scrollUp"></span>
+				<p>Newer</p>
+			</a>
+			<a class="navigation-arrow navigation-arrow-down" style="display: none;">
+				<span class="glyphicon glyphicon-arrow-down" id="scrollDown"></span>
+				<p>Older</p>
+			</a>
+
+			<div> <!-- could be a padded container?-->
+				<div id="post-list-area">       <section class="post" id="53df55cfc3b5a03fe7a4d186" posted="1407145423">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">4 minutes ago</span>
+           <p class="post-body">WOWZERS</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53de4e6fc3b5a0394286958b" posted="1407077999">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David2</h2>
+           <span class="post-time">19 hours ago</span>
+           <p class="post-body">I'm another david!! Hehe.</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53de3da7c3b5a037ef0d71f9" posted="1407073703">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">20 hours ago</span>
+           <p class="post-body">4 hours ago. So I spent 4 hours walking around.
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53de0300c3b5a03721e121f7" posted="1407058688">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">a day ago</span>
+           <p class="post-body">asd paosd sad</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd64d1c3b5a032fa53f0c0" posted="1407018193">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">a day ago</span>
+           <p class="post-body">testing</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd6457c3b5a032fa53f0bf" posted="1407018071">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">a day ago</span>
+           <p class="post-body">Hell</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd6450c3b5a032fa53f0be" posted="1407018064">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">a day ago</span>
+           <p class="post-body">Hi guys!!!!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd3431c3b5a02ff43cad34" posted="1407005745">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Annie</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hello David, you are the best!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd234bc3b5a02ff43cad33" posted="1407001419">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">as;do aspd </p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd232ec3b5a02ff43cad32" posted="1407001390">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hello this is a test</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd22c5c3b5a02ff43cad31" posted="1407001285">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">It did sign me in luckily.</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd0ed3c3b5a02df058c1d8" posted="1406996179">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Annie</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">WopopWdpoaj±!
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dd0884c3b5a02dd25cd2a3" posted="1406994564">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">This is the text I am writing
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcfa28c3b5a02d974791ac" posted="1406990888">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Welcome everyone. Great to see people are using the app!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcf7aec3b5a02c2cd42e31" posted="1406990254">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Granada Password</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">I am happy to be here
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcf379c3b5a02c2cd42e2c" posted="1406989177">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">frances</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">This is actually quite easy to use</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcf334c3b5a02c2cd42e2b" posted="1406989108">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">I am feeling well thank you too. How are you Walter...?</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcf2b3c3b5a02c2cd42e2a" posted="1406988979">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">walter</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">I am feeling very good thanks!
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dce81dc3b5a029d57e4d81" posted="1406986269">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Here is my message to you!
+</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dce514c3b5a029d57e4d80" posted="1406985492">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Here is my message.</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dce4f1c3b5a029d57e4d7f" posted="1406985457">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Ben</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hi David, how's it going?</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc947c3b5a029d57e4d6f" posted="1406978375">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hello!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc92cc3b5a029d57e4d6e" posted="1406978348">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">I am going to type in something here.</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc908c3b5a029d57e4d6d" posted="1406978312">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Wowzers.</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc901c3b5a029d57e4d6c" posted="1406978305">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hello! </p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc891c3b5a029d57e4d6b" posted="1406978193">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">Hi there</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc839c3b5a029d57e4d6a" posted="1406978105">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">I am feeling great!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc825c3b5a029d57e4d69" posted="1406978085">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body"></p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc7d3c3b5a029d57e4d68" posted="1406978003">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">This is it!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post" id="53dcc7d2c3b5a029d57e4d67" posted="1406978002">
+         <div class="post-img">
+           <img src="/static/img/icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">David</h2>
+           <span class="post-time">2 days ago</span>
+           <p class="post-body">This is it!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+</div>
+			</div> <!-- end div holding post list -->
+		</div> <!-- end right panel -->
+	</div> <!-- end row -->
+</div> <!-- end container -->
+	
+
+	
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="http://localhost:5000/static/js/bootstrap.min.js"></script>
+    
+	<script src="http://localhost:5000/static/js/post.js"></script>
+	<script src="http://localhost:5000/static/js/quick_fade.js"></script>
+
+
+
+
+    
+	
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="http://localhost:5000/static/js/bootstrap.min.js"></script>
+    
+	<script src="http://localhost:5000/static/js/post.js"></script>
+	<script src="http://localhost:5000/static/js/quick_fade.js"></script>
+
+  
+<div id="window-resizer-tooltip"><a href="#" title="Edit settings" style="background-image: url(chrome-extension://kkelicaakdanhinjdeammmilcgefonfh/images/icon_19.png);"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth"></span> x <span class="tooltipHeight" id="winHeight"></span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth"></span> x <span class="tooltipHeight" id="vpHeight"></span></div></body></html>

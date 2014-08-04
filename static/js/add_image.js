@@ -108,14 +108,48 @@ function draw_images() {
 	$.each( urls, function(index, url) {
 		console.log(url)
 		html += "<div class='div-in-img-grid'>"
-		html += "<img src='"+url+"' class='img-in-img-grid'>"
+		html += "<a><img src='"+url+"' class='img-in-img-grid'></a>"
 		html += "</div>"
 	}) // end each
 	html += "</row><div class='filler'></div>" // Adding on a filler element to bottom
 	$('#bing-img-grid').html(html)
 	setTimeout (function() {
 		$('#bing-page2of2').fadeIn()
+		click_image_to_post()
 		}, 500)
+}
+
+function click_image_to_post() {
+$('.img-in-img-grid').click( function(evt) {
+		evt.preventDefault();
+		evt.stopImmediatePropagation();
+		url = $(this).attr("src")
+		img_link = "<p class='post-body'><img src="+url+"></p>"
+		create_post_from_html(img_link)
+	})
+}
+
+// TODO currently duplicated in post.js and add_image.js
+function create_post_from_html(html) {
+	console.log('about to submit post')
+	$.ajax({
+
+                url:'/_submit_post_entry',
+                data: JSON.stringify({
+                  "content":html
+                }, null, '\t'), // end data
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                success: function(result) { 
+                  console.log ('This is the result and type of result:',result,typeof(result))
+                  get_posts(full_refresh=true, 10,0)
+                  remove_text_from_input();
+                }, // end success
+                error: function() {
+                  alert('Server error')
+                }
+
+              }) // end ajax
 }
 
 prepare_LHS_button_fading_behaviour()

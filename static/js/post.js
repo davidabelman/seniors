@@ -21,16 +21,16 @@ function all_posts_to_dom(posts) {
   // This replaces all posts currently shown in the DOM with a refreshed set
   html = ""
   $.each(posts, function(index, post) {
-    html += "<section class='post' id="+post._id+" posted="+moment(post.posted).unix()+">"
-    html += "<div class='post-img'>"
-    html += "<img src='/static/img/icon.png' width='70', height='70'>"
-    html += "</div> <!-- end img part -->"
-    html += "<div class='post-alltext'>"
-    html += "<h2 class='post-name'>"+post.name+"</h2>"
-    html += "<span class='post-time'>"+moment(post.posted).fromNow()+"</span>"
-    html += "<p class='post-body'>"+post.body+"</p>"
-    html += "</div> <!-- end text part -->"    
-    html += "</section> <!-- end post --><hr>"
+    html += "       <section class='post' id="+post._id+" posted="+moment(post.posted).unix()+">\n"
+    html += "         <div class='post-img'>\n"
+    html += "           <img src='/static/img/icon.png' width='70', height='70'>\n"
+    html += "         </div> <!-- end img part -->\n"
+    html += "         <div class='post-alltext'>\n"
+    html += "           <h2 class='post-name'>"+post.name+"</h2>\n"
+    html += "           <span class='post-time'>"+moment(post.posted).fromNow()+"</span>\n"
+    html += "           <p class='post-body'>"+post.body+"</p>\n"
+    html += "         </div> <!-- end text part -->\n"    
+    html += "       </section> <!-- end post --><hr>\n\n"
   }) // end each
     $('#post-list-area').html(html)
 }
@@ -64,16 +64,26 @@ function add_new_posts_only(posts) {
 
 
 function submit_posts_button_ready() {
+  // Bind ajax to post user's mssage (with clean HTML) to server
   $('#post_submit_button').click( function(evt) {
       evt.preventDefault();
       evt.stopImmediatePropagation();
       console.log('Clicked submit')
-      var message = $('#post_input').val();
+      var html = escapeHtml($('#post_input').val());
       hide_submit_button();
-      $.ajax({
+      create_post_from_html(html);
+  }); // end submit
+}
+
+// TODO currently duplicated in post.js and add_image.js
+function create_post_from_html(html) {
+  // Adds some HTML (or text etc) to the feed
+  console.log('about to submit post')
+  $.ajax({
+
                 url:'/_submit_post_entry',
                 data: JSON.stringify({
-                  "message":message
+                  "content":html
                 }, null, '\t'), // end data
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
@@ -87,19 +97,30 @@ function submit_posts_button_ready() {
                 }
 
               }) // end ajax
-  }); // end submit
+}
+
+function escapeHtml(text) {
+  // This makes HTML submitted by user safer, is applied to text input by user
+  // Means they can't encode links, iframes, etc.
+  return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 }
 
 function logout_button_ready() {
   $('#logout-button').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
-    $('#whole-content').fadeOut(
-      function() {
+    $('#whole-content').animate({
+      opacity: 0}, 350, function() {
+        // When complete
         window.location.href = "logout";
-      }, 50)
-  })
-}
+      })
+  }) // end click event
+} // end function
 
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts

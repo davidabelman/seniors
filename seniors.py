@@ -18,10 +18,10 @@ manager = Manager(app)
 moment = Moment(app)
 
 #MONGO
-# db = mongo.start_up_mongo()
-# Users = db.users
-# Posts = db.posts
-# Tokens = db.tokens
+db = mongo.start_up_mongo()
+Users = db.users
+Posts = db.posts
+Tokens = db.tokens
 
 # JSON ENCODING
 from bson.objectid import ObjectId
@@ -38,13 +38,17 @@ class Encoder(json.JSONEncoder):
 token_expiry_days = 30
 base_url = "http://localhost:5000/invite/"
 
+@app.route('/temp')
+def temp():
+	return render_template('temp.html')
 
 @app.route('/')
 def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	if session.get('name') and session.get('network'):
+	#if session.get('name') and session.get('network'):
+	if True:
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -188,12 +192,12 @@ def submit_feed_entry():
 	Given a feed entry, this will check user is signed in, then add to database and return success or fail statement
 	On the client side the entry is added to the top of the page
 	"""
-	message = request.json['message']
+	content = request.json['content']
 	if session.get('name') and session.get('network'):
 		to_add ={ 	
 					'name':session.get('name'),
 					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'body' : message,
+					'body' : content,
 					'network' : session.get('network')
 				}
 		Posts.insert(to_add)
@@ -202,7 +206,7 @@ def submit_feed_entry():
 		response = 0
 	
 	if app.debug:
-		print "Information received:", message
+		print "Information received:", content
 		print "Response:", response
 	
 	return json.dumps(int(response))
@@ -439,8 +443,8 @@ def get_bing_image_urls():
 	"""
 	Given a query string and extra parameters (e.g. cartoon, funny), requests results from Bing and returns top X URLs
 	"""
-	#user = Users.find_one({'network':session.get('network')})
-	if True:
+	user = Users.find_one({'network':session.get('network')})
+	if user:
 
 		query = request.json['query']
 		funny = int(request.json['funny'])
