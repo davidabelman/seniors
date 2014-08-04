@@ -18,10 +18,10 @@ manager = Manager(app)
 moment = Moment(app)
 
 #MONGO
-db = mongo.start_up_mongo()
-Users = db.users
-Posts = db.posts
-Tokens = db.tokens
+# db = mongo.start_up_mongo()
+# Users = db.users
+# Posts = db.posts
+# Tokens = db.tokens
 
 # JSON ENCODING
 from bson.objectid import ObjectId
@@ -439,8 +439,8 @@ def get_bing_image_urls():
 	"""
 	Given a query string and extra parameters (e.g. cartoon, funny), requests results from Bing and returns top X URLs
 	"""
-	user = Users.find_one({'network':session.get('network')})
-	if user:
+	#user = Users.find_one({'network':session.get('network')})
+	if True:
 
 		query = request.json['query']
 		funny = int(request.json['funny'])

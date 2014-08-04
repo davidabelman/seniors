@@ -20,9 +20,6 @@ a.disabled {
 .padded-container {
 	padding: 4% !important;
 }
-.padded-container-1 {
-	padding: 1% !important;
-}
 .filler {
 	height: 40px;
 	display: block;
@@ -47,9 +44,6 @@ a.disabled {
 .shift-down-3 {
 	margin-top: 30px;
 }
-.shift-down-4 {
-	margin-top: 40px;
-}
 .shift-left {
 	margin-right: 10px !important;
 }
@@ -73,6 +67,9 @@ a.disabled {
 }
 .width-30 {
 	width: 30%;
+}
+.padded-container-1 {
+	padding: 1% !important;
 }
 .width-80 {
 	width: 80%;
@@ -514,10 +511,7 @@ a.disabled {
 /*========================================================================*/
 /*ADD AN IMAGE*/
 /*========================================================================*/
-.rhs-to-disappear {
-	display: none;
-}
-#bing-page2of2 {
+.webcam-content, .upload-content, .bing-search-content {
 	display: none;
 }
 
@@ -525,14 +519,11 @@ a.disabled {
 	height: 190px;
 	margin-top: 10px;
 	margin-right: 5px;
-	padding: 6px;
-}
-.img-in-img-grid:hover {
-	border: solid 6px #e60;
-	padding: 0px;
 }
 .div-in-img-grid {
 	display: inline !important;
 }
 
-
+#bing-search-results {
+	display: none;
+}

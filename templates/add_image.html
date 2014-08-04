@@ -27,78 +27,79 @@ log in to group
 		<row>
 			
 			<div class='col-md-5'> <!-- left panel -->
-				<div class='page-main-subheading shift-down-3 padded-container-1'>
-					<h2>How would you like to add your photo?</h2>
+				<div class='page-main-subheading shift-down-2 padded-container-1'>
+					<h2>How would you like to add your picture?</h2>
 				</div> 
 
-				<div class='centered_80pc_width  shift-down-3'>
-					<a href='#' id='bing-search-button' class='a-button' >Type a description</a>
+				<div class='centered_80pc_width  shift-down-2'>
+					<a href='#' id='bing-button' class='a-button' >Type a description</a>
 				</div>
 
-				<div class='centered_80pc_width  shift-down-3'>
+				<div class='centered_80pc_width  shift-down-2'>
 					<a href='#' id='webcam-button' class='a-button shift-down-3' >Take a photo</a>
 				</div>
 
-				<div class='centered_80pc_width shift-down-3'>
-					<a href='#' id='upload-button' class='a-button shift-down-3' >Use a photo on my computer</a>
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='upload-button' class='a-button shift-down-3' >Use a picture on my computer</a>
 				</div>
 
-				<div class='centered_80pc_width shift-down-3'>
-					<a href='#' id='imgurl-button' class='a-button shift-down-3' >Use a photo on the internet</a>
-				</div>
+				<br><br>
 
 				<div class='centered_80pc_width shift-down-3'>
-					<a href='#' id='cancel-button' class='a-button shift-down-3' >I don't want to add a photo</a>
+					<a href='#' id='cancel-button' class='a-button shift-down-3' >I don't want to add a picture</a>
 				</div>
 
 			</div> <!-- end left panel -->
 
 			<div class='col-md-7'> <!-- right panel -->
-				<div class='page-main-subheading shift-down-3 padded-container-1'>
-					<h2 id='bing-search-hint' class=' bing-search-content'>Type one or more words into the box describing your desired photo:</h2>
-					<h2 id='webcam-hint' class='webcam-content'>Click 'take photo' to take a photo!</h2><p class='webcam-content'>Note your computer may ask you for permission to use your camera. You will need to press 'OK', or 'Accept' or 'Allow'</p>
-					<h2 id='upload-hint' class='upload-content'>Click 'upload a photo' to upload a photo from your computer</h2>
-					<h2 id='url-hint' class='imgurl-content'>Copy and paste the web address to the image you would like to add. The link must end in 'jpg', 'jpeg', 'png' or 'gif'</h2>
-				</div> 
 
-				<div id='bing-search-body' class='bing-search-content'>
-					<!-- Bing to go here -->
-					<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-						<input type="text" name="img-input" id='img-input' placeholder='Type here...' class='big-input'>
-					</div>
-					<div class='centered_50pc_width shift-down-3'>
-						<a href='#' id='bing-search-submit' class='a-button' >Get pictures!</a>
-					</div>
-				</div> <!-- end bing search body -->
-
-				<div id='bing-search-results' class='bing-content'>
-					<div class='padded-container'>
-						<h2 class='bing-search-content bing-search-results'>
-							Here we go! Click on an image to send it in your message.
-						</h2>
-					</div>
-						<div id='img-grid' class='bing-search-results'>
-							<!-- Images will go here -->
+				<!-- bing pages 1 and 2 -->
+				<div id='bing-rhs' class='rhs-to-disappear'>
+					
+					<div id='bing-page1of2'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
+							<h2>Type one or more words into the box describing your desired photo:</h2>
+						</div> 
+							
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="text" name="img-input" id='img-input' placeholder='Type here...' class='big-input'>
 						</div>
+						
+						<div class='centered_50pc_width shift-down-3'>
+							<a href='#' id='bing-search-submit' class='a-button' >Get pictures!</a>
+						</div>
+					</div> <!-- end bing page 1 of 2 -->
+						
+					<div id='bing-page2of2' class='shift-down-3'>
+						<div class='padded-container'>
+							<h2>
+								Here we go! Click on an image to send it to the group.
+							</h2>
+						</div>
+						<div id='bing-img-grid'><!-- Images will go here --></div>
+					</div> <!-- end bing page 2 of 2 -->
+
 				</div>
 
-
-
-
-				<div id='webcam-body' class='webcam-content'>
-					<!-- webcam to go here -->
+				<!-- webcam page -->
+				<div id='webcam-rhs' class='rhs-to-disappear'>
+					<div class='page-main-subheading shift-down-2 padded-container-1'>
+						<h2>Click 'take photo' to take a photo!</h2>
+						<p>Note your computer may ask you for permission to use your camera. You will need to press 'OK', or 'Accept' or 'Allow'</p>
+					</div> 
 				</div>
-				<div id='upload-body' class='upload-content'>
-					<!-- upload to go here -->
-				</div>
-				<div id='imgurl-body' class='imgurl-content'>
-					<!-- url to go here -->
+
+				<!-- upload page -->
+				<div id='upload-rhs' class='rhs-to-disappear'>
+					<div class='page-main-subheading shift-down-2 padded-container-1'>
+						<h2>Click 'upload a photo' to upload a photo from your computer</h2>
+					</div> 
 				</div>
 
 			</div>
 
 
-		</row>
+		</row> <!-- end LH RH page split -->
 
 
 	</div> <!-- end container -->
