@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+settings
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page initially-hidden'>
+	
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1>
+				What would you like to change?
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<!-- Page 1 of 2, i.e. enter network -->
+	<div class='container-fluid'>
+
+		<row>
+			
+			<div class='col-md-5'> <!-- left panel -->
+				<!-- <div class='page-main-subheading shift-down-2 padded-container-1'>
+					<h2>What would you like to change?</h2>
+				</div>  -->
+
+				<!-- condition -->
+				{% if admin %}
+				<div class='centered_80pc_width  shift-down-3'>
+					<a href='#' id='add-users-button' class='a-button shift-down-3' >Add a user <small>(admin only)</small></a>
+				</div>
+				
+				<div class='centered_80pc_width  shift-down-2'>
+					<a href='#' id='remove-users-button' class='a-button shift-down-3' >Remove a user <small>(admin only)</small></a>
+				</div>
+				<hr>
+				<!-- end condition -->
+				{% endif %}
+
+				<div class='centered_80pc_width shift-down-3'>
+					<a href='#' id='change-name-button' class='a-button shift-down-3' >My name</a>
+				</div>
+
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='change-email-button' class='a-button shift-down-3' >My email address</a>
+				</div>
+
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='change-password-button' class='a-button shift-down-3' >My password</a>
+				</div>
+
+				<div class='centered_80pc_width  shift-down-2'>
+					<a href='#' id='change-picture-button' class='a-button' >My picture</a>
+				</div>
+
+				<br><br>
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='change-picture-button' class='a-button green-button' >Go back to group page</a>
+				</div>
+
+
+			</div> <!-- end left panel -->
+
+			<div class='col-md-7'> <!-- right panel -->
+
+				<!-- change-name pages 1 and 2 -->
+				<div id='change-name-rhs' class='rhs-to-disappear'>
+					
+					<div id='change-name-page1of2'>
+						<div class='page-main-subsubheading lighter shift-up-2'>
+							<h2>You are currently registered as <strong>{{name}}</strong>. If you would like to change this, please type a new name in the box below</h2>
+						</div> 
+							
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="text" name="name-input" id='name-input' placeholder='Type new name here...' class='big-input'>
+						</div>
+						
+						<div class='centered_80pc_width shift-down-3'>
+							<a href='#' id='bing-search-submit' class='a-button' >Click here once new name is correct</a>
+						</div>
+					</div> <!-- end name page 1 of 2 -->
+						
+					<div id='change-name-page2of2' class='shift-down-3'>
+						<div class='page-main-subsubheading lighter'>
+							<h2>Your name has been changed succesfully!</h2>
+						</div> 
+					</div> <!-- end name page 2 of 2 -->
+
+				</div>
+
+				<!-- change email page -->
+				<div id='change-email-rhs' class='rhs-to-disappear'>
+
+					<div id='change-email-page1of2'>
+						<div class='page-main-subsubheading lighter shift-up-2'>
+							{% if email %}
+							<h2>Your email is currently set as <strong>{{email}}</strong>. Please enter a new email (and your password) to change this</h2>
+							{% else %}
+							<h2>If you would like to add an email address, please enter one below, followed by your password</h2>
+							{% endif %}
+						</div> 
+							
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="text" name="email-input" id='email-input' placeholder='Type email here...' class='big-input'>
+						</div>
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="password" name="email-password-confirm" id='email-password-confirm' placeholder='Type password here...' class='big-input'>
+						</div>
+						
+						<div class='centered_80pc_width shift-down-3'>
+							<a href='#' id='bing-search-submit' class='a-button' >Click here once email &amp; password entered</a>
+						</div>
+					</div> <!-- end email page 1 of 2 -->
+						
+					<div id='change-email-page2of2' class='shift-down-3'>
+						<div class='page-main-subsubheading lighter'>
+							<h2>Your email address has been changed succesfully!</h2>
+						</div> 
+					</div> <!-- end email page 2 of 2 -->
+						
+				</div>
+
+				<!-- change password page -->
+				<div id='change-password-rhs' class='rhs-to-disappear'>
+					<div id='change-email-page1of2'>
+						<div class='page-main-subsubheading lighter shift-up-2'>
+							<h2>Enter details below to change your password</h2>
+						</div> 
+							
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="password" name="old-password" id='old-password' placeholder='Old password...' class='big-input'>
+						</div>
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="password" name="new-password" id='new-password' placeholder='New password...' class='big-input'>
+						</div>
+						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
+							<input type="password" name="new-password-confirm" id='new-password-confirm' placeholder='New password again...' class='big-input'>
+						</div>
+						
+						<div class='centered_80pc_width shift-down-3'>
+							<a href='#' id='bing-search-submit' class='a-button' >Click here to confirm the change</a>
+						</div>
+					</div> <!-- end email page 1 of 2 -->
+						
+					<div id='change-email-page2of2' class='shift-down-3'>
+						<div class='page-main-subsubheading lighter'>
+							<h2>Your password has been changed succesfully!</h2>
+						</div> 
+					</div> <!-- end email page 2 of 2 -->
+						
+				</div>
+
+				<!-- change picture page -->
+				<div id='change-picture-rhs' class='rhs-to-disappear'>
+					<div class='page-main-subsubheading lighter shift-up-2'>
+							<h2>Click a picture below to use it as your 'icon' on the site</h2>
+							
+							{% for animal in animals %}
+							<div class='inline'>
+								<img src="/static/img/{{animal}}-icon.png" width='80px' class="icon-pick inline" animal='{{animal}}'>
+							</div>
+							{% endfor %}
+					</div> 
+				</div>
+
+			</div> <!-- end right panel -->
+
+
+		</row> <!-- end LH RH page split -->
+
+
+	</div> <!-- end container -->
+</div> <!-- end centred page -->
+
+
+				
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
+	
+{% endblock %}
+
+{% endblock %}
+

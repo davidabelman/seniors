@@ -12,7 +12,7 @@ def convert_image_and_upload(img_string):
 	"""
 	import base64, string, random
 	filename = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
-	img = base64.b64decode(img_string)
-	put = client.put_file('/%s.png'%filename, img) 
-	share = client.share('/%s.png'%filename, short_url=False)
+	img = base64.decodestring(img_string)
+	put = client.put_file('/%s.jpeg'%filename, img) 
+	share = client.share('/%s.jpeg'%filename, short_url=False)
 	return share['url'].replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')

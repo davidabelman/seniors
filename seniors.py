@@ -23,7 +23,6 @@ moment = Moment(app)
 db = mongo.start_up_mongo()
 Users = db.users
 Posts = db.posts
-Tokens = db.tokens
 
 # JSON ENCODING
 from bson.objectid import ObjectId
@@ -57,7 +56,7 @@ def home():
 @app.route('/enter', methods=['GET', 'POST'])
 def enter():
 	"""
-	This is where you enter group name, then choose your group member name, then type your password
+	This is where you enter group name (to login), then choose your group member name, then type your password
 	"""
 	return render_template('login.html', network='')
 
@@ -79,7 +78,7 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	"""
-	This is where one person creates the group, he/she is then the admin(?)
+	This is where one person creates the group, he/she is then the admin
 	"""
 	return render_template('signup.html')
 
@@ -102,23 +101,25 @@ def accept_invite(token):
 	Screen on which a user can join a group (only would reach this through secret access token)
 	"""
 	token = long(token)
-	result = Tokens.find_one({'token':token})
-	# return str(result)
-	if result:
-		if result.get('token_not_used'):
+	user = Users.find_one({'token':token})
+	
+	if user:
+		if user.get('token_not_used'):
 			# Token not yet used
-			print 'Token not yet used:', result.get('token_not_used')
-			print 'Days left:', token_expiry_days - ((datetime.datetime.now() - result.get('token_sent')).days )
+			print 'Token not yet used:', user.get('token_not_used')
+			print 'Days left:', token_expiry_days - ((datetime.datetime.now() - user.get('token_sent')).days )
 
-			if (datetime.datetime.now() - result.get('token_sent')).days < token_expiry_days:
+			if (datetime.datetime.now() - user.get('token_sent')).days < token_expiry_days:
 				# We have an unused token, and it is not yet expired.
 				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
 				session.clear()
-				session['network']=result.get('network')
-				session['email']=result.get('recipient_email')
+				session['network']=user.get('network')
+				session['name']=user.get('name')
+				session['email']=user.get('email')
 				session['token']=token
+				session['picture']=user.get('picture')
 				return render_template('valid_token.html',
-					name=result.get('recipient_name'), network=session['network'])
+					name=session['name'], network=session['network'])
 			else:
 				# We have a token, but it has expired
 				return render_template('expired_token.html')
@@ -136,6 +137,17 @@ def help():
 	This is a static help page with simple instructions
 	"""
 	return render_template('help.html')
+
+@app.route('/settings')
+def settings():
+	"""
+	For user to change settings (extra options for admin)
+	"""
+	#admin = session['role']
+	admin = 0
+	name = session['name']
+	email = session['email']	
+	return render_template('settings.html', admin = admin, name=name, email=email, animals=animals)
 
 @app.route('/add_image')
 def add_image():
@@ -284,7 +296,7 @@ def create_account_join_network():
 		session['name'] = name
 		
 		# Update token to 'used'
-		Tokens.update({'token':token}, {"$set": {'token_not_used':False} })
+		Users.update({'token':token}, {"$set": {'token_not_used':False} })
 		return json.dumps('[1]')
 		
 	else:
@@ -354,6 +366,7 @@ def add_user_on_behalf():
 	password = request.json['password']
 	network = session.get('network')
 	admin_name = session.get('name')
+	admin_email = session.get('email')
 	admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
 
 	# Check someone is logged in and is an admin for that group
@@ -365,6 +378,7 @@ def add_user_on_behalf():
 			to_add = { 	
 						'name':name,
 						'email':"",
+						'admin_email': admin_email,
 						'password_hash': generate_password_hash(password),
 						'register' : datetime.datetime.now(),
 						'picture' : random.choice(animals),
@@ -405,19 +419,9 @@ def add_user_via_access_token():
 		# Check that username does not exist already within this network
 		existing = Users.find_one({'network':network, 'name':firstname})
 		if not existing:
-			# Generate access token and add to token dictionary
+			# Generate access token and add user to database
 			token = random.getrandbits(32)
-			to_add = {
-						'token' : token,
-						'recipient_name' : firstname,
-						'recipient_email' : email,
-						'token_sent' : datetime.datetime.now(),
-						'network' : network,
-						'token_not_used':True
-					}
-			Tokens.insert(to_add)
 
-			# Create user account and add to DB
 			to_add = { 	
 							'name':firstname,
 							'email':email,
@@ -427,7 +431,9 @@ def add_user_via_access_token():
 							'online' : False, #TODO
 							'network' : network,
 							'role' : admin, # i.e. admin
-							'token' : token
+							'token' : token,
+							'token_not_used' : True,
+							'token_sent' : datetime.datetime.now()
 						}	
 			Users.insert(to_add)
 
@@ -487,10 +493,29 @@ def upload_img_to_dropbox():
 	"""
 	base = request.json['base']
 	print base
-	base_clean = base.replace('data:image/png;base64,','')
+	base_clean = base.replace('data:image/jpeg;base64,','')
 	print base_clean
 	url = dropbox_upload.convert_image_and_upload(base_clean)
 	return json.dumps(url)
+
+
+@app.route('/_change_profile_picture', methods=['GET', 'POST'])
+def change_profile_picture():
+	"""
+	Post request to change profile picture
+	"""
+	picture = request.json['animal']
+	name = session.get('name')
+	network = session.get('network')
+	user = Users.find_one({'network':network, 'name':name})
+	if user:
+		Users.update({'network':network, 'name':name}, {"$set": {'picture':picture} })
+		session['picture']=picture
+		return json.dumps(1)
+	else:
+		message = "Authentication error: you are not logged in to your group."
+		return json.dumps(message)
+	
 
 
 ###################### ERRORS ######################

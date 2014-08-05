@@ -76,7 +76,7 @@ function activate_webcam_script() {
 			
 			// Convert to BASE 64 and then call function to send to server
 			var image = new Image();
-			image.src = canvas.toDataURL("image/png");
+			image.src = canvas.toDataURL("image/jpeg");
 			save_image_to_cloud(image.src)
 
 		})

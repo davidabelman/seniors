@@ -161,6 +161,8 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
+
+// TODO duplicated in settings.js
 function fade_page_in(fade_in_out) {
 	if (fade_in_out == 'in') {
 		$('.initially-hidden').fadeTo(500, 1)

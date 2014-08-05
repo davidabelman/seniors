@@ -114,6 +114,9 @@ a.disabled {
 .initially-hidden {
 	display: none;
 }
+.lighter h1, .lighter h2, .lighter h3 {
+	font-weight: 400 !important;
+}
 
 /*DIVS*/
 .grey-panel {
@@ -569,3 +572,16 @@ a.disabled {
 	display: none;
 }
 
+/*========================================================================*/
+/*SETTINGS*/
+/*========================================================================*/
+.icon-pick {
+	border: solid 7px #fff;
+	padding: 3px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+.icon-pick:hover {
+	border: solid 2px #e60;
+	
+}

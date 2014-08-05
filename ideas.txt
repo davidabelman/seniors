@@ -45,7 +45,9 @@ main page
 
 ** check session variables for weird errors
 
-*** fix firefox webcam message thing
+** Add some webcam hint/message to help switch on
+
+*** create error pages
 
 * help
 * dictate
