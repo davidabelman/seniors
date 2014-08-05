@@ -7,15 +7,18 @@ function prepare_LHS_button_fading_behaviour () {
 			// Fade other buttons on click, and show relevant content on RHS
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
-
+		    
 		    // Fade all but current button
 		    $('#change-name-button').css('opacity',1)
 			$('#change-email-button').css('opacity',0.6)
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',0.6)
 
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
+			// Fade all RHS content and make sure page 1 of 2 is showing
+			$('.rhs-to-disappear').fadeOut(50, function() {
+				$('.page2of2').hide()
+		    	$('.page1of2').fadeIn(300)
+			})
 
 			// Show relevant RHS content
 			setTimeout ( function() {
@@ -34,8 +37,11 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',0.6)
 
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
+			// Fade all RHS content and make sure page 1 of 2 is showing
+			$('.rhs-to-disappear').fadeOut(50, function() {
+				$('.page2of2').hide()
+		    	$('.page1of2').fadeIn(300)
+			})
 
 			// Show relevant RHS content
 			setTimeout ( function() {
@@ -54,8 +60,11 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-password-button').css('opacity',1)
 			$('#change-picture-button').css('opacity',0.6)
 
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
+			// Fade all RHS content and make sure page 1 of 2 is showing
+			$('.rhs-to-disappear').fadeOut(50, function() {
+				$('.page2of2').hide()
+		    	$('.page1of2').fadeIn(300)
+			})
 
 			// Show relevant RHS content
 			setTimeout ( function() {
@@ -74,19 +83,30 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',1)
 
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
+			// Fade all RHS content and make sure page 1 of 2 is showing
+			$('.rhs-to-disappear').fadeOut(50, function() {
+				$('.page2of2').hide()
+		    	$('.page1of2').fadeIn(300)
+			})
 
 			// Show relevant RHS content
 			setTimeout ( function() {
 				$('#change-picture-rhs').fadeIn(300)
 			} , 51 ) 
 		});
+
+		$('#back-to-group-button').click( function(evt) {
+			// Reload main page
+			evt.preventDefault()
+			evt.stopImmediatePropagation()
+			fade_page_in('out')
+			setTimeout( function() {window.location.href = "/"}, 500)
+		})
 } // end fading behaviour for LHS buttons
+
 
 $('.icon-pick').click( function(evt) {
 	// Update database to use this icon as user's icon
-	// Then return to main screen
 	evt.preventDefault()
 	evt.stopImmediatePropagation()
 	animal = $(this).attr('animal');
@@ -98,8 +118,128 @@ $('.icon-pick').click( function(evt) {
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(result) { 
-                  fade_page_in('out')
-				  setTimeout( function() {window.location.href = "/"}, 500)
+                  result = JSON.parse(result);
+                  if (result==1) {
+                  	$('.response-message').text('Your picture has been changed succesfully!')
+                  	$('.page1of2').fadeOut( function() {
+                  		$('.page2of2').fadeTo(300,1)
+                  	})
+                  }
+	                else {
+	                	$('.response-message').text(result)
+	                	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                	})	   
+	                } // end else
+                }, // end success
+                error: function() {
+                  alert('Server error')
+                }
+              }) // end ajax
+})
+
+$('#change-name-submit').click( function(evt) {
+	// Update user's name (check it doesn't exist already)
+	evt.preventDefault()
+	evt.stopImmediatePropagation()
+	new_name = $('#name-input').val();
+	$.ajax({
+                url:'/_change_username',
+                data: JSON.stringify({
+                  "new_name":new_name
+                }, null, '\t'), // end data
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                success: function(result) { 
+                	result = JSON.parse(result);
+                	if (result==1) {
+                		alert('response received 1')
+                		$('.response-message').text('Your name has been changed succesfully! Note that you cannot now make another change to your name on this site.')
+                		// Change name on HTML page already rendered
+	                  	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                  		$('.name-from-server').text(new_name)
+	                 	 })
+	                  }
+	                else {
+	                	$('.response-message').text(result)
+	                	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                	})
+	                } // end else               
+                }, // end success
+                error: function() {
+                  alert('Server error')
+                }
+              }) // end ajax
+})
+
+$('#change-email-submit').click( function(evt) {
+	// Update user's email (check password too)
+	evt.preventDefault()
+	evt.stopImmediatePropagation()
+	new_email = $('#email-input').val();
+	password = $('#email-password-confirm').val()
+	$.ajax({
+                url:'/_change_email',
+                data: JSON.stringify({
+                  "new_email":new_email,
+                  'password':password
+                }, null, '\t'), // end data
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                success: function(result) { 
+                	result = JSON.parse(result);
+                	if (result==1) {
+                		$('.response-message').text('Your email address has been changed succesfully!')
+                		// Change name on HTML page already rendered
+	                  	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                  		$('.email-from-server').text(new_email)
+	                 	 })
+	                  }
+	                else {
+	                	$('.response-message').text(result)
+	                	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                 		})
+	               		} // end else          
+                }, // end success
+                error: function() {
+                  alert('Server error')
+                }
+              }) // end ajax
+})
+
+$('#change-password-submit').click( function(evt) {
+	// Update user's email (check password too)
+	evt.preventDefault()
+	evt.stopImmediatePropagation()
+	old_password = $('#old-password').val();
+	new_password = $('#new-password').val();
+	$.ajax({
+                url:'/_change_password',
+                data: JSON.stringify({
+                  "old_password":old_password,
+                  'new_password':new_password
+                }, null, '\t'), // end data
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                success: function(result) { 
+                	result = JSON.parse(result);
+                	if (result==1) {
+                		$('.response-message').text('Your password has been changed succesfully!')
+                		// Change name on HTML page already rendered
+	                  	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                 	 })
+	                  }
+	                else {
+	                	$('.response-message').text(result)
+	                	$('.page1of2').fadeOut( function() {
+	                  		$('.page2of2').fadeTo(300,1)
+	                	})
+	                } // end else	               
                 }, // end success
                 error: function() {
                   alert('Server error')

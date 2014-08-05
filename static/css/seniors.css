@@ -305,6 +305,13 @@ a.disabled {
     filter: alpha(opacity=100); /* For IE8 and earlier */
 } 
 
+.orange-color {
+	color: #e60;
+}
+.red-color {
+	color: red;
+}
+
 
 /*========================================================================*/
 /*LOGIN PAGE*/
@@ -378,7 +385,6 @@ a.disabled {
 #network_does_not_exist_message {
 	display: none;
 }
-
 
 .page2of2 {
 	display:none;

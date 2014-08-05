@@ -65,7 +65,7 @@ settings
 
 				<br><br>
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-picture-button' class='a-button green-button' >Go back to group page</a>
+					<a href='#' id='back-to-group-button' class='a-button green-button' >Go back to group page</a>
 				</div>
 
 
@@ -76,9 +76,9 @@ settings
 				<!-- change-name pages 1 and 2 -->
 				<div id='change-name-rhs' class='rhs-to-disappear'>
 					
-					<div id='change-name-page1of2'>
+					<div id='change-name-page1of2' class='page1of2'>
 						<div class='page-main-subsubheading lighter shift-up-2'>
-							<h2>You are currently registered as <strong>{{name}}</strong>. If you would like to change this, please type a new name in the box below</h2>
+							<h2>You are currently registered as <strong class='name-from-server'>{{name}}</strong>. If you would like to change this, please type a new name in the box below.</h2><h3 class='shift-up'><strong class='red-color'>WARNING: You are only able to change your name once. You cannot change it back.</strong></h3>
 						</div> 
 							
 						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
@@ -86,13 +86,13 @@ settings
 						</div>
 						
 						<div class='centered_80pc_width shift-down-3'>
-							<a href='#' id='bing-search-submit' class='a-button' >Click here once new name is correct</a>
+							<a href='#' id='change-name-submit' class='a-button' >Click here once new name is correct</a>
 						</div>
 					</div> <!-- end name page 1 of 2 -->
 						
-					<div id='change-name-page2of2' class='shift-down-3'>
+					<div id='change-name-page2of2' class='shift-down-3 page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2>Your name has been changed succesfully!</h2>
+							<h2 class='response-message'><!--message here--></h2>
 						</div> 
 					</div> <!-- end name page 2 of 2 -->
 
@@ -101,30 +101,30 @@ settings
 				<!-- change email page -->
 				<div id='change-email-rhs' class='rhs-to-disappear'>
 
-					<div id='change-email-page1of2'>
+					<div id='change-email-page1of2' class='page1of2'>
 						<div class='page-main-subsubheading lighter shift-up-2'>
 							{% if email %}
-							<h2>Your email is currently set as <strong>{{email}}</strong>. Please enter a new email (and your password) to change this</h2>
+							<h2>Your email is currently set as <strong class='email-from-server'>{{email}}</strong>. Please enter a new email (and your password) to change this</h2>
 							{% else %}
 							<h2>If you would like to add an email address, please enter one below, followed by your password</h2>
 							{% endif %}
 						</div> 
 							
 						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="text" name="email-input" id='email-input' placeholder='Type email here...' class='big-input'>
+							<input type="text" name="email-input" id='email-input' placeholder='Type new email here...' class='big-input'>
 						</div>
 						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
 							<input type="password" name="email-password-confirm" id='email-password-confirm' placeholder='Type password here...' class='big-input'>
 						</div>
 						
 						<div class='centered_80pc_width shift-down-3'>
-							<a href='#' id='bing-search-submit' class='a-button' >Click here once email &amp; password entered</a>
+							<a href='#' id='change-email-submit' class='a-button' >Click here once email &amp; password entered</a>
 						</div>
 					</div> <!-- end email page 1 of 2 -->
 						
-					<div id='change-email-page2of2' class='shift-down-3'>
+					<div id='change-email-page2of2' class='shift-down-3 page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2>Your email address has been changed succesfully!</h2>
+							<h2 class='response-message'><!--message here--></h2>
 						</div> 
 					</div> <!-- end email page 2 of 2 -->
 						
@@ -132,7 +132,7 @@ settings
 
 				<!-- change password page -->
 				<div id='change-password-rhs' class='rhs-to-disappear'>
-					<div id='change-email-page1of2'>
+					<div id='change-email-page1of2' class='page1of2'>
 						<div class='page-main-subsubheading lighter shift-up-2'>
 							<h2>Enter details below to change your password</h2>
 						</div> 
@@ -148,13 +148,13 @@ settings
 						</div>
 						
 						<div class='centered_80pc_width shift-down-3'>
-							<a href='#' id='bing-search-submit' class='a-button' >Click here to confirm the change</a>
+							<a href='#' id='change-password-submit' class='a-button' >Click here to confirm the change</a>
 						</div>
 					</div> <!-- end email page 1 of 2 -->
 						
-					<div id='change-email-page2of2' class='shift-down-3'>
+					<div id='change-email-page2of2' class='shift-down-3  page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2>Your password has been changed succesfully!</h2>
+							<h2 class='response-message'><!--message here--></h2>
 						</div> 
 					</div> <!-- end email page 2 of 2 -->
 						
@@ -162,7 +162,8 @@ settings
 
 				<!-- change picture page -->
 				<div id='change-picture-rhs' class='rhs-to-disappear'>
-					<div class='page-main-subsubheading lighter shift-up-2'>
+					<div id='change-picture-page1of2' class='page1of2'>
+						<div class='page-main-subsubheading lighter shift-up-2'>
 							<h2>Click a picture below to use it as your 'icon' on the site</h2>
 							
 							{% for animal in animals %}
@@ -170,7 +171,15 @@ settings
 								<img src="/static/img/{{animal}}-icon.png" width='80px' class="icon-pick inline" animal='{{animal}}'>
 							</div>
 							{% endfor %}
-					</div> 
+						</div>
+					</div><!--  end page 1 of 2 -->
+
+					<div id='change-picture-page2of2' class='shift-down-3 page2of2'>
+						<div class='page-main-subsubheading lighter'>
+							<h2 class='response-message'><!--message here--></h2>
+						</div> 
+					</div> <!-- end email page 2 of 2 -->
+
 				</div>
 
 			</div> <!-- end right panel -->

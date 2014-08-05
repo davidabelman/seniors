@@ -144,10 +144,14 @@ def settings():
 	For user to change settings (extra options for admin)
 	"""
 	#admin = session['role']
-	admin = 0
-	name = session['name']
-	email = session['email']	
-	return render_template('settings.html', admin = admin, name=name, email=email, animals=animals)
+	admin = session.get('admin')
+	name = session.get('name')
+	email = session.get('email')
+	network = session.get('network')
+	if name and network:
+		return render_template('settings.html', admin = admin, name=name, email=email, animals=animals)
+	else:
+		return redirect(url_for('home'))
 
 @app.route('/add_image')
 def add_image():
@@ -395,7 +399,7 @@ def add_user_on_behalf():
 			return json.dumps(message)
 	else:
 		print 'admin_name', admin_name, 'network', network, 'admin_role', admin_role
-		message = "Authentication error: you are not logged in to your group."
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
 		return json.dumps(message)
 
 
@@ -455,7 +459,7 @@ def add_user_via_access_token():
 			return json.dumps(message)
 			
 	else:
-		message = "Authentication error: you are not logged in to your group."
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
 		return json.dumps(message)
 
 
@@ -513,9 +517,94 @@ def change_profile_picture():
 		session['picture']=picture
 		return json.dumps(1)
 	else:
-		message = "Authentication error: you are not logged in to your group."
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
 		return json.dumps(message)
 	
+
+@app.route('/_change_username', methods=['GET','POST'])
+def change_username():
+	"""
+	Post request to change username
+	"""
+	new_name = request.json['new_name']
+	name = session.get('name')
+	network = session.get('network')
+	user = Users.find_one({'network':network, 'name':name})
+	name_changed_before = Users.find_one({'network':network, 'name':name}).get('name_changed_before')
+	if user:
+		if not name_changed_before:
+			# Check to make sure new name doesn't exist already
+			existing_user = Users.find_one({'network':network, 'name':new_name})
+			if not existing_user:
+				Users.update({'network':network, 'name':name}, {"$set": {'name':new_name, 'name_changed_before':True} })
+				session['name']=new_name
+				return json.dumps(1)
+			else:
+				# This username is already is use
+				message =  "This name already exists in group. Please pick another name."
+				return json.dumps(message)
+		else:
+			message =  "You have already changed your name before. For security reasons you cannot change it again. Please contact us if you require assistance."
+			return json.dumps(message)
+	else:
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
+		return json.dumps(message)
+
+
+@app.route('/_change_email', methods=['GET','POST'])
+def change_email():
+	"""
+	Post request to change username
+	"""
+	new_email = request.json['new_email']
+	password = request.json['password']
+	name = session.get('name')
+	network = session.get('network')
+	user = Users.find_one({'network':network, 'name':name})
+	
+	# Check user is logged in
+	if user:
+		known_password_hash = user['password_hash']
+		response = check_password_hash(known_password_hash, password)
+		# Check password correct
+		if response:
+			Users.update({'network':network, 'name':name}, {"$set": {'email':new_email} })
+			session['email']=new_email
+			return json.dumps(1)
+		else:
+			# This password didn't match known password
+			message =  "The password you have entered is not correct."
+			return json.dumps(message)
+	else:
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
+		return json.dumps(message)
+
+@app.route('/_change_password', methods=['GET','POST'])
+def change_password():
+	"""
+	Post request to change password
+	"""
+	old_password = request.json['old_password']
+	new_password = request.json['new_password']
+	name = session.get('name')
+	network = session.get('network')
+	user = Users.find_one({'network':network, 'name':name})
+	
+	# Check user is logged in
+	if user:
+		known_password_hash = user['password_hash']
+		response = check_password_hash(known_password_hash, old_password)
+		# Check password correct
+		if response:
+			Users.update({'network':network, 'name':name}, {"$set": {'password_hash':generate_password_hash(new_password)} })
+			return json.dumps(1)
+		else:
+			# This password didn't match known password
+			message =  "The old password you have entered is not correct."
+			return json.dumps(message)
+	else:
+		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
+		return json.dumps(message)
 
 
 ###################### ERRORS ######################
