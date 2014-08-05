@@ -111,6 +111,9 @@ a.disabled {
 .float-left {
 	float: left;
 }
+.initially-hidden {
+	display: none;
+}
 
 /*DIVS*/
 .grey-panel {

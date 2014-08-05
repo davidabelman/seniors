@@ -39,9 +39,13 @@ main page
 
 ** make 'create new group' page nicer
 
-** add javascript form validation for password, limit usernames, etc.
+*** add javascript form validation for password, limit usernames, etc.
 
 ** Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
+
+** check session variables for weird errors
+
+*** fix firefox webcam message thing
 
 * help
 * dictate

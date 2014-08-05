@@ -231,7 +231,7 @@ function get_scroll_navs_ready() {
     //handler in
     function() {
       $('.navigation-arrow-down').fadeIn()
-      if ($('body').scrollTop()>50) {
+      if ($(window).scrollTop()>50) {
         $('.navigation-arrow-up').fadeIn()
       }
     },
@@ -245,7 +245,7 @@ function get_scroll_navs_ready() {
     // Down arrow is always on
     $('.navigation-arrow-down').fadeIn()
     // Up arrow is only on if not near top
-    if ($('body').scrollTop()>50) {
+    if ($(window).scrollTop()>50) {
         $('.navigation-arrow-up').fadeIn()
       }
     else {

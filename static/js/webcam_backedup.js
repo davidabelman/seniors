@@ -1,10 +1,48 @@
 function activate_webcam_script() {
 
+	// setTimeout( function() {
+	// 	// Code from http://stackoverflow.com/questions/23288918/check-user-has-webcam-or-not-using-javascript
+	// 	navigator.getUserMedia = ( navigator.getUserMedia || // use the proper vendor prefix
+	// 	                       navigator.webkitGetUserMedia ||
+	// 	                       navigator.mozGetUserMedia ||
+	// 	                       navigator.msGetUserMedia);
+
+	//  if (navigator.getUserMedia) {
+	// 		navigator.getUserMedia(
+	// 		{video: true},
+	// 		function() {
+	// 		  // webcam is available: draw canvas, buttons etc. and remove message
+	// 		  console.log('webcam on!')
+	// 		  $('#webcam-required-message').fadeOut(200, function() {
+	// 		  	$('#webcam-available').fadeIn()
+	// 		  })  
+	// 		},
+	// 		function() {
+	// 		  // webcam is not available
+	// 		  console.log('webcam unavailable')
+	// 		  $('#webcam-required-message').fadeOut(200, function() {
+	// 		  	$('#webcam-denied-message').fadeIn()
+	// 		  })
+
+	// 		});
+	// 	}
+	// else {
+	// 		  // media not supported
+	// 		  console.log('webcam unavailable')
+	// 		  $('#webcam-required-message').fadeOut(200, function() {
+	// 		  	$('#webcam-denied-message').fadeIn()
+	// 		  })
+
+
+	// 	}
+	// }, 10) // end timeout
+
 	// Code from: view-source:http://davidwalsh.name/demo/camera.php
 	// Put event listeners into place
 		// Grab elements, create settings, etc.
-		
-		// Load webcam canvas straight away
+
+
+		//temp
 		$('#webcam-required-message').fadeOut(200, function() {
 		  	$('#webcam-available').fadeIn()
 		  })

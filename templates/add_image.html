@@ -12,13 +12,13 @@ log in to group
 {% block body %}
 {{ super() }}
 
-<div class='centered-page'>
+<div class='centered-page initially-hidden'>
 	
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	  <div id='logotemp'>
 	  	<span id='saltandpepper'>Salt&Pepper</span><span id='beta'> beta</span>
-	  </div><!-- end navbar container -->
-	</nav><!-- end navbar -->
+	  </div>
+	</nav> -->
 
 
 	<!-- Page 1 of 2, i.e. enter network -->
@@ -93,23 +93,23 @@ log in to group
 						</div> <!-- end webcam message -->
 					</div> 
 					<div id='webcam-available' style='display:none'>
-					<div class='page-main-subheading shift-down-1 padded-container-1'>
-						<h2>Click 'take photo' to take a photo!</h2>
-					</div>
-					<div id='loading-spinner' class='padded-container shift-down-3'></div>
-						<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
-						<canvas id="webcam-canvas" width="320" height="250"></canvas>
-						<div class='centered_50pc_width shift-down-3'>
-							<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+						<div class='page-main-subheading shift-down-1 padded-container-1'>
+							<h2>Click 'take photo' to take a photo!</h2>
 						</div>
-						<row>
-							<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
-								<a href='#' class='a-button inline float-right' >Take another...</a>
+						<div id='loading-spinner' class='padded-container shift-down-3'></div>
+							<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
+							<canvas id="webcam-canvas" width="320" height="250"></canvas>
+							<div class='centered_50pc_width shift-down-3'>
+								<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
 							</div>
-							<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
-								<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
-							</div>
-						</row>
+							<row>
+								<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
+									<a href='#' class='a-button inline float-right' >Take another...</a>
+								</div>
+								<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
+									<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+								</div>
+							</row>
 					</div>
 						
 				</div>

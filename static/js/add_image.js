@@ -28,7 +28,7 @@ function prepare_LHS_button_fading_behaviour () {
 		    evt.stopImmediatePropagation();
 
 		    // When button is clicked, load webcam script stuff
-		    if (window.webcamActivated ==0) {
+		    if (window.webcamActivated == 0) {
 		    	window.webcamActivated = 1;
 		    	activate_webcam_script()
 		    }
@@ -132,7 +132,6 @@ $('.img-in-img-grid').click( function(evt) {
 		url = $(this).attr("src")
 		img_link = "<p class='post-body'><img src="+url+" width='30%'></p>"
 		create_post_from_html(img_link)
-
 	})
 }
 
@@ -152,7 +151,8 @@ function create_post_from_html(html) {
                   // get_posts(full_refresh=true, 10,0)
                   // remove_text_from_input();
                   // When complete
-        			window.location.href = "/";
+				  fade_page_in('out')
+				  setTimeout( function() {window.location.href = "/"}, 500)
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -161,7 +161,17 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
+function fade_page_in(fade_in_out) {
+	if (fade_in_out == 'in') {
+		$('.initially-hidden').fadeTo(500, 1)
+	}
+	else {
+		$('.initially-hidden').fadeTo(500, 0)
+	}
+}
+
 window.webcamActivated = 0 // Later switched to 1 if activated
+fade_page_in('in')
 prepare_LHS_button_fading_behaviour()
 prepare_to_get_content_from_bing()
 
