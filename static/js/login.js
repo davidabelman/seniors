@@ -19,10 +19,10 @@ function get_ready_to_check_network() {
                   }
                   html = "<row>"
                   $.each( data, function(i, d) {
-                    html += "<div class='col-md-3 col-sm-4 col-xs-6 user-icon-div'>"
-                    html+= "  <img src='/static/img/icon.png' class='img-responsive user-icon-img'>"
-                    html+= "  <span class='user-icon-span'>"+d.name+"</span>"
-                    html+= "</div>"
+                    html += "<div class='col-md-3 col-xs-4 user-icon-div  icon_unselected'>"
+                    html+=  "  <img src='/static/img/"+d.picture+"-icon.png' class='img-responsive user-icon-img'>"
+                    html+=  "  <span class='user-icon-span'>"+d.name+"</span>"
+                    html+=  "</div>"
                   }) //each
                   html += "</row>"
                   $('#user_grid').html(html);

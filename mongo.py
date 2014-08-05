@@ -3,6 +3,7 @@ This file starts up the mongo database, generates some fake data (can delete all
 """
 
 from secret import USERNAME, PASSWORD
+from tools.icons import animals
 
 def start_up_mongo():
 	import pymongo
@@ -34,14 +35,15 @@ def create_fake_users(db):
 	if u=='y':
 		db.users.remove()
 
+	network_name = 'test0'
 	to_add =  	[{ 	
 					'name':'David',
 					'email':'test0@gmail.com',
 					'password_hash': generate_password_hash('David'),
 					'register' : datetime.datetime(2014,4,5), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'abelman',
+					'network' : network_name,
 					'role' : 1
 				},
 				{ 	
@@ -49,9 +51,9 @@ def create_fake_users(db):
 					'email':'test1@gmail.com',
 					'password_hash': generate_password_hash('Ben'),
 					'register' : datetime.datetime(2014,4,9), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'abelman',
+					'network' : network_name,
 					'role' : 0
 				},
 				{ 	
@@ -59,9 +61,9 @@ def create_fake_users(db):
 					'email':'test2@gmail.com',
 					'password_hash': generate_password_hash('Annie'),
 					'register' : datetime.datetime(2014,4,30), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'abelman',
+					'network' : network_name,
 					'role' : 0
 				},
 				{ 	
@@ -69,19 +71,19 @@ def create_fake_users(db):
 					'email':'test3@gmail.com',
 					'password_hash': generate_password_hash('Jack'),
 					'register' : datetime.datetime(2014,4,10), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'smith',
+					'network' : 'Smith',
 					'role' : 0
 				},
 				{ 	
-					'name':'brenda_old_username',
+					'name':'Brenda',
 					'email':'davidabelman+brenda@gmail.com',
 					'password_hash': '',
 					'register' : '', #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']),
+					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'abelman',
+					'network' : network_name,
 					'role' : 0,
 					'token' : 'exampletoken123'
 				},
@@ -96,53 +98,62 @@ def create_fake_posts(db):
 	if u=='y':
 		db.posts.remove()
 
+	network_name = 'test0'
 	to_add =  	[{ 	
 					'name':'David',
 					'posted' : datetime.datetime(2014,4,5), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'This is a good post!',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'David',
 					'posted' : datetime.datetime(2014,4,6), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Another good post!',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'Annie',
 					'posted' : datetime.datetime(2014,4,7), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'How does this work',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'Ben',
 					'posted' : datetime.datetime(2014,4,8), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Glad to have joined the party!!!!',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'David',
 					'posted' : datetime.datetime(2014,4,9), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Yabadabadoooooooo. So.',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'Annie',
 					'posted' : datetime.datetime(2014,4,9), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Yabadabadoooooooo. So what?!?!?!?! Blah blha lash ldka lsht oaihs dins oiajos aois longer post.',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'David',
 					'posted' : datetime.datetime(2014,4,10), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Another good post!!!!! Once again.',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				{ 	
 					'name':'Ben',
 					'posted' : datetime.datetime(2014,5,12), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Mind your own business.',
-					'network' : 'abelman'
+					'network' : network_name,
+					'picture' : 'cat'
 				},
 				]		
 	collection = db.posts

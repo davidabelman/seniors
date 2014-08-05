@@ -23,24 +23,29 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
-try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
-settings page within the app
+** forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
+* try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
+*** settings page within the app
 
 
-2 Frontend:
+Frontend:
 
 main page 
-- update moment js every now and again
-- add notification for new messages
-- colour new messages as they pop up
+** update moment js every now and again
+** add notification for new messages
+** colour new messages as they pop up
 
-add bing search funcationality
+*** settings page
 
-user images
+** make 'create new group' page nicer
 
-settings page
+** add javascript form validation for password, limit usernames, etc.
 
-make 'create new group' page nicer
+** Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
-add javascript form validation for password, limit usernames, etc.
+* help
+* dictate
+* add video
+
+
+ICONS: http://www.iconarchive.com/show/animal-icons-by-martin-berube.html

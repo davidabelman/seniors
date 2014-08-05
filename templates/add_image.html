@@ -83,10 +83,35 @@ log in to group
 
 				<!-- webcam page -->
 				<div id='webcam-rhs' class='rhs-to-disappear'>
-					<div class='page-main-subheading shift-down-2 padded-container-1'>
-						<h2>Click 'take photo' to take a photo!</h2>
-						<p>Note your computer may ask you for permission to use your camera. You will need to press 'OK', or 'Accept' or 'Allow'</p>
+
+					<div class='page-main-subheading padded-container-1'>
+						<div class='shift-down-3' id='webcam-required-message'>
+							<h2 class='grey-note' >If you have a webcam, we need permission to use it. There should be a message near the top of your screen asking you for permission. You will need to press 'Share', or 'Allow' to continue. <a href='/webcam-help'>Click here for more help.</a></h2>
+						</div> <!-- end webcam message -->
+						<div class='shift-up-3' id='webcam-denied-message' style='display:none'>
+							<h2 class='grey-note' >Webcam unavailable. Please use one of the other methods on the right to add a photo.</h2>
+						</div> <!-- end webcam message -->
 					</div> 
+					<div id='webcam-available' style='display:none'>
+					<div class='page-main-subheading shift-down-1 padded-container-1'>
+						<h2>Click 'take photo' to take a photo!</h2>
+					</div>
+					<div id='loading-spinner' class='padded-container shift-down-3'></div>
+						<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
+						<canvas id="webcam-canvas" width="320" height="250"></canvas>
+						<div class='centered_50pc_width shift-down-3'>
+							<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+						</div>
+						<row>
+							<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
+								<a href='#' class='a-button inline float-right' >Take another...</a>
+							</div>
+							<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
+								<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+							</div>
+						</row>
+					</div>
+						
 				</div>
 
 				<!-- upload page -->
@@ -112,6 +137,7 @@ log in to group
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/webcam.js', _external=True)}}"></script>
 {% endblock %}
 
 {% endblock %}

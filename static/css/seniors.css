@@ -29,6 +29,9 @@ a.disabled {
 	color: white;
 	background: white;
 }
+.display-block {
+	display: block;
+}
 .shift-up {
 	margin-top: -10px;
 }
@@ -83,7 +86,13 @@ a.disabled {
 }
 .fix-300 {
 /*Fixes 300px from top of screen*/
-	position:fixed; top:120px; right: 2%; !important; 
+	position:fixed; top:120px; right: 2%;; 
+}
+@media only screen and (max-width : 767px) {
+	.fix-300 {
+	/*Fixes 300px from top of screen*/
+		position:relative; 
+	}
 }
 .quick-fade {
 	opacity: 0;
@@ -92,7 +101,16 @@ a.disabled {
 	border: solid 1px #bbb;
 	padding: 15px;
 }
-
+.grey-note {
+	color: #999;
+	font-weight: 300;
+}
+.float-right {
+	float: right;
+}
+.float-left {
+	float: left;
+}
 
 /*DIVS*/
 .grey-panel {
@@ -100,16 +118,16 @@ a.disabled {
 	linear,
 	left top,
 	left bottom,
-	color-stop(0, #eee),
-	color-stop(0.4, #eee),
-	color-stop(0.9, #eee),
+	color-stop(0, #3ee),
+	color-stop(0.4, #3ee),
+	color-stop(0.9, #3ee),
 	color-stop(1, #efefef)
-	);
-	background-image: -o-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%);
-	background-image: -moz-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%);
-	background-image: -webkit-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%);
-	background-image: -ms-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%);
-	background-image: linear-gradient(to bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%);
+	) !important;
+	background-image: -o-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
+	background-image: -moz-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
+	background-image: -webkit-linear-gradient(bottom, #E8E8E8 100%, #EBEBEB 59%, #FFFFFF 0%) !important; /*swapped for safari*/
+	background-image: -ms-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
+	background-image: linear-gradient(to bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
 }
 
 #left-panel {
@@ -186,22 +204,21 @@ a.disabled {
 }
 
 .post {
-	padding-top: 5px;
+	padding-top: 20px;
 	padding-bottom: 20px;
     width: 100%;
     background: #fff;
     margin-top: 20px;
 }
 .post-img {
-	margin-top: 0px;
+	margin-top: -8px;
     width: 15%;
-    background: #fff;
     float: left;
     padding: 2%;
 }
 .post-alltext {
 	margin-left: 15%;
-    background: #fff;
+    
     padding-right: 10px;
 }
 .post-name {
@@ -217,6 +234,14 @@ a.disabled {
 }
 .post-body {
 	font-size: 140%;
+}
+.self-post {
+	background: #dfd !important;
+	border-radius: 16px;
+}
+.hidden-new-post {
+	display: none;
+	opacity: 0.3;
 }
 
 
@@ -348,26 +373,28 @@ a.disabled {
 	display: none;
 }
 
+
 .page2of2 {
 	display:none;
 }
 
 .user-icon-div {
-	padding: 30px;
+	border: solid 3px #fff;
 }
 
 .user-icon-div:hover {
-	padding: 10px;
-	color: #e60;
+	border: solid 3px #e60;
 }
 
 .user-icon-img {
-	padding: 10px;
+    padding-top: 8px;
+    margin: auto;
 }
 
 .user-icon-span {
 	font-weight: bold;
 	font-size: 130%;
+	text-align: center;
 }
 
 #password_entry {
@@ -398,13 +425,10 @@ a.disabled {
 
 #home-container, #home-right-content
 {
-    height: calc(100% - 110px);
+    /*height: calc(100% - 110px);*/
     overflow: auto;
 }
-#home-left, #home-right
-{
-    height: 100%;
-}
+
 #home-left
 {
 	width: 50%;
@@ -412,14 +436,13 @@ a.disabled {
     background-color: #eee;
     color: black;
 }
-#home-right
-{
-	border-left: 1px solid #ddd;
-    overflow: auto;
+#home-left {
+	border-right: 1px solid #ddd;
 }
 
 #home-left-content {
 	padding: 40px;
+	
 }
 #home-left-content h1, #home-right-content h1 {
 	font-weight: bold;
@@ -441,21 +464,21 @@ a.disabled {
 	margin-top: 40px;
 }
 
-#new-group-button {
+.green-button {
 	background: #3ac98d;
 	-webkit-box-shadow: 0px 3px 0px #173;
     -moz-box-shadow: 0px 3px 0px #173;
     box-shadow: 0px 3px 0px #173;
 }
 
-.new-group-button:active{
+.green-button:active{
     -webkit-box-shadow: 0px 2px 0px #173;
     -moz-box-shadow: 0px 2px 0px #173;
     box-shadow: 0px 2px 0px #173;
     position:relative;
     top:1px;
 }
-#new-group-button:hover {
+.green-button:hover {
 	background: #3ae18d;
 }
 
@@ -535,4 +558,11 @@ a.disabled {
 	display: inline !important;
 }
 
+#webcam-canvas {
+	display: none;
+}
+
+#loading-spinner {
+	display: none;
+}
 

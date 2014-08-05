@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from secret import SECRET_KEY
 from mailgun import send_access_token_email
 from tools.bing_search import bing_search_and_return_urls
+from tools.icons import animals
+import dropbox_upload
 import mongo
 import json, urllib, urllib2
 import datetime
@@ -40,15 +42,14 @@ base_url = "http://localhost:5000/invite/"
 
 @app.route('/temp')
 def temp():
-	return render_template('temp.html')
+	return render_template('videotest2.html')
 
 @app.route('/')
 def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	#if session.get('name') and session.get('network'):
-	if True:
+	if session.get('name') and session.get('network'):
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -198,7 +199,8 @@ def submit_feed_entry():
 					'name':session.get('name'),
 					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : content,
-					'network' : session.get('network')
+					'network' : session.get('network'),
+					'picture' : session.get('picture')
 				}
 		Posts.insert(to_add)
 		response = 1
@@ -298,6 +300,7 @@ def create_account_create_network():
 	email = request.json['email']
 	network = request.json['network']
 	password = request.json['password']
+	picture = random.choice(animals)
 
 	# Could run server checks here to ensure all info OK
 	u1 = Users.find_one({'network':network})
@@ -308,7 +311,7 @@ def create_account_create_network():
 						'email':email,
 						'password_hash': generate_password_hash(password),
 						'register' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
-						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+						'picture' : picture,
 						'online' : False, #TODO
 						'network' : network,
 						'role' : 1 # i.e. admin
@@ -320,10 +323,21 @@ def create_account_create_network():
 		session['name'] = name
 		session['network'] = network
 		session['email'] = email
+		session['picture'] = picture
 
 		if app.debug:
 			print "Added user (%s, %s) to database." %(name, network)
 			print to_add
+
+		# Add just one post to get things going
+		to_add = { 	
+					'name':'The Salt & Pepper robot',
+					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'body' : 'Ta-da! Your group is ready to go. Have fun!',
+					'network' : network,
+					'picture' : 'robo'
+				}
+		Posts.insert(to_add)
 
 		return json.dumps(1)
 
@@ -353,7 +367,7 @@ def add_user_on_behalf():
 						'email':"",
 						'password_hash': generate_password_hash(password),
 						'register' : datetime.datetime.now(),
-						'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+						'picture' : random.choice(animals),
 						'online' : False, #TODO
 						'network' : network,
 						'role' : 0, # i.e. admin
@@ -366,6 +380,7 @@ def add_user_on_behalf():
 				print message
 			return json.dumps(message)
 	else:
+		print 'admin_name', admin_name, 'network', network, 'admin_role', admin_role
 		message = "Authentication error: you are not logged in to your group."
 		return json.dumps(message)
 
@@ -408,7 +423,7 @@ def add_user_via_access_token():
 							'email':email,
 							'password_hash': "",
 							'register' : "",
-							'picture' : random.choice(['anteater', 'bat', 'cat', 'dog', 'elephant', 'fish']), #TODO
+							'picture' : random.choice(animals),
 							'online' : False, #TODO
 							'network' : network,
 							'role' : admin, # i.e. admin
@@ -458,12 +473,24 @@ def get_bing_image_urls():
 											search_type='Image',
 											minsize=150,
 											maxsize=250,
-											testing=True)
+											testing=False)
 
 		return json.dumps({"status":1, "data":urls[0:max_results]})
 	else: 
 		return json.dumps({"status":0, "data":"Authorization error"})
 
+
+@app.route('/_upload_img_to_dropbox', methods=['GET', 'POST'])
+def upload_img_to_dropbox():
+	"""
+	Decodes base 64 string to image file, then uploads file to dropbox
+	"""
+	base = request.json['base']
+	print base
+	base_clean = base.replace('data:image/png;base64,','')
+	print base_clean
+	url = dropbox_upload.convert_image_and_upload(base_clean)
+	return json.dumps(url)
 
 
 ###################### ERRORS ######################

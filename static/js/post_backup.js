@@ -48,37 +48,38 @@ function add_new_posts_only(posts) {
   var newest_post_displayed = parseInt($('.post').first().attr('posted'))
   var newest_post_on_server = moment(posts[0].posted).unix()
   if (newest_post_displayed < newest_post_on_server) {
-    // html=""
+    html=""
     $.each( posts, function(index, post) {
       if (moment(post.posted).unix() > newest_post_displayed) {
-        add_single_post_to_top(post);
+        html += "<section class='post' id="+post._id+" posted="+moment(post.posted).unix()+">"
+        html += "<div class='post-img'>"
+        html += "<img src='/static/img/icon.png' width='70', height='70'>"
+        html += "</div> <!-- end img part -->"
+        html += "<div class='post-alltext'>"
+        html += "<h2 class='post-name'>"+post.name+"</h2>"
+        html += "<span class='post-time'>"+moment(post.posted).fromNow()+"</span>"
+        html += "<p class='post-body'>"+post.body+"</p>"
+        html += "</div> <!-- end text part -->"    
+        html += "</section> <!-- end post --><hr>"
       }
     }) // end each
+    $('#post-list-area').prepend(html)
   } // end if
   else{ console.log(moment().unix(), 'no new posts') }
 }
 
-function add_single_post_to_top(post) {
-  // Adds HTML for a single post as hidden, and then shows it at the end
-
-  // For testing purposes
-  // post = {
-  //   name:'David',
-  //   posted:'2014-08-04T16:43:05.995000',
-  //   body:'This is a another test xyz',
-  //   picture:'dog'
-  // }
-
-  // Determine background colour
-  if ($('#user_name_hidden').val()==post.name) {
-      var own_post = 'self-post';
-    }
-    else {
-      var own_post = '';
-    }
-  // Add HTML
-  html = "        <div class='hidden-new-post''>"
-  html += "       <section class='post "+own_post+"' id="+'test'+" posted="+moment(post.posted).unix()+">\n"
+function add_single_post_to_top(name, posted, body, picture) {
+  console.log('added post as hidden')
+  post = {
+    name:'Grandad',
+    posted:'2014-08-04T16:43:05.995000',
+    body:'This is a another test xyz',
+    picture:'dog'
+  }
+  console.log(post.picture)
+  own_post = 'self-post'
+  html = ""
+  html += "       <section class='post "+own_post+"' style='display: none;' id="+'test'+" posted="+moment(post.posted).unix()+">\n"
   html += "         <div class='post-img'>\n"
   html += "           <img src='/static/img/"+post.picture+"-icon.png' width='70', height='70'>\n"
   html += "         </div> <!-- end img part -->\n"
@@ -88,13 +89,8 @@ function add_single_post_to_top(post) {
   html += "           <p class='post-body'>"+post.body+"</p>\n"
   html += "         </div> <!-- end text part -->\n"    
   html += "       </section> <!-- end post --><hr>\n\n"
-  html += "       </div>"
-
-  // Add to post area and fade in
+  console.log(html)
   $('#post-list-area').prepend(html)
-  $('.hidden-new-post').show(250, function() {
-    $('.hidden-new-post').fadeTo( 300 , 1)
-  })
 }
 
 function submit_posts_button_ready() {
@@ -106,14 +102,14 @@ function submit_posts_button_ready() {
       var html = escapeHtml($('#post_input').val());
       hide_submit_button();
       create_post_from_html(html);
-      get_posts(full_refresh=false, 50,0)
+      //get_posts(full_refresh=true, 50,0)
       remove_text_from_input();
   }); // end submit
 }
 
 // TODO currently duplicated in post.js and add_image.js
 function create_post_from_html(html) {
-  // Adds some HTML (or text etc) to the feed on the Database side
+  // Adds some HTML (or text etc) to the feed
   console.log('about to submit post')
   $.ajax({
                 url:'/_submit_post_entry',
@@ -142,9 +138,7 @@ function escapeHtml(text) {
       .replace(/'/g, "&#039;");
 }
 
-function nav_buttons_ready() {
-
-  // Fade out and logout 
+function logout_button_ready() {
   $('#logout-button').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
@@ -154,22 +148,11 @@ function nav_buttons_ready() {
         window.location.href = "logout";
       })
   }) // end click event
-
-  // Fade out and go to 'add_image screen' 
-  $('#add-image-button').click ( function(evt) {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-    $('#whole-content').animate({
-      opacity: 0}, 350, function() {
-        // When complete
-        window.location.href = "add_image";
-      })
-  })
 } // end function
 
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts
-    delay = 6000; //in milliseconds
+    delay = 30000;
     get_posts(full_refresh=false, 30,0)
     setTimeout(recursive_check_for_new_posts, delay)
 }
@@ -261,6 +244,6 @@ recursive_check_for_new_posts()
 submit_posts_button_ready()
 show_submit_button_when_typing()
 get_scroll_navs_ready()
-nav_buttons_ready()
+logout_button_ready()
 
 add_single_post_to_top()

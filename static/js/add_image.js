@@ -27,6 +27,12 @@ function prepare_LHS_button_fading_behaviour () {
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
 
+		    // When button is clicked, load webcam script stuff
+		    if (window.webcamActivated ==0) {
+		    	window.webcamActivated = 1;
+		    	activate_webcam_script()
+		    }
+
 		    // Fade all but current button
 		    $('#bing-button').css('opacity',0.6)
 			$('#webcam-button').css('opacity',1)
@@ -124,8 +130,9 @@ $('.img-in-img-grid').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
 		url = $(this).attr("src")
-		img_link = "<p class='post-body'><img src="+url+"></p>"
+		img_link = "<p class='post-body'><img src="+url+" width='30%'></p>"
 		create_post_from_html(img_link)
+
 	})
 }
 
@@ -142,8 +149,10 @@ function create_post_from_html(html) {
                 type: "POST",
                 success: function(result) { 
                   console.log ('This is the result and type of result:',result,typeof(result))
-                  get_posts(full_refresh=true, 10,0)
-                  remove_text_from_input();
+                  // get_posts(full_refresh=true, 10,0)
+                  // remove_text_from_input();
+                  // When complete
+        			window.location.href = "/";
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -152,6 +161,7 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
+window.webcamActivated = 0 // Later switched to 1 if activated
 prepare_LHS_button_fading_behaviour()
 prepare_to_get_content_from_bing()
 
