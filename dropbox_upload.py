@@ -1,10 +1,14 @@
 # Include the Dropbox SDK libraries
 import os, binascii
 from dropbox import client, rest, session
-from secret import DROPBOX_APP_KEY, DROPBOX_APP_SECRET, DROPBOX_TOKEN_KEY, DROPBOX_TOKEN_SECRET
+# from secret import DROPBOX_APP_KEY, DROPBOX_APP_SECRET, DROPBOX_TOKEN_KEY, DROPBOX_TOKEN_SECRET
+SENIORS_DROPBOX_APP_KEY = os.environ.get('SENIORS_DROPBOX_APP_KEY')
+SENIORS_DROPBOX_APP_SECRET = os.environ.get('SENIORS_DROPBOX_APP_SECRET')
+SENIORS_DROPBOX_TOKEN_KEY = os.environ.get('SENIORS_DROPBOX_TOKEN_KEY')
+SENIORS_DROPBOX_TOKEN_SECRET = os.environ.get('SENIORS_DROPBOX_TOKEN_SECRET')
  
-sess = session.DropboxSession(DROPBOX_APP_KEY, DROPBOX_APP_SECRET, 'app_folder')
-sess.set_token(DROPBOX_TOKEN_KEY, DROPBOX_TOKEN_SECRET)
+sess = session.DropboxSession(SENIORS_DROPBOX_APP_KEY, SENIORS_DROPBOX_APP_SECRET, 'app_folder')
+sess.set_token(SENIORS_DROPBOX_TOKEN_KEY, SENIORS_DROPBOX_TOKEN_SECRET)
 client = client.DropboxClient(sess)
  
 def convert_image_and_upload(img_string):

@@ -1,9 +1,9 @@
-
+import os
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask.ext.script import Manager
 from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
-from secret import SECRET_KEY
+#from secret import SECRET_KEY
 from mailgun import send_access_token_email
 from tools.bing_search import bing_search_and_return_urls
 from tools.icons import animals
@@ -15,7 +15,7 @@ import datetime
 import random
 
 app = Flask(__name__)
-app.config.from_object('config')
+SECRET_KEY = os.environ['SENIORS_SECRET_KEY']
 app.secret_key = SECRET_KEY
 manager = Manager(app)
 moment = Moment(app)
@@ -607,6 +607,5 @@ def server_error(e):
 
 ###################### START ######################
 if __name__ == '__main__':
-	manager.secret_key = SECRET_KEY
 	manager.run()
 	

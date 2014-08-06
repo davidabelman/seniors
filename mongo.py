@@ -2,15 +2,20 @@
 This file starts up the mongo database, generates some fake data (can delete all old data whilst it is at it too)
 """
 
-from secret import USERNAME, PASSWORD
+# from secret import SENIORS_MONGO_USERNAME, SENIORS_MONGO_PASSWORD
+import os
 from tools.icons import animals
+SENIORS_MONGO_USERNAME = os.environ.get('SENIORS_MONGO_USERNAME')
+SENIORS_MONGO_PASSWORD = os.environ.get('SENIORS_MONGO_PASSWORD')
 
 def start_up_mongo():
 	import pymongo
 	from pymongo import MongoClient
 	# PASSWORD = raw_input('Password: ')
-	client = MongoClient('mongodb://'+USERNAME+':'+PASSWORD+'@kahana.mongohq.com:10096/davidabelman', 27017)
+	client = MongoClient('mongodb://'+SENIORS_MONGO_USERNAME+':'+SENIORS_MONGO_PASSWORD+'@kahana.mongohq.com:10096/davidabelman', 27017)
 	db = client.davidabelman
+	# Users=db.users
+	# Posts=db.posts
 	return db
 
 def show_all_users(db):
