@@ -12,7 +12,7 @@ log in to group
 {% block body %}
 {{ super() }}
 
-<div class='centered-page'>
+<div class='centered-page initially-hidden'>
 	
 	{% include 'navbar.html' %}
 
@@ -49,15 +49,11 @@ log in to group
 			<a href='#' id='confirm_name' class='a-button' >Click here if the name is correct!</a>
 		</div>
 		
-		<!-- Hidden unless error -->
-<!-- 		<div id='name-status'>
-					<span id='name-taken' class='color-fail'><br>
-						<strong>This name is already taken by someone. Please try another.</strong>
-					</span>
-
-		</div> -->
-		<div class='error-message'>
-			<h2><!-- Message goes here --></h2>
+		<div class='flash-message' id='error-name'>
+			<!--Error message to go here-->
+		</div>
+		<div class='flash-message green-text' id='success-name'>
+			<!--Success message to go here-->
 		</div>
 
 	</div> <!-- end page 1 of 2 fluid container -->
@@ -80,8 +76,11 @@ log in to group
 		<div class='centered_50pc_width shift-down-3'>
 			<a href='#' id='submit_all_form_data' class='a-button' >Click here to join the group!</a>
 		</div>
-		<div class='error-message'>
-			<h2><!-- Message goes here --></h2>
+		<div class='flash-message' id='error-password'>
+			<!--Error message to go here-->
+		</div>
+		<div class='flash-message green-text' id='success-password'>
+			<!--Success message to go here-->
 		</div>
 		
 	</div> <!-- end page 2 of 2 fluid container -->
@@ -90,6 +89,7 @@ log in to group
 
 {% block scripts_bottom %}
 	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 {% endblock %}

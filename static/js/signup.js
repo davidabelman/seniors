@@ -50,6 +50,7 @@ function validate_name() {
     if (valid_response===true) {
       $('#success-name').text("Hi "+name_input+"!").fadeIn( function() {
           $('.page2bof2').fadeIn();
+          $('#password-input').focus()
         })
     }
     else {
@@ -69,6 +70,7 @@ function validate_email() {
                         setTimeout( function() {
                             $('.page1of2').fadeOut( function() {
                               $('.page2of2').fadeIn();
+                              $('#name-input').focus()
                             })                          
                         }, 400 )
                       })
@@ -76,7 +78,6 @@ function validate_email() {
     else {
       // If group name is too short or long:
       $('#error-email').text("This is not a valid email address.").fadeIn()
-      console.log("eror")
       return;
     }
 }
@@ -113,25 +114,13 @@ function check_network_already_exists(name) {
                 else {
                       $('#success-network').text("Looks good to me!").fadeIn( function() {
                         $('.page1bof2').fadeIn();
+                        $('#email-input').focus()
                       })
 
                 }
           }) // end JSON
 } // end check_network_exists
 
-function hide_messages_on_focus() { 
-  // Finds all flash messages relating to the input and hides them if input is edited
-  $('input').focus( function() {
-      $(this).parent().parent().find('.flash-message').fadeOut();
-    })
-  $('input').keyup( function() {
-      $(this).parent().parent().find('.flash-message').fadeOut();
-    })
-  // And when user clicks submit
-  $('.a-button').click( function(evt) {
-    $(this).parent().parent().find('.flash-message').fadeOut();
-    })
-}
 
 function bind_clicks() {
 
@@ -164,19 +153,13 @@ function bind_clicks() {
   })
 }
 
-// TODO duplicated in add-image and settings and other pages
-function fade_page_in_out(fade_in_out, link_url) {
-  if (fade_in_out == 'in') {
-    $('.initially-hidden').fadeTo(500, 1)
-  }
-  else {
-    $('.initially-hidden').fadeTo(300, 0)
-    setTimeout( function() {
-      window.location.href = link_url;
-    }, 301)
-  }
-}
 
 fade_page_in_out('in')
 bind_clicks()
 hide_messages_on_focus()
+make_enter_key_submit_form('#network-input', '#network-submit')
+make_enter_key_submit_form('#name-input', '#name-submit')
+make_enter_key_submit_form('#email-input', '#email-submit')
+make_enter_key_submit_form('#password-confirm-input', '#password-submit')
+// Start by focusing form
+$('#network-input').focus()

@@ -13,7 +13,7 @@ log in to group
 {{ super() }}
 
 
-<div class='whole-body'>
+<div class='initially-hidden'>
 	<header id="home-logo" class='quick-fade quick-fade-1'>
 		<div class='quick-fade quick-fade-3'>
 					<span id='salt-main'>Salt</span>&amp;<span id='pepper-main'>Pepper</span>
@@ -40,8 +40,8 @@ log in to group
 
 {% block scripts_bottom %}
 	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/info.js', _external=True)}}"></script>
-	<script src="{{url_for('static', filename = 'js/quick_fade.js', _external=True)}}"></script>
 {% endblock %}
 
 {% endblock %}

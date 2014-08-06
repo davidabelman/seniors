@@ -1,10 +1,21 @@
-function get_ajax_handlers_ready() {
-
-  // This will add a user by email (either admin or not) when the user submits an email address
+function bind_clicks() {
+  // This will invite a user by email when submit pressed
   $('#submit_email_invitation').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
+    check_form_and_invite_user_by_email()
+  }) // end submit
 
+  // This will add user to DB when submit pressed
+  $('#create_account_on_behalf').click( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    check_form_and_add_user_to_db()
+  }) // end submit
+}
+
+function check_form_and_invite_user_by_email() {
+    // This will add a user by email 
     var email = $('#email').val();
     var firstname = $('#firstname').val();
 
@@ -46,14 +57,10 @@ function get_ajax_handlers_ready() {
         alert("Server error?")
       } // end success callback
     }); // end ajax
-  }) // end submit
+}
 
+function check_form_and_add_user_to_db() {
   // This will just add the user to the database, can then show them how to log on at ..com/enter/networkname
-  $('#create_account_on_behalf').click( function(evt) {
-    console.log("CLICK")
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-
     var initial_name = $('#initial_name').val()
     var password = $('#password').val()
 
@@ -97,13 +104,10 @@ function get_ajax_handlers_ready() {
         }
       } // end success callback
     }) // end ajax
-
-  }) // end submit
 }
 
 function get_page2_links_ready() {
   $('#add_another_user').click( function(evt) {
-    console.log('Add another user button pressed')
     evt.preventDefault();
     evt.stopImmediatePropagation();
     redraw_screen(page_1_or_2='1')
@@ -142,6 +146,7 @@ function redraw_screen(page_1_or_2, page_2a_or_2b, name) {
   else {
     // Clear all values on page 1
     $('input').val('')
+    $('.flash-message').fadeOut();
 
     // Show page 1
     $('.page2of2').fadeOut ( function () {
@@ -156,36 +161,12 @@ function display_error(message, id) {
     // Cut quotes off if receiving from server
     message = message.substring(1, message.length-1)
   }
-  $(id+' h2').text(message)
+  $(id).text(message)
   $(id).fadeIn()
 }
 
-function hide_error_message_when_input_active() {
-  $('input').focus( function() {
-      $('.error-message').fadeOut();
-    })
-  $('input').keyup( function() {
-      $('.error-message').fadeOut();
-    })
-  // And when user clicks submit
-  $('.a-button').click( function(evt) {
-    $('.error-message').fadeOut();
-    })
-}
-
-function fade_page_in_out(fade_in_out, link_url) {
-  if (fade_in_out == 'in') {
-    $('.initially-hidden').fadeTo(500, 1)
-  }
-  else {
-    $('.initially-hidden').fadeTo(300, 0)
-    setTimeout( function() {
-      window.location.href = link_url;
-    }, 301)
-  }
-}
 
 fade_page_in_out('in')
-hide_error_message_when_input_active()
-get_ajax_handlers_ready()
+hide_messages_on_focus()
+bind_clicks()
 get_page2_links_ready()

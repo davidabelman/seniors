@@ -652,6 +652,12 @@ a.disabled {
 	
 }
 
+.response-message {
+	/*margin-top: 120px;*/
+	color: #e60;
+	font-weight: 500;
+	font-size: 140%;
+}
 
 /*========================================================================*/
 /*HELP PAGE*/

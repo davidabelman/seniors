@@ -36,12 +36,10 @@ main page
 ** colour new messages as they pop up
 ** add 'see more posts' at bottom or automatically load
 
-5 *** make 'create new group' page nicer
-
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
 *** check session variables for weird errors
-6 *** tidy code
+*** tidy code
 
 ** Add some webcam hint/message to help switch on
 
@@ -51,5 +49,8 @@ main page
 7 *** upload to heroku then write documentation
 ** investigate testing with selenium
 ** add basic analytics before sharing
+
+* colour messages by ObjID and not by name==name
+* do profile picture by ObjID (i.e. have it in hidden field when posts is loaded, then when you draw HTML to screen you look up the animal of the ObjID... probably should do the same for 'Name' as well actually)
 
 ICONS: http://www.iconarchive.com/show/animal-icons-by-martin-berube.html

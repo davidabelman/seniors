@@ -55,29 +55,29 @@ help
 			</div>
 
 			<div class='col-sm-8 padded-container shift-up-4'>
-				<div class='help-page-content rhs-to-disappear' id='using-website'>
+				<div class='help-page-content rhs-to-disappear' id='using-website-rhs'>
 					<h2>Using the website</h2>
 					<p>Salt&amp;Pepper aims to be fun and simple to use. Almost everything you can click on is marked in orange or green.<span class='a-button'>Orange buttons</span> will move you around the website.<span class='a-button green-button'>Green buttons</span> will send something to everyone in your group!</p>
 				</div>
 
-				<div class='help-page-content rhs-to-disappear' id='writing-text'>
+				<div class='help-page-content rhs-to-disappear' id='writing-text-rhs'>
 					<h2>Adding text</h2>
 					<p>To say something to the group, you can type in the white box with the orange border on the main group's page. When you start typing, a green button will appear:<span class='a-button shift-up-4 green-button'>Click when finished!</span></p>
 					<p><br>Once you click this, you will see your message appear on the right hand side of the screen, at the top of the pile! Newest messages always appear at the top.</p>
 				</div>
 
-				<div class='help-page-content rhs-to-disappear' id='adding-photos'>
+				<div class='help-page-content rhs-to-disappear' id='adding-photos-rhs'>
 					<h2>Adding photos</h2>
 					<p>There are currently two ways to add photos: firstly by typing in a description (which will provide you with a selection of photos to choose from), and secondly by taking a picture with your webcam (if your computer has one). You can do either of these by pressing the orange 'Add photo' button within your group's main room.</p>
 					<p>If you are having difficulties with your webcam, please see the next section on this help page.</p>
 				</div>
-				<div class='help-page-content rhs-to-disappear' id='webcam-difficulties'>
+				<div class='help-page-content rhs-to-disappear' id='webcam-difficulties-rhs'>
 					<h2>Webcam difficulties</h2>
 					<p>You need a connected webcam on your computer to take photos of yourself to send to the group. If you have a webcam connected but cannot see the photos you are taking of yourself, it may be because we don't have your permission to take photos. When you are trying to take a photo, towards the top of your screen there may be a grey button asking for your permission to use the webcam. You will need to press 'Accept' or 'Share' (depending on the message shown). Please contact us if you are still having difficulties.</p>
 					
 				</div>
 
-				<div class='help-page-content rhs-to-disappear' id='inviting-people'>
+				<div class='help-page-content rhs-to-disappear' id='inviting-people-rhs'>
 					<h2>Inviting more people</h2>
 					<p>The group's leader, or administrator, is able to add more people to the group. If this is you, you can do this by clicking 'Settings' within your group's main page, and then on the blue 'Users' button:<span class='a-button shift-up-4 blue-button'>Users<small> (admin only)</small></span></p>
 					<p><br>If you are not the administrator, you will need to ask him or her to add other users in this way.</p>
@@ -92,6 +92,7 @@ help
 
 	{% block scripts_bottom %}
 		{{ super() }}
+		<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 		<script src="{{url_for('static', filename = 'js/help.js', _external=True)}}"></script>
 		
 	{% endblock %}

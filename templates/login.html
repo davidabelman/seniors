@@ -47,8 +47,8 @@ log in to group
 			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
 		</div>
 
-		<div class='error-message' id='network_does_not_exist_message'>
-			<h2><!-- Message goes here --></h2>
+		<div class='flash-message' id='network-error-message'>
+			<!-- Message goes here -->
 		</div>
 	</div>
 
@@ -56,7 +56,6 @@ log in to group
 		<row>
 			<div class='col-sm-8' id='user_grid'>
 				<!-- User list goes here -->
-				
 			</div>
 
 			<div id='password_entry' style="display:none" class='col-sm-4 fix-300'>
@@ -71,7 +70,7 @@ log in to group
 					<a href='#' id='password_submit' class='a-button' >Enter</a>
 				</div>
 
-				<div class='error-message shift-up-3' id='password-error-message'>
+				<div class='flash-message shift-up-3' id='password-error-message'>
 					<h2><!-- Message goes here --></h2>
 				</div>
 
@@ -85,6 +84,7 @@ log in to group
 
 {% block scripts_bottom %}
 	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/login.js', _external=True)}}"></script>
 {% endblock %}

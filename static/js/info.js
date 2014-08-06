@@ -2,25 +2,20 @@ function left_panel_to_page_height_on_load() {
 	$('#home-left').css({'height':(($(window).height()))+'px'});
 }
 
-function get_buttons_ready() {
+function bind_clicks() {
 	$('#new-group-button').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
-		$('.whole-body').fadeOut('fast', 
-		function() {
-			window.location.href = "/signup"
-		})	
+		fade_page_in_out('out', '/signup')
 	})
 	$('#join-group-button').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
-		$('.whole-body').fadeOut('fast', 
-		function() {
-			window.location.href = "/enter"
-		})	
+		fade_page_in_out('out', '/enter')
 	})	
 	
 }
 
 left_panel_to_page_height_on_load()
-get_buttons_ready()
+quick_fade()  // fades each element in in term (see common.js)
+bind_clicks()

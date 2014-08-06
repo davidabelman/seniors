@@ -1,22 +1,21 @@
-
-
-function get_ready_to_check_network() {
-  //Focus if box is empty
-  if (!$("#network").val()) { 
-    $("#network").focus();
-  }
-
-  // Make enter key click submit
-  $("#network").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#choose_network_submit").click();
-    }
-  });
-
-  // Bind to click
+function bind_clicks() {
+  // Bind network submit to click
   $('#choose_network_submit').click( function(evt) {
-  		evt.preventDefault();
+   evt.preventDefault();
+   evt.stopImmediatePropagation();
+   check_form_and_show_usernames()
+  })
+
+  // Bind password submit
+
+  $('#password_submit').click( function(evt) {
+      evt.preventDefault();
       evt.stopImmediatePropagation();
+      check_form_and_login()
+    })
+}
+
+function check_form_and_show_usernames() {
       var network = $('#network').val();
 
       // Client side validation
@@ -26,13 +25,12 @@ function get_ready_to_check_network() {
       }
       else {
         // If group name is too short or long:
-        $('.error-message h2').text(valid_response)
-        $('.error-message').fadeIn();
+        $('#network-error-message').text(valid_response).fadeIn()
         return;
       }
-  		
-      // Drawing a list of users if they exist (or firing error message if not)
-  		$.getJSON('/_network_users_list',
+      
+      // Drawing a list of user icons if they exist (or firing error message if not)
+      $.getJSON('/_network_users_list',
                 {"network":network},
                 function(result) {
                   data = result['data']
@@ -49,19 +47,19 @@ function get_ready_to_check_network() {
                     }) //each
                     html += "</row>"
                     $('#user_grid').html(html);
-                    make_user_icon_clickable()
+                    make_user_icons_clickable()
                   } // end it
                   else {
                     // No users in network, i.e doesn't exist, display error
-                    $('#network_does_not_exist_message h2').text(result['data'])
-                    $('#network_does_not_exist_message').fadeIn();
+                    $('#network-error-message').text(result['data']).fadeIn();
                   }                  
-                })
-  }); // end submit
-
+                }) // end getJSON
 }
 
-var make_user_icon_clickable = function() {
+
+var make_user_icons_clickable = function() {
+
+  // When any user icon is clicked, we bring up password form, fade the others
   $('.user-icon-div').click( function() {
     
     // Remove any fade
@@ -92,19 +90,9 @@ function fade_unselected_icons(fade_or_unfade) {
   }
 }
 
-function get_ready_to_check_password() {
-
-  // Make enter key click submit
-  $("#password_enter_field").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#password_submit").click();
-    }
-  });
+function check_form_and_login() {
 
   // Client and server validation on password when clicked
-  $('#password_submit').click( function(evt) {
-      evt.preventDefault();
-      evt.stopImmediatePropagation();
       var network = $('#network').val();  // This comes from page 1 of 2
       var username = $('.icon_selected').find('.user-icon-span').text()
       var password = $('#password_enter_field').val()
@@ -116,8 +104,7 @@ function get_ready_to_check_password() {
       }
       else {
         // If password is too short or long:
-        $('#password-error-message h2').text(valid_response)
-        $('.error-message').fadeIn();
+        $('#password-error-message').text(valid_response).fadeIn();
         return;
       }
 
@@ -134,64 +121,30 @@ function get_ready_to_check_password() {
                 success: function(result) { 
                   result = JSON.parse(result)
                   if (result['status']=="1") {
-                    fade_page_in('out')
-                    setTimeout( function() {window.location.href = "/";}, 300 )
+                    // Let's go!
+                    fade_page_in_out('out','/') 
                   }
                   else {
                     console.log(result['data'])
-                    $('#password-error-message h2').text(result['data'])
-                    $('.error-message').fadeIn();
+                    $('#password-error-message').text(result['data']).fadeIn();
                   }
                 },
                 error: function() {
                   alert('Server error')
                 }
               }) // end ajax
-  }); // end submit
+
 }
 
 
-function toggle_page_1_and_2(go_to_page) {
-  if (go_to_page==1) {
-    $('.page2of2').fadeOut( function() {
-      $('.page1of2').fadeIn()
-    })
-    
-  }
-  else {
-    $('.page1of2').fadeOut( function() {
-      $('.page2of2').fadeIn()
-    })
-    
-  }
-}
 
 
-function hide_error_message_when_input_active() {
-  $('#network, #password_enter_field').focus( function() {
-      $('.error-message').fadeOut();
-    })
-  $('#network, #password_enter_field').keyup( function() {
-      $('.error-message').fadeOut();
-    })
-  // And when user clicks submit
-  $('#choose_network_submit').click( function(evt) {
-    $('.error-message').fadeOut();
-    })
-}
+fade_page_in_out('in') // From common.js
 
-// TODO duplicated in settings.js and add_image.js
-function fade_page_in(fade_in_out) {
-  if (fade_in_out == 'in') {
-    $('.initially-hidden').fadeTo(500, 1)
-  }
-  else {
-    $('.initially-hidden').fadeTo(300, 0)
-  }
-}
+bind_clicks()
+hide_messages_on_focus()  // From common.js
 
-hide_error_message_when_input_active()
-get_ready_to_check_network()
-make_user_icon_clickable()
-get_ready_to_check_password()
-fade_page_in('in')
+focus_at_end_of_input_form('#network')
+focus_at_end_of_input_form('#password_enter_field')
+make_enter_key_submit_form('#network', '#choose_network_submit')
+make_enter_key_submit_form('#password_enter_field', '#password_submit')

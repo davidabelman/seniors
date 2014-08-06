@@ -1,111 +1,16 @@
-function prepare_LHS_button_fading_behaviour () {
-	// Enables click behaviour for buttons on LHS
-	// Fades all other buttons when one is clicked
-	// Brings up correct content on RHS
-			$('#change-name-button').click( function(evt) {
-
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-		    
-		    // Fade all but current button
-		    $('#change-name-button').css('opacity',1)
-			$('#change-email-button').css('opacity',0.6)
-			$('#change-password-button').css('opacity',0.6)
-			$('#change-picture-button').css('opacity',0.6)
-			$('#users-button').css('opacity',0.6)
-
-			// Fade all RHS content and make sure page 1 of 2 is showing
-			$('.rhs-to-disappear').fadeOut(50, function() {
-				$('.page2of2').hide()
-		    	$('.page1of2').fadeIn(300)
-			})
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#change-name-rhs').fadeIn(300)
-			} , 51 ) 
-		});
-
-		$('#change-email-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-
-		    // Fade all but current button
-		    $('#change-name-button').css('opacity',0.6)
-			$('#change-email-button').css('opacity',1)
-			$('#change-password-button').css('opacity',0.6)
-			$('#change-picture-button').css('opacity',0.6)
-			$('#users-button').css('opacity',0.6)
-
-			// Fade all RHS content and make sure page 1 of 2 is showing
-			$('.rhs-to-disappear').fadeOut(50, function() {
-				$('.page2of2').hide()
-		    	$('.page1of2').fadeIn(300)
-			})
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#change-email-rhs').fadeIn(300)
-			} , 51 ) 
-		});
-
-		$('#change-password-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-
-		    // Fade all but current button
-		    $('#change-name-button').css('opacity',0.6)
-			$('#change-email-button').css('opacity',0.6)
-			$('#change-password-button').css('opacity',1)
-			$('#change-picture-button').css('opacity',0.6)
-			$('#users-button').css('opacity',0.6)
-
-			// Fade all RHS content and make sure page 1 of 2 is showing
-			$('.rhs-to-disappear').fadeOut(50, function() {
-				$('.page2of2').hide()
-		    	$('.page1of2').fadeIn(300)
-			})
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#change-password-rhs').fadeIn(300)
-			} , 51 ) 
-		});
-
-		$('#change-picture-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-
-		    // Fade all but current button
-		    $('#change-name-button').css('opacity',0.6)
-			$('#change-email-button').css('opacity',0.6)
-			$('#change-password-button').css('opacity',0.6)
-			$('#change-picture-button').css('opacity',1)
-			$('#users-button').css('opacity',0.6)
-
-			// Fade all RHS content and make sure page 1 of 2 is showing
-			$('.rhs-to-disappear').fadeOut(50, function() {
-				$('.page2of2').hide()
-		    	$('.page1of2').fadeIn(300)
-			})
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#change-picture-rhs').fadeIn(300)
-			} , 51 ) 
-		});
-
-		$('#back-to-group-button').click( function(evt) {
-			// Reload main page
-			evt.preventDefault()
-			evt.stopImmediatePropagation()
-			fade_page_in('out')
-			setTimeout( function() {window.location.href = "/"}, 500)
-		})
+function bind_clicks () {
+	$('#back-to-group-button').click( function(evt) {
+		// Reload main page
+		evt.preventDefault()
+		evt.stopImmediatePropagation()
+		fade_page_in_out('out','/')
+	})
+	$('#users-button').click( function(evt) {
+		// Reload main page
+		evt.preventDefault()
+		evt.stopImmediatePropagation()
+		fade_page_in_out('out','/add_users')
+	})
 } // end fading behaviour for LHS buttons
 
 
@@ -141,6 +46,7 @@ $('.icon-pick').click( function(evt) {
                 }
               }) // end ajax
 })
+
 
 $('#change-name-submit').click( function(evt) {
 	// Update user's name (check it doesn't exist already)
@@ -192,6 +98,7 @@ $('#change-name-submit').click( function(evt) {
                 }
               }) // end ajax
 })
+
 
 $('#change-email-submit').click( function(evt) {
 	// Update user's email (check password too)
@@ -246,6 +153,7 @@ $('#change-email-submit').click( function(evt) {
               }) // end ajax
 })
 
+
 $('#change-password-submit').click( function(evt) {
 	// Update user's email (check password too)
 	evt.preventDefault()
@@ -299,15 +207,6 @@ $('#change-password-submit').click( function(evt) {
               }) // end ajax
 })
 
-// TODO duplicated in add-image
-function fade_page_in(fade_in_out) {
-	if (fade_in_out == 'in') {
-		$('.initially-hidden').fadeTo(500, 1)
-	}
-	else {
-		$('.initially-hidden').fadeTo(300, 0)
-	}
-}
-
-prepare_LHS_button_fading_behaviour()
-fade_page_in('in')
+bind_clicks()
+bind_left_hand_button_clicks() // from common.js
+fade_page_in_out('in')

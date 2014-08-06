@@ -44,19 +44,19 @@ settings
 				{% endif %}
 
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-name-button' class='a-button' >My name</a>
+					<a href='#' id='change-name-button' class='a-button lhs-button' >My name</a>
 				</div>
 
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-email-button' class='a-button ' >My email address</a>
+					<a href='#' id='change-email-button' class='a-button lhs-button' >My email address</a>
 				</div>
 
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-password-button' class='a-button ' >My password</a>
+					<a href='#' id='change-password-button' class='a-button lhs-button' >My password</a>
 				</div>
 
-				<div class='centered_80pc_width  shift-down-2'>
-					<a href='#' id='change-picture-button' class='a-button' >My picture</a>
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='change-picture-button' class='a-button lhs-button' >My picture</a>
 				</div>
 
 				<hr>
@@ -90,7 +90,7 @@ settings
 						
 					<div id='change-name-page2of2' class='shift-down-3 page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2 class='response-message'><!--message here--></h2>
+							<p class='response-message'><!--message here--></p>
 						</div> 
 					</div> <!-- end name page 2 of 2 -->
 
@@ -122,7 +122,7 @@ settings
 						
 					<div id='change-email-page2of2' class='shift-down-3 page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2 class='response-message'><!--message here--></h2>
+							<p class='response-message'><!--message here--></p>
 						</div> 
 					</div> <!-- end email page 2 of 2 -->
 						
@@ -152,7 +152,7 @@ settings
 						
 					<div id='change-email-page2of2' class='shift-down-3  page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2 class='response-message'><!--message here--></h2>
+							<p class='response-message'><!--message here--></p>
 						</div> 
 					</div> <!-- end email page 2 of 2 -->
 						
@@ -175,7 +175,7 @@ settings
 
 					<div id='change-picture-page2of2' class='shift-down-3 page2of2'>
 						<div class='page-main-subsubheading lighter'>
-							<h2 class='response-message'><!--message here--></h2>
+							<p class='response-message'><!--message here--></p>
 						</div> 
 					</div> <!-- end email page 2 of 2 -->
 
@@ -196,6 +196,7 @@ settings
 
 	{% block scripts_bottom %}
 		{{ super() }}
+		<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 		<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
 		<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 		

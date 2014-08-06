@@ -295,6 +295,7 @@ function get_scroll_navs_ready() {
 
 
 // START OF SCRIPT ON PAGE LOAD
+quick_fade()
 get_posts(full_refresh=true, 30,0)
 recursive_check_for_new_posts()
 submit_posts_button_ready()
