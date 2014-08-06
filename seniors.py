@@ -181,25 +181,25 @@ def check_network_username_password():
 	"""
 	Given a network, username and password, this function will check the password and allow a login or not (True, False)
 	"""
+	print 'starting function...'
 	network = request.json['network']
 	username = request.json['username']
 	password = request.json['password']	
+	print 'we have variables'
 	user = Users.find_one({'name':username, 'network':network})
 	known_password_hash = user['password_hash']
+	print 'known password hash =',known_password_hash
 	valid_password = check_password_hash(known_password_hash, password)
-	
+	print 'valid_password', valid_password
 	if valid_password:
 		# Get user object to store as session variable
 		session['user'] = load_user(Users, {'name':username, 'network':network} )
 		USER = session['user']
+		print "Correct password. User=",USER
 
-		# TODO delete
-		# session['name'] = username
-		# session['network'] = network
-		# session['picture'] = user.get('picture')
-		# session['email'] = user.get('email')
 	else:
 		session.clear()
+		print "Wasn't correct password"
 		return json.dumps({'status':0, 'data':'This is not the correct password.'})
 
 	if app.debug:
@@ -209,6 +209,7 @@ def check_network_username_password():
 		print "Stored in database", known_password_hash
 		print "Try check_password_hash(known_password_hash, password)..."
 
+	print "About to return"
 	return json.dumps({'status':int(valid_password)})
 
 @app.route('/_submit_post_entry', methods=['GET', 'POST'])
