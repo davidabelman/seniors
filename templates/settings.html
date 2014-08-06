@@ -37,33 +37,29 @@ settings
 				<!-- condition -->
 				{% if admin %}
 				<div class='centered_80pc_width  shift-down-3'>
-					<a href='#' id='add-users-button' class='a-button shift-down-3' >Add a user <small>(admin only)</small></a>
-				</div>
-				
-				<div class='centered_80pc_width  shift-down-2'>
-					<a href='#' id='remove-users-button' class='a-button shift-down-3' >Remove a user <small>(admin only)</small></a>
-				</div>
+					<a href='add_users' id='users-button' class='a-button blue-button shift-down-3' >Users <small>(admin only)</small></a>
+				</div>				
 				<hr>
 				<!-- end condition -->
 				{% endif %}
 
-				<div class='centered_80pc_width shift-down-3'>
-					<a href='#' id='change-name-button' class='a-button shift-down-3' >My name</a>
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='change-name-button' class='a-button' >My name</a>
 				</div>
 
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-email-button' class='a-button shift-down-3' >My email address</a>
+					<a href='#' id='change-email-button' class='a-button ' >My email address</a>
 				</div>
 
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='change-password-button' class='a-button shift-down-3' >My password</a>
+					<a href='#' id='change-password-button' class='a-button ' >My password</a>
 				</div>
 
 				<div class='centered_80pc_width  shift-down-2'>
 					<a href='#' id='change-picture-button' class='a-button' >My picture</a>
 				</div>
 
-				<br><br>
+				<hr>
 				<div class='centered_80pc_width shift-down-2'>
 					<a href='#' id='back-to-group-button' class='a-button green-button' >Go back to group page</a>
 				</div>
@@ -81,9 +77,10 @@ settings
 							<h2>You are currently registered as <strong class='name-from-server'>{{name}}</strong>. If you would like to change this, please type a new name in the box below.</h2><h3 class='shift-up'><strong class='red-color'>WARNING: You are only able to change your name once. You cannot change it back.</strong></h3>
 						</div> 
 							
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="text" name="name-input" id='name-input' placeholder='Type new name here...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="text" name="name-input" id='name-input' placeholder='Type new name here...' class='big-input centered-page '>
 						</div>
+						
 						
 						<div class='centered_80pc_width shift-down-3'>
 							<a href='#' id='change-name-submit' class='a-button' >Click here once new name is correct</a>
@@ -104,17 +101,17 @@ settings
 					<div id='change-email-page1of2' class='page1of2'>
 						<div class='page-main-subsubheading lighter shift-up-2'>
 							{% if email %}
-							<h2>Your email is currently set as <strong class='email-from-server'>{{email}}</strong>. Please enter a new email (and your password) to change this</h2>
+							<h2>Your email is currently set as <strong class='email-from-server'>{{email}}</strong>. Please enter a new email to change this.</h2>
 							{% else %}
 							<h2>If you would like to add an email address, please enter one below, followed by your password</h2>
 							{% endif %}
 						</div> 
 							
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="text" name="email-input" id='email-input' placeholder='Type new email here...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="text" name="email-input" id='email-input' placeholder='Type new email here...' class='big-input centered-page'>
 						</div>
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="password" name="email-password-confirm" id='email-password-confirm' placeholder='Type password here...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="password" name="email-password-confirm" id='email-password-confirm' placeholder='Type password here...' class='big-input centered-page'>
 						</div>
 						
 						<div class='centered_80pc_width shift-down-3'>
@@ -137,14 +134,14 @@ settings
 							<h2>Enter details below to change your password</h2>
 						</div> 
 							
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="password" name="old-password" id='old-password' placeholder='Old password...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="password" name="old-password" id='old-password' placeholder='Old password...' class='big-input centered-page'>
 						</div>
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="password" name="new-password" id='new-password' placeholder='New password...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="password" name="new-password" id='new-password' placeholder='New password...' class='big-input centered-page'>
 						</div>
-						<div class='one_line_entry_box centered_80pc_width one_line_entry_box_heavy'>
-							<input type="password" name="new-password-confirm" id='new-password-confirm' placeholder='New password again...' class='big-input'>
+						<div class='centered_80pc_width'>
+							<input type="password" name="new-password-confirm" id='new-password-confirm' placeholder='New password again...' class='big-input centered-page'>
 						</div>
 						
 						<div class='centered_80pc_width shift-down-3'>
@@ -198,6 +195,7 @@ settings
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 	
 {% endblock %}
 

@@ -1,1 +1,38 @@
-Sorry, this is not a valid token. Click here to return home. If you believe there has been an error, please email support@blah.com.
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+log in to group
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page'>
+
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				Email invitation invalid
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<div class='container-fluid'>
+		<div class='page-main-subheading'>
+			<h2>Sorry, this is not a valid token.</h2>
+			<div class='centered_50pc_width'>
+				<h3>Please contact us if you believe there has been an error, or request another token from your group administrator.</h3>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

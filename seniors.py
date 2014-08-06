@@ -89,11 +89,11 @@ def add_users():
 	"""
 	network = session.get('network')
 	admin_name = session.get('name')
-	admin_role = Users.find_one({'network':network, 'name':admin_name})['role']
-	if admin_name and network and admin_role==1:
-		return render_template('add_users.html')
-	else:
-		return redirect(url_for('home'))
+	if admin_name and network:
+		admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
+		if admin_role==1:
+			return render_template('add_users.html')
+	return redirect(url_for('home'))
 
 @app.route('/invite/<token>', methods=['GET', 'POST'])
 def accept_invite(token):
@@ -102,8 +102,9 @@ def accept_invite(token):
 	"""
 	token = long(token)
 	user = Users.find_one({'token':token})
-	
+
 	if user:
+		sender = user.get('admin_email')
 		if user.get('token_not_used'):
 			# Token not yet used
 			print 'Token not yet used:', user.get('token_not_used')
@@ -122,10 +123,10 @@ def accept_invite(token):
 					name=session['name'], network=session['network'])
 			else:
 				# We have a token, but it has expired
-				return render_template('expired_token.html')
+				return render_template('expired_token.html', sender=sender)
 		else:
 			# Token has been used already
-			return render_template('used_token.html')
+			return render_template('used_token.html', sender=sender)
 	else:
 		# The link was invalid
 		return render_template('invalid_token.html')
@@ -143,12 +144,11 @@ def settings():
 	"""
 	For user to change settings (extra options for admin)
 	"""
-	#admin = session['role']
-	admin = session.get('admin')
 	name = session.get('name')
 	email = session.get('email')
 	network = session.get('network')
 	if name and network:
+		admin = Users.find_one({'network':network, 'name':name}).get('role')
 		return render_template('settings.html', admin = admin, name=name, email=email, animals=animals)
 	else:
 		return redirect(url_for('home'))
@@ -168,9 +168,17 @@ def network_users_list():
 	Given a network, this function returns a JSON string of users to display on the screen
 	Using method from http://runnable.com/UiPhLHanceFYAAAP/how-to-perform-ajax-in-flask-for-python
 	"""
+	# User has tried to log in so clear any session data
+	session.clear()
+
+	# See if network exists already
 	network = request.args.get('network')
 	users = list(Users.find({'network':network}, { 'name': 1, 'picture': 1, '_id':0 }))  # Return certain fields only
-	return json.dumps(users)
+	if not users:
+		message = "I'm sorry, it appears this group does not exist. Please try again."
+		return json.dumps({'status':0, 'data':message})
+	# If it does exist, we return the list of users (names, pics)
+	return json.dumps({'status':1, 'data':users})
 
 @app.route('/_check_network_username_password', methods=['GET', 'POST'])
 def check_network_username_password():
@@ -192,6 +200,7 @@ def check_network_username_password():
 		session['email'] = user.get('email')
 	else:
 		session.clear()
+		return json.dumps({'status':0, 'data':'This is not the correct password.'})
 
 	if app.debug:
 		print "Information received:",network, username, password
@@ -201,7 +210,7 @@ def check_network_username_password():
 		print "Try check_password_hash(known_password_hash, password)..."
 		print "Response is", response
 
-	return json.dumps(int(response))
+	return json.dumps({'status':int(response)})
 
 @app.route('/_submit_post_entry', methods=['GET', 'POST'])
 def submit_feed_entry():
@@ -347,9 +356,9 @@ def create_account_create_network():
 
 		# Add just one post to get things going
 		to_add = { 	
-					'name':'The Salt & Pepper robot',
+					'name':'Robot',
 					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
-					'body' : 'Ta-da! Your group is ready to go. Have fun!',
+					'body' : 'Ta-daa! Your group is ready to go. Have fun!',
 					'network' : network,
 					'picture' : 'robo'
 				}
@@ -393,7 +402,7 @@ def add_user_on_behalf():
 			Users.insert(to_add)
 			return json.dumps(1)
 		else:
-			message =  "Error: Name already exists in group. Please pick another name."
+			message =  "Name already exists in group. Please pick another name."
 			if app.debug:
 				print message
 			return json.dumps(message)
@@ -415,7 +424,8 @@ def add_user_via_access_token():
 	"""
 	email = request.json['email']
 	firstname = request.json['firstname']
-	admin = request.json['admin']
+	admin_email = session.get('email')
+	#admin = request.json['admin'] not including this option here any more
 	# Check if allowed to add people
 	if session.get('name') and session.get('network'):
 		network = session.get('network')
@@ -429,12 +439,13 @@ def add_user_via_access_token():
 			to_add = { 	
 							'name':firstname,
 							'email':email,
+							'admin_email':admin_email,
 							'password_hash': "",
 							'register' : "",
 							'picture' : random.choice(animals),
 							'online' : False, #TODO
 							'network' : network,
-							'role' : admin, # i.e. admin
+							'role' : 0, # i.e. admin TODO
 							'token' : token,
 							'token_not_used' : True,
 							'token_sent' : datetime.datetime.now()
@@ -455,7 +466,7 @@ def add_user_via_access_token():
 			return json.dumps(1)
 		
 		else:
-			message = "Error: Name already exists in group. Please pick another name."
+			message = "Name already exists in group. Please pick another name."
 			return json.dumps(message)
 			
 	else:
@@ -573,7 +584,7 @@ def change_email():
 			return json.dumps(1)
 		else:
 			# This password didn't match known password
-			message =  "The password you have entered is not correct."
+			message =  "This is not the correct password."
 			return json.dumps(message)
 	else:
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."

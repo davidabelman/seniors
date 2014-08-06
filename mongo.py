@@ -35,11 +35,11 @@ def create_fake_users(db):
 	if u=='y':
 		db.users.remove()
 
-	network_name = 'test0'
+	network_name = 'test10'
 	to_add =  	[{ 	
 					'name':'David',
 					'email':'test0@gmail.com',
-					'password_hash': generate_password_hash('David'),
+					'password_hash': generate_password_hash('David123'),
 					'register' : datetime.datetime(2014,4,5), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(animals),
 					'online' : False,
@@ -49,7 +49,7 @@ def create_fake_users(db):
 				{ 	
 					'name':'Ben',
 					'email':'test1@gmail.com',
-					'password_hash': generate_password_hash('Ben'),
+					'password_hash': generate_password_hash('Ben123'),
 					'register' : datetime.datetime(2014,4,9), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(animals),
 					'online' : False,
@@ -59,7 +59,7 @@ def create_fake_users(db):
 				{ 	
 					'name':'Annie',
 					'email':'test2@gmail.com',
-					'password_hash': generate_password_hash('Annie'),
+					'password_hash': generate_password_hash('Annie123'),
 					'register' : datetime.datetime(2014,4,30), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(animals),
 					'online' : False,
@@ -69,7 +69,7 @@ def create_fake_users(db):
 				{ 	
 					'name':'Jack',
 					'email':'test3@gmail.com',
-					'password_hash': generate_password_hash('Jack'),
+					'password_hash': generate_password_hash('Jack123'),
 					'register' : datetime.datetime(2014,4,10), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(animals),
 					'online' : False,

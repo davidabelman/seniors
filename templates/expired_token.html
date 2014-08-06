@@ -1,1 +1,38 @@
-Sorry, this token has expired. Please request a new token from your group's leader.
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+log in to group
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page'>
+
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				Email invitation invalid
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<div class='container-fluid'>
+		<div class='page-main-subheading'>
+			<h2>Sorry, this token is too old and has expired.</h2>
+			<div class='centered_50pc_width'>
+				<h3>Please request a new invite from {% if sender %}{{sender}}{% else %}the original sender of the email{% endif %}.</h3>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

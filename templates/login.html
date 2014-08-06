@@ -12,15 +12,9 @@ log in to group
 {% block body %}
 {{ super() }}
 
-<div class='centered-page'>
-	
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	  <div id='logotemp'>
-	  	<span id='saltandpepper'>Salt&Pepper</span><span id='beta'> beta</span>
-	  </div><!-- end navbar container -->
-	</nav><!-- end navbar -->
+<div class='centered-page initially-hidden'>
 
-
+	{% include 'navbar.html' %}
 
 	<div class='horizontal-header'>
 		<div class='page-main-heading'>
@@ -47,14 +41,14 @@ log in to group
 		</div>
 
 		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
-			<input type="text" name="network" id='network' value='{{network}}' placeholder='Type here...' class='big-input'>
+			<input type="text" name="network" id='network' value='{{network}}' placeholder='Type here...' class='big-input centered-page'>
 		</div>
 		<div class='centered_20pc_width'>
 			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
 		</div>
 
 		<div class='error-message' id='network_does_not_exist_message'>
-			<h2>I'm sorry, it appears this network does not exist. Please try again.</h2>
+			<h2><!-- Message goes here --></h2>
 		</div>
 	</div>
 
@@ -68,14 +62,19 @@ log in to group
 			<div id='password_entry' style="display:none" class='col-sm-4 fix-300'>
 					
 				<div class='page-main-subsubheading'>
-					<h2>Welcome <span id='chosen_name'>X</span>! <br><br>Please enter your password to enter the room.</h2>
+					<h2>Welcome <span id='chosen_name'>X</span>! Please type your password to enter the room.</h2>
 				</div>
 				
-				<input type="password" id='password_enter_field' class='big-input' placeholder='Type here...'/required>
+				<input type="password" id='password_enter_field' class='big-input centered-page' placeholder='Type here...'/required>
 				
 				<div class='centered_50pc_width'>
 					<a href='#' id='password_submit' class='a-button' >Enter</a>
 				</div>
+
+				<div class='error-message shift-up-3' id='password-error-message'>
+					<h2><!-- Message goes here --></h2>
+				</div>
+
 			</div>
 
 
@@ -86,6 +85,7 @@ log in to group
 
 {% block scripts_bottom %}
 	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/login.js', _external=True)}}"></script>
 {% endblock %}
 

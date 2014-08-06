@@ -31,13 +31,14 @@ log in to group
 	<div class='container-fluid page1of2'>
 		<div class='page-main-subheading'>
 			<h2>
-				Please confirm we are using your correct name:
-			</h2>
+				Please confirm we are using your correct first name</h2><h3 class='shift-up-3'>(you can change it if not)
+			</h3>
+			
 			
 		</h2>
 		</div>
 
-		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
+		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy shift-down-3'>
 			<!--hidden fields-->
 			<input type="hidden" id="name_initial" value='{{name}}'  />
 			<input type="hidden" id="network" value='{{network}}'  />
@@ -49,15 +50,16 @@ log in to group
 		</div>
 		
 		<!-- Hidden unless error -->
-		<div id='name-status'>
+<!-- 		<div id='name-status'>
 					<span id='name-taken' class='color-fail'><br>
 						<strong>This name is already taken by someone. Please try another.</strong>
 					</span>
+
+		</div> -->
+		<div class='error-message'>
+			<h2><!-- Message goes here --></h2>
 		</div>
 
-		<div class='padded-container'>
-			<p>(If not, you can click on it to change it.)</p>
-		</div>
 	</div> <!-- end page 1 of 2 fluid container -->
 
 	<div class='container-fluid page2of2'>
@@ -73,54 +75,23 @@ log in to group
 			<input type="password" name="password" id="password" placeholder='Type password here...' class='big-input' required />
 		</div>
 		<div class='one_line_entry_box centered_50pc_width one_line_entry_box_heavy'>
-			<input type="password" name="password" id="password" placeholder='Re-type it, just to confirm...' class='big-input' required />
+			<input type="password" name="password_confirm" id="password_confirm" placeholder='Re-type it, just to confirm...' class='big-input' required />
 		</div>
 		<div class='centered_50pc_width shift-down-3'>
 			<a href='#' id='submit_all_form_data' class='a-button' >Click here to join the group!</a>
 		</div>
+		<div class='error-message'>
+			<h2><!-- Message goes here --></h2>
+		</div>
 		
-		<!-- Hidden unless error -->
-<!-- 		<div id='name-status'>
-					<span id='name-taken' class='color-fail'><br>
-						<strong>This name is already taken by someone. Please try another.</strong>
-					</span>
-		</div> -->
-
-		
-	</div> <!-- end page 1 of 2 fluid container -->
- 
-
-<!-- 
-<h1>Welcome to the '{{network}}' group!</h1>
-<p>Sign up with your first name and password</p>
-<div id='error_messages'></div>
-<br><br>
-
-<div >
-	<form id='signup_form'>
-
-	  <label for="name">Your first name (or username):</label>
-	  <input type="text" name="name" id="name" value='{{name}}' required />
-	  <br>
-
-	  <label for="password">Password:</label>
-	  <input type="password" name="password" id="password" required/>
-	  <br>
-
-	  <label for="password_confirm">Confirm password:</label>
-	  <input type="password" name="password_confirm" id="password_confirm" required/>
-	  <br>
-
-	  <input type="submit" value="Submit">
-	  <br>
-	</form>
-</div> -->
+	</div> <!-- end page 2 of 2 fluid container -->
 
 
 
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 {% endblock %}
 
 {% endblock %}

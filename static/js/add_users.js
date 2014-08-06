@@ -4,18 +4,32 @@ function get_ajax_handlers_ready() {
   $('#submit_email_invitation').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
-    console.log('clicked');
 
-    // Admin variable
-    var admin = 0;
-    if ($('#admin').is(':checked')) { admin = 1}
+    var email = $('#email').val();
+    var firstname = $('#firstname').val();
 
+      // Client side validation...
+      //... of email
+      var valid_response_email = isEmail(email);
+      if (valid_response_email!=true) {
+        display_error('This is not a valid email address.', '#email_invitation_error')
+        return;
+      }
+
+      //... of username
+      var valid_response_firstname = valid_name_and_group_syntax(firstname, 2, 15);
+      if (valid_response_firstname!=true) {
+        display_error(valid_response_firstname, '#email_invitation_error')
+        return;
+      }
+
+    // Server add user (or display error)
     $.ajax( {
       url: '/_add_user_via_access_token',
       data: JSON.stringify ({
-        'email':$('#email').val(),
-        'firstname':$('#firstname').val(),
-        'admin':admin
+        'email':email,
+        'firstname':firstname
+        //'admin':admin
       }, null, '\t'),
       contentType: 'application/json;charset=UTF-8',
       type: "POST",
@@ -39,13 +53,31 @@ function get_ajax_handlers_ready() {
     console.log("CLICK")
     evt.preventDefault();
     evt.stopImmediatePropagation();
-    console.log('clicked');
 
+    var initial_name = $('#initial_name').val()
+    var password = $('#password').val()
+
+      // Client side validation...
+      //... of username
+      var valid_response_firstname = valid_name_and_group_syntax(initial_name, 2, 15);
+      if (valid_response_firstname!=true) {
+        display_error(valid_response_firstname, '#create_account_error')
+        return;
+      }
+
+      //... of password
+      var valid_password = valid_password_length(password, 6, 20);
+      if (valid_password!=true) {
+        display_error(valid_password, '#create_account_error')
+        return;
+      }
+
+    // Server add user and check name doesn't exist
     $.ajax( {
       url: '/_add_user_on_behalf',
       data: JSON.stringify ({
-        'name':$('#initial_name').val(),
-        'password':$('#password').val(),
+        'name':initial_name,
+        'password':password,
       }, null, '\t'), // end data
       contentType: 'application/json;charset=UTF-8',
       type: "POST",
@@ -120,9 +152,11 @@ function redraw_screen(page_1_or_2, page_2a_or_2b, name) {
 
 function display_error(message, id) {
   // id should be #create_account_error or #email_invitation_error, i.e. shows where to place the error message
-  console.log('DISPLAYING ERROR')
-  message_stripped = message.substring(1, message.length-1)
-  $(id+' h2').text(message_stripped)
+  if (message[0]=='"') {
+    // Cut quotes off if receiving from server
+    message = message.substring(1, message.length-1)
+  }
+  $(id+' h2').text(message)
   $(id).fadeIn()
 }
 

@@ -67,6 +67,14 @@ function prepare_LHS_button_fading_behaviour () {
 				$('#upload-rhs').fadeIn(300)
 			} , 51 ) 
 		});
+
+		$('#back-to-group-button').click( function(evt) {
+			// Reload main page
+			evt.preventDefault()
+			evt.stopImmediatePropagation()
+			fade_page_in('out')
+			setTimeout( function() {window.location.href = "/"}, 500)
+		})
 } // end fading behaviour for LHS buttons
 
 
@@ -152,7 +160,7 @@ function create_post_from_html(html) {
                   // remove_text_from_input();
                   // When complete
 				  fade_page_in('out')
-				  setTimeout( function() {window.location.href = "/"}, 500)
+				  setTimeout( function() {window.location.href = "/"}, 200)
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -168,7 +176,7 @@ function fade_page_in(fade_in_out) {
 		$('.initially-hidden').fadeTo(500, 1)
 	}
 	else {
-		$('.initially-hidden').fadeTo(500, 0)
+		$('.initially-hidden').fadeTo(300, 0)
 	}
 }
 

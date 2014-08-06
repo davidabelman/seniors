@@ -7,24 +7,65 @@ function check_network_exists() {
               },
               function(response) {
                 if (response=='1') {
-                      $('#network-ok').hide()
-                      $('#network-taken').show()
+                      // $('#network-ok').hide()
+                      $('#network-not-ok').text("Group name already taken").show()
                 }
                 else {
-                      $('#network-taken').hide()
-                      $('#network-ok').show()
+                      $('#network-not-ok').hide()
+                      // $('#network-ok').show()
                 }
                 }) // end JSON
 } // end check_network_exists
 
+function validate_network_name() {
+  // Client side validation
+    var network_input = $('#network').val()
+    var valid_response = valid_name_and_group_syntax(network_input, 4, 20)
+    if (valid_response===true) {
+      // $('#network-ok').show()
+      $('#network-not-ok').hide()
+    }
+    else {
+      // If group name is too short or long:
+      $('#network-not-ok').text(valid_response).show()
+      // $('#network-ok').hide()
+      return;
+    }
+
+    check_network_exists()
+
+} // end check_network_exists
+
+
 
 function get_ajax_handlers_ready() {
 
-  // Firstly checking network doesn't exist after typing it in
+  // Check network name on blur
   $('#network').blur( function() {
-    check_network_exists()
-    console.log("CHECKING NETWORK NAME")
+    validate_network_name()
   }) // end blur callback
+
+  // Check network name on blur
+  $('#email').blur( function() {
+    validate_network_name()
+  }) // end blur callback
+
+  // Check network name on blur
+  $('#name').blur( function() {
+    validate_network_name()
+  }) // end blur callback
+
+  // Check network name on blur
+  $('#password').blur( function() {
+    validate_network_name()
+  }) // end blur callback
+
+  // Check network name on blur
+  $('#password_confirm').blur( function() {
+    validate_network_name()
+  }) // end blur callback
+
+
 
   // Submitting all form data when done
   $('#registration_submit').click( function(evt) {

@@ -143,6 +143,22 @@ $('#change-name-submit').click( function(evt) {
 	evt.preventDefault()
 	evt.stopImmediatePropagation()
 	new_name = $('#name-input').val();
+
+	// Client side validation
+      var valid_response = valid_name_and_group_syntax(new_name, 2, 15)
+      if (valid_response===true) {
+        // We're fine, so continue
+      }
+      else {
+        // If group name is too short or long:
+        $('.response-message').text(valid_response+" Your name has not been changed.")
+    	$('.page1of2').fadeOut( function() {
+  		$('.page2of2').fadeTo(300,1)
+        	})
+    	console.log('too short?')
+        return;
+      }
+
 	$.ajax({
                 url:'/_change_username',
                 data: JSON.stringify({
@@ -153,7 +169,6 @@ $('#change-name-submit').click( function(evt) {
                 success: function(result) { 
                 	result = JSON.parse(result);
                 	if (result==1) {
-                		alert('response received 1')
                 		$('.response-message').text('Your name has been changed succesfully! Note that you cannot now make another change to your name on this site.')
                 		// Change name on HTML page already rendered
 	                  	$('.page1of2').fadeOut( function() {
@@ -180,6 +195,22 @@ $('#change-email-submit').click( function(evt) {
 	evt.stopImmediatePropagation()
 	new_email = $('#email-input').val();
 	password = $('#email-password-confirm').val()
+	$('#email-password-confirm').val('')
+
+	// Client side validation of email
+      var valid_response = isEmail(new_email)
+      if (valid_response===true) {
+        // We're fine, so continue
+      }
+      else {
+        // If group name is too short or long:
+        $('.response-message').text("This doesn't look like a valid email address. Please try again.")
+    	$('.page1of2').fadeOut( function() {
+  		$('.page2of2').fadeTo(300,1)
+        	})
+        return;
+      }
+
 	$.ajax({
                 url:'/_change_email',
                 data: JSON.stringify({
@@ -215,8 +246,25 @@ $('#change-password-submit').click( function(evt) {
 	// Update user's email (check password too)
 	evt.preventDefault()
 	evt.stopImmediatePropagation()
+
 	old_password = $('#old-password').val();
 	new_password = $('#new-password').val();
+	new_password_confirm = $('#new-password-confirm').val();
+
+	// Client side validation password type
+	  var valid_response = two_passwords_ok(new_password, new_password_confirm, 6, 20)
+	  if (valid_response===true) {
+	    // We're fine, so continue
+	  }
+	  else {
+	    // If group name is too short or long:
+	    $('.response-message').text(valid_response+" Your password has not been changed. Please try again.")
+		$('.page1of2').fadeOut( function() {
+			$('.page2of2').fadeTo(300,1)
+	    	})
+	    return;
+	  }
+
 	$.ajax({
                 url:'/_change_password',
                 data: JSON.stringify({
@@ -253,7 +301,7 @@ function fade_page_in(fade_in_out) {
 		$('.initially-hidden').fadeTo(500, 1)
 	}
 	else {
-		$('.initially-hidden').fadeTo(500, 0)
+		$('.initially-hidden').fadeTo(300, 0)
 	}
 }
 

@@ -43,7 +43,7 @@ Signup
 			<div class='col-sm-10' id='form-container'>
 				<row>
 					<div class='col-sm-5 form-line'>
-					<label for="network">Name of group</label> 
+					<label for="network">Name of your group</label> 
 					</div>
 			  		<div class='col-sm-7 form-line'>
 			  		<input class=' big-input big-input-multiline-adjust' type="text" name="network" id="network" required />
@@ -93,7 +93,7 @@ Signup
 			<div class='col-sm-2' id='hints-container'>
 				<div id='network-name-status'>
 					<span id='network-ok' class='color-success'>Group name<br>is OK!</span>
-					<span id='network-taken' class='color-fail'>Group name<br>already taken</span>
+					<span id='network-not-ok' class='color-fail'>Group name<br>not OK</span>
 				</div>
 				<div class='filler'> <br></div>
 				<div id='hints-div'>
@@ -111,6 +111,7 @@ Signup
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/signup.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 {% endblock %}
 
 {% endblock %}

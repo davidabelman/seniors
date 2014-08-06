@@ -98,16 +98,28 @@ function add_single_post_to_top(post) {
 }
 
 function submit_posts_button_ready() {
+  // Focus on input page load
+  $('#post_input').focus()
+
+  // // Make enter key click submit
+  // $("#post_input").keyup(function(event){
+  //   if(event.keyCode == 13){
+  //       $("#post_submit_button").click();
+  //   }
+  // });
+
   // Bind ajax to post user's mssage (with clean HTML) to server
   $('#post_submit_button').click( function(evt) {
       evt.preventDefault();
       evt.stopImmediatePropagation();
+
       console.log('Clicked submit')
       var html = escapeHtml($('#post_input').val());
       hide_submit_button();
       create_post_from_html(html);
       get_posts(full_refresh=false, 50,0)
       remove_text_from_input();
+      $('#post_input').focus()
   }); // end submit
 }
 
@@ -144,12 +156,13 @@ function escapeHtml(text) {
 
 function nav_buttons_ready() {
 
+  var speed = 200
   // Fade out and logout 
   $('#logout-button').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
     $('#whole-content').animate({
-      opacity: 0}, 350, function() {
+      opacity: 0}, speed, function() {
         // When complete
         window.location.href = "logout";
       })
@@ -160,9 +173,31 @@ function nav_buttons_ready() {
     evt.preventDefault();
     evt.stopImmediatePropagation();
     $('#whole-content').animate({
-      opacity: 0}, 350, function() {
+      opacity: 0}, speed, function() {
         // When complete
         window.location.href = "add_image";
+      })
+  })
+
+  // Fade out and go to 'settings screen' 
+  $('#settings-button').click ( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    $('#whole-content').animate({
+      opacity: 0}, speed, function() {
+        // When complete
+        window.location.href = "settings";
+      })
+  })
+
+  // Fade out and go to 'help screen' 
+  $('#help-button').click ( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    $('#whole-content').animate({
+      opacity: 0}, speed, function() {
+        // When complete
+        window.location.href = "help";
       })
   })
 } // end function
@@ -255,6 +290,7 @@ function get_scroll_navs_ready() {
 
 }
 
+
 // START OF SCRIPT ON PAGE LOAD
 get_posts(full_refresh=true, 30,0)
 recursive_check_for_new_posts()
@@ -263,4 +299,3 @@ show_submit_button_when_typing()
 get_scroll_navs_ready()
 nav_buttons_ready()
 
-add_single_post_to_top()
