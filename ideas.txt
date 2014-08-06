@@ -25,10 +25,7 @@ Backend:
 
 ** forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
 * try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
-*** settings page within the app
 
-
-Frontend:
 
 main page 
 ** update moment js every now and again
@@ -38,15 +35,15 @@ main page
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
-
+** clean posts.js and add_image.js
 ** Add some webcam hint/message to help switch on
 
-* dictate
+* dictate functionality
 * add video
 
 *** Add users - fade opposite half of the screen
 
-7 *** upload to heroku then write documentation
+*** write documentation
 ** investigate testing with selenium
 ** add basic analytics before sharing
 

@@ -110,7 +110,7 @@ function submit_posts_button_ready() {
       hide_submit_button();
       create_post_from_html(html);
       setTimeout( function() {
-        get_posts(full_refresh=false, 20,0) 
+        get_posts(full_refresh=false, 5,0) 
       }, 500) // Adding a delay to avoid two very close requests to server
       remove_text_from_input();
       $('#post_input').focus()
@@ -198,7 +198,7 @@ function nav_buttons_ready() {
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts
     delay = 5000; //in milliseconds
-    get_posts(full_refresh=false, 20,0)
+    get_posts(full_refresh=false, 5,0)
     setTimeout(recursive_check_for_new_posts, delay)
 }
 

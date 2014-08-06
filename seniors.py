@@ -38,7 +38,7 @@ class Encoder(json.JSONEncoder):
 
 # TOKENS
 token_expiry_days = 30
-base_url = "http://localhost:5000/invite/"
+base_url = "http://salt-and-pepper.herokuapp.com/invite/"
 
 @app.before_request
 def before_request():
