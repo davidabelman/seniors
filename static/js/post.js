@@ -101,23 +101,17 @@ function submit_posts_button_ready() {
   // Focus on input page load
   $('#post_input').focus()
 
-  // // Make enter key click submit
-  // $("#post_input").keyup(function(event){
-  //   if(event.keyCode == 13){
-  //       $("#post_submit_button").click();
-  //   }
-  // });
-
   // Bind ajax to post user's mssage (with clean HTML) to server
   $('#post_submit_button').click( function(evt) {
       evt.preventDefault();
       evt.stopImmediatePropagation();
 
-      console.log('Clicked submit')
       var html = escapeHtml($('#post_input').val());
       hide_submit_button();
       create_post_from_html(html);
-      get_posts(full_refresh=false, 50,0)
+      setTimeout( function() {
+        get_posts(full_refresh=false, 20,0) 
+      }, 500) // Adding a delay to avoid two very close requests to server
       remove_text_from_input();
       $('#post_input').focus()
   }); // end submit
@@ -155,7 +149,6 @@ function escapeHtml(text) {
 }
 
 function nav_buttons_ready() {
-
   var speed = 200
   // Fade out and logout 
   $('#logout-button').click( function(evt) {
@@ -204,8 +197,8 @@ function nav_buttons_ready() {
 
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts
-    delay = 30000; //in milliseconds
-    get_posts(full_refresh=false, 30,0)
+    delay = 5000; //in milliseconds
+    get_posts(full_refresh=false, 20,0)
     setTimeout(recursive_check_for_new_posts, delay)
 }
 
