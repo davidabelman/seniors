@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-{{ super() }}{{session.get('network')}} room
+{{ super() }}{{session.get('user').get('network')}} room
 {% endblock %}
 
 {% block body %}
@@ -18,8 +18,8 @@
 				
 				
 				<div id='welcome-messages' class='can-fade quick-fade quick-fade-2'>
-					<h1>Welcome {{session.get('name')}}!</h1>
-					<input type=hidden id='user_name_hidden' value='{{session.get('name')}}'/> <!-- Store name -->
+					<h1>Welcome {{session.get('user').get('name')}}!</h1>
+					<input type=hidden id='user_name_hidden' value='{{session.get('user').get('name')}}'/> <!-- Store name -->
 				</div> <!-- end welcome-messages -->
 				
 

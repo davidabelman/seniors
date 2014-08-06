@@ -204,7 +204,7 @@ function nav_buttons_ready() {
 
 function recursive_check_for_new_posts(){
     // Loops the poll on server via AJAX to check for new posts
-    delay = 6000; //in milliseconds
+    delay = 30000; //in milliseconds
     get_posts(full_refresh=false, 30,0)
     setTimeout(recursive_check_for_new_posts, delay)
 }

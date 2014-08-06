@@ -35,7 +35,7 @@ log in to group
 				</div>
 
 				<!-- Hidden network name -->
-				<input type="hidden" value="{{session.get('network')}}" id='network_hidden'>
+				<input type="hidden" value="{{session.get('user').get('network')}}" id='network_hidden'>
 				
 				<div class='one_line_entry_box centered_80pc_width'>
 					<input type="text" name="firstname" id='firstname' class='big-input' placeholder='Their first name...' /required>
@@ -90,7 +90,7 @@ log in to group
 			<h2 class='page2a'>We have sent a link to <span class='invited-name'>your friend</span> inviting them to your group.</h2>
 
 			<h2 class='page2b'>You now need to show <span class='invited-name'>your friend</span> how to log on at
-				<br><a href='http://localhost:5000/enter/{{session.get('network')}}'>http://localhost:5000/enter/{{session.get('network')}}</a><br>
+				<br><a href='http://localhost:5000/enter/{{session.get('user').get('network')}}'>http://localhost:5000/enter/{{session.get('user').get('network')}}</a><br>
 				using the name and password you just created.</h2>
 
 			<!-- <p class='page2b shift-down-20'>Once logged, in <span class='invited-name'>they</span> will be able to change these, if desired. Any forgotten password requests will be sent to your email, unless <span class='invited-name'>he/she</span> adds their own email address.</p> -->

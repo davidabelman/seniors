@@ -35,7 +35,7 @@ def create_fake_users(db):
 	if u=='y':
 		db.users.remove()
 
-	network_name = 'test10'
+	network_name = 'test11'
 	to_add =  	[{ 	
 					'name':'David',
 					'email':'test0@gmail.com',
@@ -44,7 +44,8 @@ def create_fake_users(db):
 					'picture' : random.choice(animals),
 					'online' : False,
 					'network' : network_name,
-					'role' : 1
+					'role' : 1,
+					'completed_registration':True,
 				},
 				{ 	
 					'name':'Ben',
@@ -54,7 +55,8 @@ def create_fake_users(db):
 					'picture' : random.choice(animals),
 					'online' : False,
 					'network' : network_name,
-					'role' : 0
+					'role' : 0,
+					'completed_registration':True,
 				},
 				{ 	
 					'name':'Annie',
@@ -64,7 +66,8 @@ def create_fake_users(db):
 					'picture' : random.choice(animals),
 					'online' : False,
 					'network' : network_name,
-					'role' : 0
+					'role' : 0,
+					'completed_registration':True,
 				},
 				{ 	
 					'name':'Jack',
@@ -74,7 +77,8 @@ def create_fake_users(db):
 					'picture' : random.choice(animals),
 					'online' : False,
 					'network' : 'Smith',
-					'role' : 0
+					'role' : 0,
+					'completed_registration':True,
 				},
 				{ 	
 					'name':'Brenda',
@@ -85,7 +89,11 @@ def create_fake_users(db):
 					'online' : False,
 					'network' : network_name,
 					'role' : 0,
-					'token' : 'exampletoken123'
+					'token' : '868122211',
+					'token_not_used' : True,
+					'admin_email' : 'davidabelman@gmail.com',
+					'admin_name' : 'David',
+					'completed_registration':False,
 				},
 				]		
 	collection = db.users

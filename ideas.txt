@@ -38,13 +38,13 @@ main page
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
-*** check session variables for weird errors
-*** tidy code
 
 ** Add some webcam hint/message to help switch on
 
 * dictate
 * add video
+
+*** Add users - fade opposite half of the screen
 
 7 *** upload to heroku then write documentation
 ** investigate testing with selenium

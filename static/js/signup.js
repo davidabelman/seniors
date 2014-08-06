@@ -66,7 +66,7 @@ function validate_email() {
   valid_response = isEmail(email)
   if (valid_response===true) {
       $('#error-email').hide()
-      $('#success-email').text("Looks good to me!").fadeIn( function() {
+      $('#success-email').text("Great!").fadeIn( function() {
                         setTimeout( function() {
                             $('.page1of2').fadeOut( function() {
                               $('.page2of2').fadeIn();

@@ -7,6 +7,7 @@ from secret import SECRET_KEY
 from mailgun import send_access_token_email
 from tools.bing_search import bing_search_and_return_urls
 from tools.icons import animals
+from model import User, load_user
 import dropbox_upload
 import mongo
 import json, urllib, urllib2
@@ -39,16 +40,19 @@ class Encoder(json.JSONEncoder):
 token_expiry_days = 30
 base_url = "http://localhost:5000/invite/"
 
-@app.route('/temp')
-def temp():
-	return render_template('videotest2.html')
+@app.before_request
+def before_request():
+	# If we have a user in our session variable, create a user object
+    global USER 
+    USER = User( session.get( 'user', {} ) )
+    USER.to_console()
 
 @app.route('/')
 def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	if session.get('name') and session.get('network'):
+	if USER.is_logged_in():
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -88,12 +92,8 @@ def add_users():
 	"""
 	This is where an admin can add other group members
 	"""
-	network = session.get('network')
-	admin_name = session.get('name')
-	if admin_name and network:
-		admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
-		if admin_role==1:
-			return render_template('add_users.html')
+	if USER.is_admin():
+		return render_template('add_users.html')
 	return redirect(url_for('home'))
 
 @app.route('/invite/<token>', methods=['GET', 'POST'])
@@ -102,34 +102,30 @@ def accept_invite(token):
 	Screen on which a user can join a group (only would reach this through secret access token)
 	"""
 	token = long(token)
-	user = Users.find_one({'token':token})
-
-	if user:
-		sender = user.get('admin_email')
-		if user.get('token_not_used'):
+	user = load_user(Users, {'token':token} )
+	if user:	
+		session['user'] = user
+		USER = User( user )
+		if USER._('token_not_used'):
 			# Token not yet used
-			print 'Token not yet used:', user.get('token_not_used')
-			print 'Days left:', token_expiry_days - ((datetime.datetime.now() - user.get('token_sent')).days )
+			if app.debug:
+				print 'Days left on token:', token_expiry_days - ((datetime.datetime.now() - USER._('token_sent')).days )
 
-			if (datetime.datetime.now() - user.get('token_sent')).days < token_expiry_days:
+			if (datetime.datetime.now() - USER._('token_sent')).days < token_expiry_days:
 				# We have an unused token, and it is not yet expired.
 				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
-				session.clear()
-				session['network']=user.get('network')
-				session['name']=user.get('name')
-				session['email']=user.get('email')
-				session['token']=token
-				session['picture']=user.get('picture')
-				return render_template('valid_token.html',
-					name=session['name'], network=session['network'])
+				return render_template('valid_token.html', name=USER._('name'), network=USER._('network'))
 			else:
 				# We have a token, but it has expired
-				return render_template('expired_token.html', sender=sender)
+				session.clear()
+				return render_template('expired_token.html', sender=USER._('admin_email'))
 		else:
 			# Token has been used already
-			return render_template('used_token.html', sender=sender)
+			session.clear()
+			return render_template('used_token.html', sender=USER._('admin_email'))
 	else:
 		# The link was invalid
+		session.clear()
 		return render_template('invalid_token.html')
 
 
@@ -145,12 +141,11 @@ def settings():
 	"""
 	For user to change settings (extra options for admin)
 	"""
-	name = session.get('name')
-	email = session.get('email')
-	network = session.get('network')
-	if name and network:
-		admin = Users.find_one({'network':network, 'name':name}).get('role')
-		return render_template('settings.html', admin = admin, name=name, email=email, animals=animals)
+	# name = session.get('name')
+	# email = session.get('email')
+	# network = session.get('network')
+	if USER.is_logged_in():
+		return render_template('settings.html', admin = USER._('role'), name=USER._('name'), email=USER._('email'), animals=animals)
 	else:
 		return redirect(url_for('home'))
 
@@ -188,17 +183,21 @@ def check_network_username_password():
 	"""
 	network = request.json['network']
 	username = request.json['username']
-	password = request.json['password']
-	
+	password = request.json['password']	
 	user = Users.find_one({'name':username, 'network':network})
 	known_password_hash = user['password_hash']
-	response = check_password_hash(known_password_hash, password)
+	valid_password = check_password_hash(known_password_hash, password)
 	
-	if response==True:
-		session['name'] = username
-		session['network'] = network
-		session['picture'] = user.get('picture')
-		session['email'] = user.get('email')
+	if valid_password:
+		# Get user object to store as session variable
+		session['user'] = load_user(Users, {'name':username, 'network':network} )
+		USER = session['user']
+
+		# TODO delete
+		# session['name'] = username
+		# session['network'] = network
+		# session['picture'] = user.get('picture')
+		# session['email'] = user.get('email')
 	else:
 		session.clear()
 		return json.dumps({'status':0, 'data':'This is not the correct password.'})
@@ -209,9 +208,8 @@ def check_network_username_password():
 		print "Generated from submit", generate_password_hash(password)
 		print "Stored in database", known_password_hash
 		print "Try check_password_hash(known_password_hash, password)..."
-		print "Response is", response
 
-	return json.dumps({'status':int(response)})
+	return json.dumps({'status':int(valid_password)})
 
 @app.route('/_submit_post_entry', methods=['GET', 'POST'])
 def submit_feed_entry():
@@ -220,13 +218,13 @@ def submit_feed_entry():
 	On the client side the entry is added to the top of the page
 	"""
 	content = request.json['content']
-	if session.get('name') and session.get('network'):
+	if USER.is_logged_in():
 		to_add ={ 	
-					'name':session.get('name'),
+					'name': USER._('name'),
 					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : content,
-					'network' : session.get('network'),
-					'picture' : session.get('picture')
+					'network' : USER._('network'),
+					'picture' : USER._('picture')
 				}
 		Posts.insert(to_add)
 		response = 1
@@ -247,20 +245,18 @@ def get_posts():
 	"""
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
-	if session.get('name') and session.get('network'):
-		posts = mongo.return_last_X_posts(Posts, network=session.get('network'), limit=limit, skip=skip)
+	if USER.is_logged_in():
+		posts = mongo.return_last_X_posts(Posts, network=USER._('network'), limit=limit, skip=skip)
 		return json.dumps(list(posts), cls=Encoder)
 	else:
-		return "Error: no user logged in"
+		return "Authentication error: you are not logged in to your group."
 		
-
 @app.route('/_network_exists')
 def network_exists():
 	"""
 	Determines whether network already exists
 	"""
 	network = request.args.get('network')
-	print network
 	users = list(Users.find({'network':network}))
 	if users:
 		response = 1
@@ -288,10 +284,11 @@ def name_in_network_exists():
 def create_account_join_network():
 	"""
 	Creates a new user joining an exiting group (based off an invite)
+	This is the user adding their username & password from the email link
 	"""
 	name = request.json['name']
 	password = request.json['password']
-	token = long(session['token'])
+	token = long(USER._('token'))
 
 	object_id = Users.find_one({'token':token}).get('_id')
 
@@ -302,19 +299,18 @@ def create_account_join_network():
 													'name':name,
 													'password_hash':generate_password_hash(password),
 													'register' : datetime.datetime.now(),
-													}
-										}, upsert=False
+													'completed_registration' : True,
+													'token_not_used' : False,
+										}
+								}, upsert=False
 					)
 
 		# Add session name as we didn't add it when they clicked on link (we didn't know name yet)
-		session['name'] = name
-		
-		# Update token to 'used'
-		Users.update({'token':token}, {"$set": {'token_not_used':False} })
+		session['user'] = load_user(Users, {'_id':object_id} )
 		return json.dumps('[1]')
 		
 	else:
-		print "Can't find user - though should be able to as they were created when token was."
+		print "Error: Can't find user. Though should be able to as they were created when token was."
 
 
 @app.route('/_create_account_create_network', methods=['GET', 'POST'])
@@ -328,7 +324,7 @@ def create_account_create_network():
 	password = request.json['password']
 	picture = random.choice(animals)
 
-	# Could run server checks here to ensure all info OK
+	# Final check to make sure network not in use
 	u1 = Users.find_one({'network':network})
 
 	if not u1:
@@ -340,16 +336,15 @@ def create_account_create_network():
 						'picture' : picture,
 						'online' : False, #TODO
 						'network' : network,
-						'role' : 1 # i.e. admin
+						'role' : 1, # i.e. admin
+						'completed_registration':True
 				}
 		# Add user to DB		
 		Users.insert(to_add)
 
 		# Sign user in
-		session['name'] = name
-		session['network'] = network
-		session['email'] = email
-		session['picture'] = picture
+		session['user'] = load_user(Users, {'name':name, 'network':network} )
+		USER = session['user']
 
 		if app.debug:
 			print "Added user (%s, %s) to database." %(name, network)
@@ -364,7 +359,6 @@ def create_account_create_network():
 					'picture' : 'robo'
 				}
 		Posts.insert(to_add)
-
 		return json.dumps(1)
 
 	else:
@@ -378,44 +372,39 @@ def add_user_on_behalf():
 	"""
 	name = request.json['name']
 	password = request.json['password']
-	network = session.get('network')
-	admin_name = session.get('name')
-	admin_email = session.get('email')
-	admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
+	# network = session.get('network')
+	# admin_name = session.get('name')
+	# admin_email = session.get('email')
+	# admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
 
 	# Check someone is logged in and is an admin for that group
-	if admin_name and network and admin_role==1:
+	if USER.is_admin():
 		# Check that username does not exist already within this network
-		existing = Users.find_one({'network':network, 'name':name})
+		existing = Users.find_one({'network':USER._('network'), 'name':name})
 		if not existing:
 			# No user exists with this username, we can add them
 			to_add = { 	
 						'name':name,
 						'email':"",
-						'admin_email': admin_email,
+						'admin_name' : USER._('name'),
+						'admin_email': USER._('email'),
 						'password_hash': generate_password_hash(password),
 						'register' : datetime.datetime.now(),
 						'picture' : random.choice(animals),
 						'online' : False, #TODO
-						'network' : network,
+						'network' : USER._('network'),
 						'role' : 0, # i.e. admin
+						'completed_registration':True
 					}	
 			Users.insert(to_add)
 			return json.dumps(1)
 		else:
 			message =  "Name already exists in group. Please pick another name."
-			if app.debug:
-				print message
 			return json.dumps(message)
 	else:
-		print 'admin_name', admin_name, 'network', network, 'admin_role', admin_role
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
 		return json.dumps(message)
 
-
-
-
-	return None
 
 @app.route('/_add_user_via_access_token', methods=['GET', 'POST'])
 def add_user_via_access_token():
@@ -425,40 +414,37 @@ def add_user_via_access_token():
 	"""
 	email = request.json['email']
 	firstname = request.json['firstname']
-	admin_email = session.get('email')
-	#admin = request.json['admin'] not including this option here any more
+	
 	# Check if allowed to add people
-	if session.get('name') and session.get('network'):
-		network = session.get('network')
-
+	if USER.is_admin():
 		# Check that username does not exist already within this network
-		existing = Users.find_one({'network':network, 'name':firstname})
+		existing = Users.find_one({'network':USER._('network'), 'name':firstname})
 		if not existing:
 			# Generate access token and add user to database
 			token = random.getrandbits(32)
-
 			to_add = { 	
 							'name':firstname,
 							'email':email,
-							'admin_email':admin_email,
+							'admin_email':USER._('email'),
 							'password_hash': "",
 							'register' : "",
 							'picture' : random.choice(animals),
 							'online' : False, #TODO
-							'network' : network,
+							'network' : USER._('network'),
 							'role' : 0, # i.e. admin TODO
 							'token' : token,
 							'token_not_used' : True,
-							'token_sent' : datetime.datetime.now()
+							'token_sent' : datetime.datetime.now(),
+							'completed_registration' : False
 						}	
 			Users.insert(to_add)
 
 			# Send user an access token type of link
 			access_url = base_url+str(token)
 			send_access_token_email(
-					sender=session['name'],
-					sender_email=session['email'],
-					network=session['network'],
+					sender=USER._('name'),
+					sender_email=USER._('email'),
+					network=USER._('network'),
 					recipient=firstname,
 					recipient_email=email,
 					url=access_url
@@ -480,8 +466,7 @@ def get_bing_image_urls():
 	"""
 	Given a query string and extra parameters (e.g. cartoon, funny), requests results from Bing and returns top X URLs
 	"""
-	user = Users.find_one({'network':session.get('network')})
-	if user:
+	if USER.is_logged_in():
 
 		query = request.json['query']
 		funny = int(request.json['funny'])
@@ -508,12 +493,13 @@ def upload_img_to_dropbox():
 	"""
 	Decodes base 64 string to image file, then uploads file to dropbox
 	"""
-	base = request.json['base']
-	print base
-	base_clean = base.replace('data:image/jpeg;base64,','')
-	print base_clean
-	url = dropbox_upload.convert_image_and_upload(base_clean)
-	return json.dumps(url)
+	if USER.is_logged_in():
+		base = request.json['base']
+		base_clean = base.replace('data:image/jpeg;base64,','')
+		url = dropbox_upload.convert_image_and_upload(base_clean)
+		return json.dumps(url)
+	else:
+		return None
 
 
 @app.route('/_change_profile_picture', methods=['GET', 'POST'])
@@ -522,12 +508,10 @@ def change_profile_picture():
 	Post request to change profile picture
 	"""
 	picture = request.json['animal']
-	name = session.get('name')
-	network = session.get('network')
-	user = Users.find_one({'network':network, 'name':name})
-	if user:
-		Users.update({'network':network, 'name':name}, {"$set": {'picture':picture} })
-		session['picture']=picture
+	
+	if USER.is_logged_in():
+		Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'picture':picture} })
+		session['user']['picture'] = picture
 		return json.dumps(1)
 	else:
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
@@ -540,17 +524,15 @@ def change_username():
 	Post request to change username
 	"""
 	new_name = request.json['new_name']
-	name = session.get('name')
-	network = session.get('network')
-	user = Users.find_one({'network':network, 'name':name})
-	name_changed_before = Users.find_one({'network':network, 'name':name}).get('name_changed_before')
-	if user:
-		if not name_changed_before:
+	if USER.is_logged_in():
+		if not USER._('name_changed_before'):
 			# Check to make sure new name doesn't exist already
-			existing_user = Users.find_one({'network':network, 'name':new_name})
+			existing_user = Users.find_one({'network':USER._('network'), 'name':new_name})
 			if not existing_user:
-				Users.update({'network':network, 'name':name}, {"$set": {'name':new_name, 'name_changed_before':True} })
-				session['name']=new_name
+				Users.update({'network':USER._('network'), 'name':USER._('name')},
+					{"$set": {'name':new_name, 'name_changed_before':True} })
+				session['user']['name']=new_name
+				session['user']['name_changed_before']=True
 				return json.dumps(1)
 			else:
 				# This username is already is use
@@ -571,18 +553,15 @@ def change_email():
 	"""
 	new_email = request.json['new_email']
 	password = request.json['password']
-	name = session.get('name')
-	network = session.get('network')
-	user = Users.find_one({'network':network, 'name':name})
 	
 	# Check user is logged in
-	if user:
-		known_password_hash = user['password_hash']
+	if USER.is_logged_in():
+		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
 		response = check_password_hash(known_password_hash, password)
 		# Check password correct
 		if response:
-			Users.update({'network':network, 'name':name}, {"$set": {'email':new_email} })
-			session['email']=new_email
+			Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'email':new_email} })
+			session['user']['email']=new_email
 			return json.dumps(1)
 		else:
 			# This password didn't match known password
@@ -599,17 +578,14 @@ def change_password():
 	"""
 	old_password = request.json['old_password']
 	new_password = request.json['new_password']
-	name = session.get('name')
-	network = session.get('network')
-	user = Users.find_one({'network':network, 'name':name})
 	
 	# Check user is logged in
-	if user:
-		known_password_hash = user['password_hash']
+	if USER.is_logged_in():
+		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
 		response = check_password_hash(known_password_hash, old_password)
 		# Check password correct
 		if response:
-			Users.update({'network':network, 'name':name}, {"$set": {'password_hash':generate_password_hash(new_password)} })
+			Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'password_hash':generate_password_hash(new_password)} })
 			return json.dumps(1)
 		else:
 			# This password didn't match known password
@@ -626,7 +602,7 @@ def page_not_found(e):
 	return render_template('error.html'), 404
 
 @app.errorhandler(500)
-def page_not_found(e):
+def server_error(e):
 	return render_template('error.html'), 500
 
 ###################### START ######################
