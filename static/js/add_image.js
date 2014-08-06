@@ -19,6 +19,12 @@ function prepare_LHS_button_fading_behaviour () {
 			// Show relevant RHS content
 			setTimeout ( function() {
 				$('#bing-rhs').fadeIn(300)
+				// Focus on search box
+	    		$('#img-input').focus()
+	    		// Return = submit
+				$("#img-input").keyup(function(event){
+				    if(event.keyCode == 13){ $("#bing-search-submit").click();  }
+				});
 			} , 51 ) 
 		});
 
@@ -83,12 +89,13 @@ function prepare_to_get_content_from_bing() {
 	$('#bing-search-submit').click ( function(evt) {
 		evt.preventDefault();
       	evt.stopImmediatePropagation();
+      	var query = $('#img-input').val()
 
       	// Make call to server
       	$.ajax({
               url:'/_get_bing_image_urls',
               data: JSON.stringify({
-                "query":$('#img-input').val(),
+                "query":query,
                 "funny":0,
                 "cartoon":0,
                 "animated":0,
@@ -138,7 +145,7 @@ $('.img-in-img-grid').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
 		url = $(this).attr("src")
-		img_link = "<p class='post-body'><img src="+url+" width='30%'></p>"
+		img_link = "<p class='post-body'><img src="+url+" width='40%'></p>"
 		create_post_from_html(img_link)
 	})
 }
@@ -169,6 +176,22 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
+function show_and_hide_submit_button() {
+	$('#bing-search-submit').hide();
+	$('#img-input').keyup( function(evt) {
+		evt.preventDefault()
+		evt.stopImmediatePropagation()
+		console.log('asda')
+		if ($('#img-input').val().length >= 1 ) {
+				$('#bing-search-submit').show();
+				prepare_to_get_content_from_bing()
+		}
+		else if ($('#img-input').val().length == 0 ) {
+			$('#bing-search-submit').hide()
+		}
+	})
+}
+
 
 // TODO duplicated in settings.js
 function fade_page_in(fade_in_out) {
@@ -183,6 +206,6 @@ function fade_page_in(fade_in_out) {
 window.webcamActivated = 0 // Later switched to 1 if activated
 fade_page_in('in')
 prepare_LHS_button_fading_behaviour()
-prepare_to_get_content_from_bing()
 
+show_and_hide_submit_button()
 

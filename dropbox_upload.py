@@ -1,4 +1,5 @@
 # Include the Dropbox SDK libraries
+import os, binascii
 from dropbox import client, rest, session
 from secret import DROPBOX_APP_KEY, DROPBOX_APP_SECRET, DROPBOX_TOKEN_KEY, DROPBOX_TOKEN_SECRET
  
@@ -11,7 +12,8 @@ def convert_image_and_upload(img_string):
 	Takes image string in BASE64 as input (e.g. from canvas object) and provides public dropbox link
 	"""
 	import base64, string, random
-	filename = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+	#filename = '%030x' % random.randrange(16**50) Less secure as uses a seed?
+	filename = binascii.b2a_hex(os.urandom(30))
 	img = base64.decodestring(img_string)
 	put = client.put_file('/%s.jpeg'%filename, img) 
 	share = client.share('/%s.jpeg'%filename, short_url=False)

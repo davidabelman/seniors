@@ -76,7 +76,8 @@ var make_user_icon_clickable = function() {
     fade_unselected_icons('fade')
     
     // Show password entry with correct name
-    $('#password_entry').fadeIn()
+    $('#password_entry').fadeIn();
+    $('#password_enter_field').focus();
     $('#chosen_name').text( $(this).find('.user-icon-span').text() ) // Update the name within the span based on the clicked item
 
   }); // end click

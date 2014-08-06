@@ -210,6 +210,9 @@ a.disabled {
   border: solid 8px #ff7b00;
 }
 
+.green-border {
+  border-color: #3c8 !important;
+}
 
 /* POSTS */
 .post-list-area {
@@ -249,7 +252,7 @@ a.disabled {
 	font-size: 140%;
 }
 .self-post {
-	background: #dfd !important;
+	background: #def !important;
 	border-radius: 16px;
 }
 .hidden-new-post {
@@ -338,6 +341,10 @@ a.disabled {
 	font-size: 190%;
 	padding: 30px;
 }
+.page-main-subheading h3{
+	font-weight: 300;
+	font-size: 130%;
+}
 
 .page-main-subsubheading h2{
 	font-size: 150%;
@@ -357,6 +364,7 @@ a.disabled {
 	height: 90px;
 	padding-bottom: 10px;
 	margin-bottom: 10px	;
+	text-align: center !important;
 }
 .one_line_entry_box_heavy input {
 	font-size: 155% !important;
@@ -379,15 +387,20 @@ a.disabled {
 	width: 80%;
 }
 
-.error-message {
+.flash-message {
 	display: none;
+	font-size: 130%;
+	font-weight: 700;
+	padding: 20px;
+	color: #e60;
+
 }
-.error-message h2 {
+/*.error-message h2 {
 	font-size: 150%;
 	font-weight: bold;
 	padding: 30px;
 	color: #e60;
-}
+}*/
 
 #network_does_not_exist_message {
 	display: none;
@@ -483,8 +496,12 @@ a.disabled {
 	margin-top: 40px;
 }
 
+.green-text {
+	color: #3c8;
+}
+
 .green-button {
-	background: #3ac98d;
+	background: #3c8;
 	-webkit-box-shadow: 0px 3px 0px #173;
     -moz-box-shadow: 0px 3px 0px #173;
     box-shadow: 0px 3px 0px #173;
@@ -498,25 +515,43 @@ a.disabled {
     top:1px;
 }
 .green-button:hover {
-	background: #3ae18d;
+	background: #5d9;
 }
 
 .blue-button {
 	background: #0099ff;
-	-webkit-box-shadow: 0px 3px 0px #173;
-    -moz-box-shadow: 0px 3px 0px #173;
-    box-shadow: 0px 3px 0px #173;
+	-webkit-box-shadow: 0px 3px 0px #227;
+    -moz-box-shadow: 0px 3px 0px #227;
+    box-shadow: 0px 3px 0px #227;
 }
 
 .blue-button:active{
-    -webkit-box-shadow: 0px 2px 0px #173;
-    -moz-box-shadow: 0px 2px 0px #173;
-    box-shadow: 0px 2px 0px #173;
+    -webkit-box-shadow: 0px 2px 0px #227;
+    -moz-box-shadow: 0px 2px 0px #227;
+    box-shadow: 0px 2px 0px #227;
     position:relative;
     top:1px;
 }
 .blue-button:hover {
 	background: #52b7f2;
+}
+
+.grey-button {
+	background: #999;
+	-webkit-box-shadow: 0px 3px 0px #400;
+    -moz-box-shadow: 0px 3px 0px #400;
+    box-shadow: 0px 3px 0px #400;
+}
+
+.grey-button:active{
+    -webkit-box-shadow: 0px 2px 0px #400;
+    -moz-box-shadow: 0px 2px 0px #400;
+    box-shadow: 0px 2px 0px #400;
+    position:relative;
+    top:1px;
+}
+.grey-button:hover {
+	background: #ccc;
 }
 
 /*========================================================================*/
@@ -588,7 +623,7 @@ a.disabled {
 	padding: 6px;
 }
 .img-in-img-grid:hover {
-	border: solid 6px #e60;
+	border: solid 6px #3c8;
 	padding: 0px;
 }
 .div-in-img-grid {
@@ -615,4 +650,24 @@ a.disabled {
 .icon-pick:hover {
 	border: solid 2px #e60;
 	
+}
+
+
+/*========================================================================*/
+/*HELP PAGE*/
+/*========================================================================*/
+.help-page-content h2 {
+	font-size: 200%;
+	font-weight: 700;
+}
+
+.help-page-content p {
+	font-size: 130%;
+	font-weight: 200;
+}
+
+.help-page-content .a-button {
+	font-size: 100%;
+	width: 50%;
+	margin-top: 30px;
 }

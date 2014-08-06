@@ -34,24 +34,22 @@ main page
 ** update moment js every now and again
 ** add notification for new messages
 ** colour new messages as they pop up
+** add 'see more posts' at bottom or automatically load
 
-*** settings page
+5 *** make 'create new group' page nicer
 
-** make 'create new group' page nicer
+* Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
-*** add javascript form validation for password, limit usernames, etc.
-
-** Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
-
-** check session variables for weird errors
+*** check session variables for weird errors
+6 *** tidy code
 
 ** Add some webcam hint/message to help switch on
 
-*** create error pages
-
-* help
 * dictate
 * add video
 
+7 *** upload to heroku then write documentation
+** investigate testing with selenium
+** add basic analytics before sharing
 
 ICONS: http://www.iconarchive.com/show/animal-icons-by-martin-berube.html

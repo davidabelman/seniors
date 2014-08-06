@@ -6,105 +6,134 @@ Signup
 
 {% block body %}
 
-<div class='centered-page'>
+<div class='centered-page initially-hidden'>
 	
 	{% include 'navbar.html' %}
 
 	<div class='horizontal-header'>
 		<div class='page-main-heading'>
-			<h1 class='page1of2'>
+			<h1>
 				Create your group
 			</h1>
-			
-			<h1 class='page2of2'>Choose your user</h1>
 		</div>
 	</div> <!-- end horizontal-header container -->
 
-	<div class='container-fluid'>
-		<!-- <div class='page-main-subheading'>
-			{% if network %}
-			<h2>Press 'Enter' to enter the {{network}} group.</h2>
-			{% else %}
-			<h2>Type in your network name, then press 'Enter'.</h2>
-			{% endif %}
-		</div>
-
-		<div class='one_line_entry_box_50pc'>
-			<input type="text" name="network" id='network' value='{{network}}' class='big-input'>
-		</div>
-		<div class='centered_20pc_width'>
-			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
-		</div>
-
-		<div class='error-message' id='network_does_not_exist_message'>
-			<h2>I'm sorry, it appears this network does not exist. Please try again.</h2>
-		</div> -->
+	<!-- page 1 of 2 for group name and email -->
+	<div class='container-fluid page1of2'>
 		<row>
-			<div class='col-sm-10' id='form-container'>
-				<row>
-					<div class='col-sm-5 form-line'>
-					<label for="network">Name of your group</label> 
-					</div>
-			  		<div class='col-sm-7 form-line'>
-			  		<input class=' big-input big-input-multiline-adjust' type="text" name="network" id="network" required />
-			  		</div>
-				</row>
-				<row>
-					<div class='col-sm-5 form-line'>
-					<label for="name">Your first name</label>
-					</div>
-					<div class='col-sm-7 form-line'>
-			 		 <input class=' big-input big-input-multiline-adjust' type="text" name="name" id="name" required />
-			 		 </div>
-				</row>
-				<row>
-					<div class='col-sm-5 form-line'>
-					<label for="email">Your email</label>
-					</div>
-					<div class='col-sm-7 form-line'>
-			  		<input class=' big-input big-input-multiline-adjust' type="email" name="email" id="email" required/>
-			  		</div>
-				</row>
-				<row>
-					<div class='col-sm-5 form-line'>
-			  		<label for="password">Password</label>
-			  		</div>
-			  		<div class='col-sm-7 form-line'>
-			 		 <input class=' big-input big-input-multiline-adjust' type="password" name="password" id="password" required/>
-			 		</div>
-				</row>
-				<row>
-					<div class='col-sm-5 form-line'>
-			  		<label for="password_confirm">Confirm password</label>
-			  		</div>
-			  		<div class='col-sm-7 form-line'>
-			  		<input class='big-input big-input-multiline-adjust' type="password" name="password_confirm" id="password_confirm" required/>
-			  		</div>
-				</row>
-				<row>
-			  		<div class='col-sm-5' for=""></div>
-			  		<div class='col-sm-7 form-line'>
-			  		<a class='a-button' href='#' id='registration_submit'>I'm finished, let's go!</a>
-			  		</div>
-				</row>
-				
-			</div> <!-- end form container -->
+			
 
-			<div class='col-sm-2' id='hints-container'>
-				<div id='network-name-status'>
-					<span id='network-ok' class='color-success'>Group name<br>is OK!</span>
-					<span id='network-not-ok' class='color-fail'>Group name<br>not OK</span>
+			<div class='col-sm-6 page1aof2'>
+				<div class='page-main-subheading shift-up'>
+					<h2><strong>Decide on your group name<strong></h2>
+					<h3 class='shift-up-2'>Everyone in the group will need to remember the group name, so make it something memorable.</h3>
 				</div>
-				<div class='filler'> <br></div>
-				<div id='hints-div'>
-					<h1><!-- Hint title --></h1>
-					<p><!--Hint body--></p>
+				
+
+				<div class='one_line_entry_box centered_80pc_width shift-down-3'>
+					<input type="text" name="network-input" id='network-input' class='big-input centered-page' placeholder='Type group name here...' /required>
 				</div>
-			</div> <!-- end hints container -->
-	
-		<div id='error_messages'></div>
-	</div> <!-- end fluid container -->
-	
+
+				<div class='centered_50pc_width'>
+					<a href='#' id='network-submit' class='a-button' >Check name is OK</a>
+				</div>
+
+				<div class='flash-message' id='error-network'>
+					<!--Error message to go here-->
+				</div>
+				<div class='flash-message green-text' id='success-network'>
+					<!--Success message to go here-->
+				</div>
+
+			</div>
+
+
+			<div class='col-sm-6 page1bof2 verticalLine' style='display:none'>
+				<div class='page-main-subheading shift-up'>
+					<h2><strong>Connect your email<strong></h2>
+					<h3 class='shift-up-2'>As group creator you will have administrator privileges (such as adding group members and resetting passwords). We need your email address in order to be able to contact you.</h3>
+				</div>
+				
+
+				<div class='one_line_entry_box centered_80pc_width shift-down-3'>
+					<input type="text" name="email-input" id='email-input' class='big-input centered-page' placeholder='Type email address here...' /required>
+				</div>
+
+				<div class='centered_50pc_width'>
+					<a href='#' id='email-submit' class='a-button' >Continue</a>
+				</div>
+
+				<div class='flash-message' id='error-email'>
+					<!--Error message to go here-->
+				</div>
+				<div class='flash-message green-text' id='success-email'>
+					<!--Success message to go here-->
+				</div>
+
+			</div>
+
+		</row>
+	</div> <!-- end page 1 of 2 -->
+
+	<!-- page 2 of 2 for username and password -->
+	<div class='container-fluid page2of2'>
+		<row>
+			
+
+			<div class='col-sm-6 page2aof2'>
+				<div class='page-main-subheading shift-up'>
+					<h2><strong>Enter your first name<strong></h2>
+					<h3 class='shift-up-2'>This is what you will be known as in the group. Note that two people can't have identical names in a group (so if there were two Joe's, you may need a <i>Joe A</i> and a <i>Joe B</i>).</h3>
+				</div>
+				
+
+				<div class='one_line_entry_box centered_80pc_width shift-down-3'>
+					<input type="text" name="name-input" id='name-input' class='big-input centered-page' placeholder='Type first name here...' /required>
+				</div>
+
+				<div class='centered_50pc_width'>
+					<a href='#' id='name-submit' class='a-button' >Check name is OK</a>
+				</div>
+
+				<div class='flash-message' id='error-name'>
+					<!--Error message to go here-->
+				</div>
+				<div class='flash-message green-text' id='success-name'>
+					<!--Success message to go here-->
+				</div>
+
+			</div>
+
+
+			<div class='col-sm-6 page2bof2 verticalLine' style='display:none'>
+				<div class='page-main-subheading shift-up'>
+					<h2><strong>Create your password<strong></h2>
+					<h3 class='shift-up-2'>You will need to remember this next time you visit!</h3>
+				</div>
+				
+
+				<div class='one_line_entry_box centered_80pc_width shift-down-3'>
+					<input type="password" name="password-input" id='password-input' class='big-input centered-page' placeholder='Type password here...' /required>
+				</div>
+				<div class='one_line_entry_box centered_80pc_width '>
+					<input type="password" name="password-confirm-input" id='password-confirm-input' class='big-input centered-page' placeholder='Confirm password here...' /required>
+				</div>
+
+				<div class='centered_50pc_width'>
+					<a href='#' id='password-submit' class='a-button' >Continue</a>
+				</div>
+
+				<div class='flash-message' id='error-password'>
+					<!--Error message to go here-->
+				</div>
+				<div class='flash-message green-text' id='success-password'>
+					<!--Success message to go here-->
+				</div>
+
+			</div>
+
+		</row>
+	</div> <!-- end page 1 of 2 -->
 
 </div> <!-- end centred page -->
 

@@ -61,8 +61,9 @@ settings
 
 				<hr>
 				<div class='centered_80pc_width shift-down-2'>
-					<a href='#' id='back-to-group-button' class='a-button green-button' >Go back to group page</a>
+					<a href='#' id='back-to-group-button' class='a-button grey-button' >Go back to group page</a>
 				</div>
+				<div class='white-space'></div>
 
 
 			</div> <!-- end left panel -->
@@ -168,6 +169,7 @@ settings
 								<img src="/static/img/{{animal}}-icon.png" width='80px' class="icon-pick inline" animal='{{animal}}'>
 							</div>
 							{% endfor %}
+							<div class='white-space'></div>
 						</div>
 					</div><!--  end page 1 of 2 -->
 
@@ -192,12 +194,12 @@ settings
 				
 
 
-{% block scripts_bottom %}
-	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
-	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
-	
-{% endblock %}
+	{% block scripts_bottom %}
+		{{ super() }}
+		<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
+		<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
+		
+	{% endblock %}
 
 {% endblock %}
 

@@ -209,8 +209,10 @@ function recursive_check_for_new_posts(){
     setTimeout(recursive_check_for_new_posts, delay)
 }
 
-function show_submit_button_when_typing() {
-  $('#post_input').bind('keyup', function() { 
+function change_button_behaviour_when_typing_post() {
+  $('#post_input').bind('keyup', function(evt) { 
+    evt.preventDefault()
+    evt.stopImmediatePropagation()
     if ($('#post_input').val().length > 0) {
       $('#post_submit_button').css('opacity',1).removeClass( "disabled" );
       switch_the_can_fade_elements('fade');
@@ -234,10 +236,11 @@ function remove_text_from_input() {
 function switch_the_can_fade_elements(fade_control) {
   if (fade_control == 'fade') {
     $('.can-fade').css('opacity',0.4);
-    console.log('fading!')
+    $('#post_input').addClass('green-border')
   }
   else {
     $('.can-fade').css('opacity',1);
+    $('#post_input').removeClass('green-border')
   }
   
 };
@@ -295,7 +298,7 @@ function get_scroll_navs_ready() {
 get_posts(full_refresh=true, 30,0)
 recursive_check_for_new_posts()
 submit_posts_button_ready()
-show_submit_button_when_typing()
+change_button_behaviour_when_typing_post()
 get_scroll_navs_ready()
 nav_buttons_ready()
 

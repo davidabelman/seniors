@@ -1,4 +1,4 @@
-def bing_search_and_return_urls(query='error', funny=0, cartoon=0, animated=0, search_type='Image', minsize=150, maxsize=250, testing=True):
+def bing_search_and_return_urls(query='error', funny=0, cartoon=0, animated=0, search_type='Image', minsize=150, maxsize=250, size='Small', testing=True):
     """
     Main function called. Adds some extra parameters to the search (i.e. extra keywords) then filters results according to size
     """
@@ -24,7 +24,7 @@ def bing_search_and_return_urls(query='error', funny=0, cartoon=0, animated=0, s
             q += " cartoon"
         if animated:  # Not in use currently
             q += " animated gif"
-        results = bing_search_api(query = query, search_type = search_type, size = 'Small')
+        results = bing_search_api(query = query, search_type = search_type, size = size)
         results_filtered = [img['MediaUrl'] for img in results if int(img['Width']) >= minsize if int(img['Width']) <= maxsize]
         return results_filtered
 

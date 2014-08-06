@@ -13,6 +13,7 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-email-button').css('opacity',0.6)
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',0.6)
+			$('#users-button').css('opacity',0.6)
 
 			// Fade all RHS content and make sure page 1 of 2 is showing
 			$('.rhs-to-disappear').fadeOut(50, function() {
@@ -36,6 +37,7 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-email-button').css('opacity',1)
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',0.6)
+			$('#users-button').css('opacity',0.6)
 
 			// Fade all RHS content and make sure page 1 of 2 is showing
 			$('.rhs-to-disappear').fadeOut(50, function() {
@@ -59,6 +61,7 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-email-button').css('opacity',0.6)
 			$('#change-password-button').css('opacity',1)
 			$('#change-picture-button').css('opacity',0.6)
+			$('#users-button').css('opacity',0.6)
 
 			// Fade all RHS content and make sure page 1 of 2 is showing
 			$('.rhs-to-disappear').fadeOut(50, function() {
@@ -82,6 +85,7 @@ function prepare_LHS_button_fading_behaviour () {
 			$('#change-email-button').css('opacity',0.6)
 			$('#change-password-button').css('opacity',0.6)
 			$('#change-picture-button').css('opacity',1)
+			$('#users-button').css('opacity',0.6)
 
 			// Fade all RHS content and make sure page 1 of 2 is showing
 			$('.rhs-to-disappear').fadeOut(50, function() {

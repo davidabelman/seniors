@@ -79,6 +79,7 @@ def logout():
 def signup():
 	"""
 	This is where one person creates the group, he/she is then the admin
+	Other functions are called within this (via AJAX)
 	"""
 	return render_template('signup.html')
 
@@ -356,7 +357,7 @@ def create_account_create_network():
 
 		# Add just one post to get things going
 		to_add = { 	
-					'name':'Robot',
+					'name':'The Salt&Pepper Robot',
 					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Ta-daa! Your group is ready to go. Have fun!',
 					'network' : network,
@@ -367,7 +368,7 @@ def create_account_create_network():
 		return json.dumps(1)
 
 	else:
-		return json.dumps("Email or network already in use.")
+		return json.dumps("I'm sorry, it seems the group name is in use. Please try again.")
 
 @app.route('/_add_user_on_behalf', methods=['GET', 'POST'])
 def add_user_on_behalf():
@@ -493,8 +494,9 @@ def get_bing_image_urls():
 											cartoon=cartoon,
 											search_type='Image',
 											minsize=150,
-											maxsize=250,
-											testing=False)
+											maxsize=300,
+											size='Small',
+											testing=True)
 
 		return json.dumps({"status":1, "data":urls[0:max_results]})
 	else: 
