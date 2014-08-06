@@ -17,7 +17,7 @@ import random
 app = Flask(__name__)
 app.config.from_object('config')
 app.secret_key = SECRET_KEY
-manager = Manager(app)
+# manager = Manager(app)
 moment = Moment(app)
 
 #MONGO
@@ -606,7 +606,7 @@ def server_error(e):
 	return render_template('error.html'), 500
 
 ###################### START ######################
-if __name__ == '__main__':
-	manager.secret_key = SECRET_KEY
-	manager.run()
+# if __name__ == '__main__':
+# 	manager.secret_key = SECRET_KEY
+# 	manager.run()
 	
