@@ -81,7 +81,13 @@ def logout():
 	"""
 	Resets the cookies etc. so the user is logged out
 	"""
+	print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
+	print "DEBUG PRE CLEAR: This is session -->", session.keys()
 	session.clear()
+	print "DEBUG POST CLEAR: This is session['user'] variable -->", session.get('user')
+	print "DEBUG POST CLEAR: This is session -->", session.keys()
+
+
 	time.sleep(0.5)
 	return redirect(url_for('home'))
 
