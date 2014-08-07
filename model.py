@@ -38,6 +38,6 @@ class User:
 		return 1 if self.name and self.network and self.completed_registration else 0
 
 	def to_console(self):
-		print "The current user's object has keys:"
+		print "\nThe current user's object has keys:"
 		for key in self.session_variables:
-			print key, ":", self.session_variables[key]
+			print "    ", key, ":", self.session_variables[key]

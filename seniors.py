@@ -13,6 +13,7 @@ import mongo
 import json, urllib, urllib2
 import datetime
 import random
+import time
 
 app = Flask(__name__)
 SECRET_KEY = os.environ['SENIORS_SECRET_KEY']
@@ -81,6 +82,7 @@ def logout():
 	Resets the cookies etc. so the user is logged out
 	"""
 	session.clear()
+	time.sleep(0.5)
 	return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
