@@ -90,6 +90,7 @@
 		</div> <!-- end right panel -->
 	</div> <!-- end row -->
 </div> <!-- end container -->
+{% endblock %}
 	
 {% block scripts_bottom %}
 	{{ super() }}
@@ -98,4 +99,3 @@
 	<script src="{{url_for('static', filename = 'js/post.js', _external=True)}}"></script>
 {% endblock %}
 
-{% endblock %}

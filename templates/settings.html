@@ -190,17 +190,17 @@ settings
 	</div> <!-- end container -->
 </div> <!-- end centred page -->
 
-
+{% endblock %}
 				
 
 
-	{% block scripts_bottom %}
-		{{ super() }}
-		<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
-		<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
-		<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
-		
-	{% endblock %}
-
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/settings.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
+	
 {% endblock %}
+
+
 

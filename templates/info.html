@@ -36,7 +36,7 @@ home
 	</div>
 </div>
 
-
+{% endblock %}
 
 {% block scripts_bottom %}
 	{{ super() }}
@@ -44,4 +44,3 @@ home
 	<script src="{{url_for('static', filename = 'js/info.js', _external=True)}}"></script>
 {% endblock %}
 
-{% endblock %}

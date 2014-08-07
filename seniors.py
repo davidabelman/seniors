@@ -39,7 +39,7 @@ class Encoder(json.JSONEncoder):
 
 # TOKENS
 token_expiry_days = 30
-base_url = "http://salt-and-pepper.herokuapp.com/invite/"
+base_url = "http://salt-and-pepper.herokuapp.com"
 
 @app.before_request
 def before_request():
@@ -114,7 +114,7 @@ def add_users():
 	This is where an admin can add other group members
 	"""
 	if USER.is_admin():
-		return render_template('add_users.html')
+		return render_template('add_users.html', base_url=base_url)
 	return redirect(url_for('home'))
 
 @app.route('/invite/<token>', methods=['GET', 'POST'])
@@ -468,7 +468,7 @@ def add_user_via_access_token():
 			Users.insert(to_add)
 
 			# Send user an access token type of link
-			access_url = base_url+str(token)
+			access_url = base_url+'/invite/'+str(token)  #i.e. website.com/invite/1209312703
 			send_access_token_email(
 					sender=USER._('name'),
 					sender_email=USER._('email'),
