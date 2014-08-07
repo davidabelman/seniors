@@ -153,7 +153,7 @@ function bind_clicks() {
   })
 }
 
-
+mixpanel.track('Signup page loaded')
 fade_page_in_out('in')
 bind_clicks()
 hide_messages_on_focus()

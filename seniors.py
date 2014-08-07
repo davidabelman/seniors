@@ -68,6 +68,7 @@ def home():
 	if USER.is_a_user() and session['logged_in']:
 		return render_template('posts.html')
 	else:
+
 		return render_template('info.html')
 
 @app.route('/enter', methods=['GET', 'POST'])
@@ -104,6 +105,7 @@ def signup():
 	This is where one person creates the group, he/she is then the admin
 	Other functions are called within this (via AJAX)
 	"""
+	print "loading"
 	return render_template('signup.html')
 
 @app.route('/add_users', methods=['GET', 'POST'])
@@ -318,11 +320,11 @@ def create_account_join_network():
 		# Update user data with login data
 		Users.update(
 			{'_id':object_id}, {"$set": {
-													'name':name,
-													'password_hash':generate_password_hash(password),
-													'register' : datetime.datetime.utcnow(),
-													'completed_registration' : True,
-													'token_not_used' : False,
+											'name':name,
+											'password_hash':generate_password_hash(password),
+											'register' : datetime.datetime.utcnow(),
+											'completed_registration' : True,
+											'token_not_used' : False,
 										}
 								}, upsert=False
 					)

@@ -16,6 +16,7 @@ function bind_clicks() {
 	
 }
 
+mixpanel.track('Homepage loaded')
 left_panel_to_page_height_on_load()
 quick_fade()  // fades each element in in term (see common.js)
 bind_clicks()

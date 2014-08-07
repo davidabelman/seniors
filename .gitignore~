@@ -1,7 +1,6 @@
 venv/
 secret.py
 config.py
-set_environment_vars.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,5 +4,12 @@
 S&P - 
 {% endblock %}
 
+{% block scripts_top %}
+{{ super() }}
+<!-- start Mixpanel -->
+<script src="{{url_for('static', filename = 'js/my_analytics.js', _external=True)}}"></script>
+<!-- end Mixpanel -->
+{% endblock %}
+
 {% block body %}
 {% endblock %}
