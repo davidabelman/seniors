@@ -18,33 +18,49 @@ Loads Flask modules and other modules created within project. Passwords stored i
 
 We can then get the name by saying USER._('name'). The reason we don't just use the dictionary as an object in itself is that we want some extra methods to be available on it.
 
+## mongo.py
+Functionality for database access. db = start_up_mongo() to fire up database connection. Other functions to pull posts, delete all users, create test users etc.
+
+## model.py
+User class and ability to load user into session variable (removes password_hash field first)
+
+## dropbox_upload.py
+Takes image string as Base64 and uploads to private Dropbox link, returns URL
+
+## mailgun.py
+Functionality to send email using mailgun
+
+## venv
+activate --> source venv/bin/activate
+deactivate --> deactivate
+
 ## Pages
 # info
 '/' routes to both the logged out homepage (info) and the logged in homepage (posts).
 
-# signup
+### signup
 4 stage checkup with client and server validation allowing user to create a new network, and their user within it. Creates session['user']
 
-# add_users
+### add_users
 Allows admin to either create a username & password for someone else, or add by email. This sends an email (mailgun) to the specified address, with a generated token. A user visiting this token can then add their password (if token valid: expires after 30 days)
 
-# login
+### login
 3 stage process of typing in network name (optionally already filled in if coming from ../enter/_groupname_ URL), selecting user icon, and then entering password. Creates session['user']
 
-# valid_token
+### valid_token
 Invitee can create password and is logged in. Creates session['user']
 
-# post
+### post
 Main page ('/' leads here when USER logged in). Loads X posts on render from server. Periodically checks for new posts from server (on scale of 5-10 seconds). If latest post on client doesn't match latest post on server, the new posts are added to DOM. When user posts some text, this is sent to server, and then a refresh is requested from the server (i.e. doesn't add it to screen on client side, though perhaps should?)
 
-# add_image
+### add_image
 Page allowing various image insertion options. Can either pull images from Bing (these are filtered according to size, only certain dimension images shown) or take a photo from webcam. In the latter case, this is encoded as Base64, saved as JPEG in Python to Dropbox link (long random string), which is then added to database as <img src=...> so it can be loaded within timelines.
 
-# settings
+### settings
 Allows user to change settings, all via AJAX callbacks. Client and serverside validation.
 
-# help
+### help
 Basic help screens
 
-# logout
+### logout
 session.clear() and return to home screen

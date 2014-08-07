@@ -23,33 +23,31 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
+
 *** write documentation
-*** add basic analytics
+*** create heroku staging account
+*** add basic analytics mixpanel and ga
 *** add 'see more posts' at bottom or automatically load
+*** fix double firing of post checks (just record time of last check, and use within an if statment)
 
 ** investigate testing with selenium
 ** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+** some sort of email to keep people engaged (either daily update, or maybe one every few days if they haven't posted)
+
 main page 
 ** update moment js every now and again
 ** add notification for new messages
-** colour new messages as they pop up
+* colour new messages as they pop up
 
-
+** Add users - fade opposite half of the screen
+** clean up posts.js and add_image.js
+** Add some webcam hint/message to help switch on
+** write better help file
 
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
-
-** clean posts.js and add_image.js
-** Add some webcam hint/message to help switch on
-
 * dictate functionality
 * add video
-
-** Add users - fade opposite half of the screen
-
-
-
-
 * colour messages by ObjID and not by name==name
 
 * do profile picture by ObjID (i.e. have it in hidden field when posts is loaded, then when you draw HTML to screen you look up the animal of the ObjID... probably should do the same for 'Name' as well actually)
