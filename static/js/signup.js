@@ -11,7 +11,7 @@ function validate_password() {
       $('#error-password').text(valid_response).fadeIn()
       return;
     }
-
+    mixpanel.track('Signup1', {'Method':'Original'}) // i.e. he/she created group, no referrer
     $.ajax({
                 url:'/_create_account_create_network',
                 data: JSON.stringify({
@@ -153,7 +153,7 @@ function bind_clicks() {
   })
 }
 
-mixpanel.track('Signup page loaded')
+
 fade_page_in_out('in')
 bind_clicks()
 hide_messages_on_focus()

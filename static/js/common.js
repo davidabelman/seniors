@@ -7,6 +7,12 @@ function bind_left_hand_button_clicks() {
       // Fade other buttons on click, and show relevant content on RHS
       evt.preventDefault();
       evt.stopImmediatePropagation();
+
+      // Track page title and button clicked
+      mixpanel.track(
+        $(document).find("title").text().trim().replace(/\s{2,}/g, ' ')+' button click', // event name
+         {'Button': $(this).text()} // property
+      );
         
       // Fade all but current button
       $('.lhs-button').css('opacity',0.6)

@@ -68,6 +68,7 @@ function submit_all_form_data() {
     return;
   }
 
+  mixpanel.track('Signup', {'Method':'Email'})
   // Server check if all OK
   $.ajax({
             url:'/_create_account_join_network',

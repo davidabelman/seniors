@@ -47,6 +47,7 @@ function check_form_and_invite_user_by_email() {
       success: function(response) {
         if (response=='1') {
           // We will show a message to user saying successful (clear page 1, show page 2a)
+          mixpanel.track('Invite send')
           redraw_screen(page_1_or_2='2', page_2a_or_2b='2a', name=$('#firstname').val())
         }
         else {
@@ -90,6 +91,7 @@ function check_form_and_add_user_to_db() {
       type: "POST",
       success: function(response) {
         if (response=='1') {
+          mixpanel.track('Signup', {'Method':'On behalf'})
 
           // We will show a message to user saying successful (clear page 1, show page 2b)
           console.log('Added user successfully to database');

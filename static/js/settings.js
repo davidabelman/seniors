@@ -19,6 +19,7 @@ $('.icon-pick').click( function(evt) {
 	evt.preventDefault()
 	evt.stopImmediatePropagation()
 	animal = $(this).attr('animal');
+  mixpanel.track('Settings change', {'Changed':'Picture', 'Animal':animal})
 	$.ajax({
                 url:'/_change_profile_picture',
                 data: JSON.stringify({
@@ -79,6 +80,7 @@ $('#change-name-submit').click( function(evt) {
                 success: function(result) { 
                 	result = JSON.parse(result);
                 	if (result==1) {
+                    mixpanel.track('Settings change', {'Changed':'Name'})
                 		$('.response-message').text('Your name has been changed succesfully! Note that you cannot now make another change to your name on this site.')
                 		// Change name on HTML page already rendered
 	                  	$('.page1of2').fadeOut( function() {
@@ -133,6 +135,7 @@ $('#change-email-submit').click( function(evt) {
                 success: function(result) { 
                 	result = JSON.parse(result);
                 	if (result==1) {
+                    mixpanel.track('Settings change', {'Changed':'Email'})
                 		$('.response-message').text('Your email address has been changed succesfully!')
                 		// Change name on HTML page already rendered
 	                  	$('.page1of2').fadeOut( function() {
@@ -188,6 +191,7 @@ $('#change-password-submit').click( function(evt) {
                 success: function(result) { 
                 	result = JSON.parse(result);
                 	if (result==1) {
+                    mixpanel.track('Settings change', {'Changed':'Password'})
                 		$('.response-message').text('Your password has been changed succesfully!')
                 		// Change name on HTML page already rendered
 	                  	$('.page1of2').fadeOut( function() {

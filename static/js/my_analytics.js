@@ -7,6 +7,12 @@ if ( window.location.origin=="http://localhost:5000" ) {
 	var token = "a54d273360d0c16af87f3eaacb84c2e4"
 }
 mixpanel.init(token);
+mixpanel.track('Page view', 
+	{
+		'title':$(document).find("title").text().trim().replace(/\s{2,}/g, ' '),
+		'path':window.location.pathname
+	}
+);
 
 // mixpanel.identify("13487");
 // mixpanel.people.set({

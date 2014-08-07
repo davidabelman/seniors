@@ -122,6 +122,7 @@ function check_form_and_login() {
                   result = JSON.parse(result)
                   if (result['status']=="1") {
                     // Let's go!
+                    mixpanel.track('Login')
                     fade_page_in_out('out','/') 
                   }
                   else {

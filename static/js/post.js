@@ -109,6 +109,7 @@ function submit_posts_button_ready() {
       var html = escapeHtml($('#post_input').val());
       hide_submit_button();
       create_post_from_html(html);
+      mixpanel.track('Posted text', {'Length (chars)':html.length})
       setTimeout( function() {
         get_posts(full_refresh=false, 5,0) 
       }, 500) // Adding a delay to avoid two very close requests to server
@@ -154,6 +155,7 @@ function nav_buttons_ready() {
   $('#logout-button').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
+    mixpanel.track('Logout');
     $('#whole-content').animate({
       opacity: 0}, speed, function() {
         // When complete
@@ -195,11 +197,21 @@ function nav_buttons_ready() {
   })
 } // end function
 
-function recursive_check_for_new_posts(){
+function recursive_check_for_new_posts(count, delay){
     // Loops the poll on server via AJAX to check for new posts
-    delay = 5000 ; //in milliseconds
-    get_posts(full_refresh=false, 5,0)
-    setTimeout(recursive_check_for_new_posts, delay)
+    // Count increments for tracking purposes, delay is millisecond delay
+    console.log("Refresh posts:", count);
+    var delays_per_min = 60000/delay
+    if (count%delays_per_min==0) {
+      // 1 minute passed
+      mixpanel.track('Wall refreshes', {'Consecutive minutes': count/delays_per_min})
+      console.log("We have been going for",count/delays_per_min,'min')
+    }    
+    setTimeout( function() {
+      get_posts(full_refresh=false, 5,0);
+      count+=1;
+      recursive_check_for_new_posts(count, delay)
+    }, delay)   
 }
 
 function change_button_behaviour_when_typing_post() {
@@ -288,9 +300,10 @@ function get_scroll_navs_ready() {
 
 
 // START OF SCRIPT ON PAGE LOAD
+mixpanel.track('Wall load')
 quick_fade()
 get_posts(full_refresh=true, 30,0)
-recursive_check_for_new_posts()
+recursive_check_for_new_posts(count=1, delay=5000)
 submit_posts_button_ready()
 change_button_behaviour_when_typing_post()
 get_scroll_navs_ready()

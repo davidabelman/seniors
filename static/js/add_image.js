@@ -6,6 +6,7 @@ function prepare_LHS_button_fading_behaviour () {
 			// Fade other buttons on click, and show relevant content on RHS
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
+		    mixpanel.track('Bing panel loaded');
 
 		    // Fade all but current button
 		    $('#bing-button').css('opacity',1)
@@ -32,6 +33,7 @@ function prepare_LHS_button_fading_behaviour () {
 			// Fade other buttons on click, and show relevant content on RHS
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
+		    mixpanel.track('Webcam panel load attempt');
 
 		    // When button is clicked, load webcam script stuff
 		    if (window.webcamActivated == 0) {
@@ -89,7 +91,8 @@ function prepare_to_get_content_from_bing() {
 	$('#bing-search-submit').click ( function(evt) {
 		evt.preventDefault();
       	evt.stopImmediatePropagation();
-      	var query = $('#img-input').val()
+      	var query = $('#img-input').val();
+      	mixpanel.track('Bing search submit', {'Query':query});
 
       	// Make call to server
       	$.ajax({
@@ -144,6 +147,7 @@ function click_image_to_post() {
 $('.img-in-img-grid').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
+		mixpanel.track('Posted image', {'Method':'Search'});
 		url = $(this).attr("src")
 		img_link = "<p class='post-body'><img src="+url+" width='40%'></p>"
 		create_post_from_html(img_link)
@@ -152,7 +156,6 @@ $('.img-in-img-grid').click( function(evt) {
 
 // TODO currently duplicated in post.js and add_image.js
 function create_post_from_html(html) {
-	console.log('about to submit post')
 	$.ajax({
 
                 url:'/_submit_post_entry',

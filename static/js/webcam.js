@@ -40,6 +40,7 @@ function activate_webcam_script() {
 		$("#webcam-take-photo-button").click( function(evt) {
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
+			mixpanel.track('Webcam take photo');
 			// Create image
 			context.drawImage(video, 0, 0, 320, 250);
 			$('#webcam-video').fadeOut('fast',  function() {
@@ -55,6 +56,7 @@ function activate_webcam_script() {
 		$("#webcam-take-another-button").click (function(evt) {
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
+			mixpanel.track('Webcam try another photo');
 
 			// Fade out canvas and fade in video
 			$('#webcam-canvas').hide()
@@ -70,6 +72,7 @@ function activate_webcam_script() {
 		$('#webcam-use-photo-button').click( function(evt) {
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
+			mixpanel.track('Posted image', {'Method':'Webcam'});
 
 			$('#webcam-canvas, #webcam-take-another-button, #webcam-use-photo-button').hide()
 			$('#loading-spinner').html("<img src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif'>").show()
