@@ -87,7 +87,7 @@ def logout():
 	session.clear()
 	print "DEBUG POST CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG POST CLEAR: This is session -->", session.keys()
-
+	session['user']['log_in_binary'] = 0
 	time.sleep(0.5)
 	return redirect(url_for('home'))
 
