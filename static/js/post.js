@@ -28,13 +28,13 @@ function all_posts_to_dom(posts) {
     else {
       var own_post = '';
     }
-    html += "       <section class='post "+own_post+"' id="+post._id+" posted="+moment(post.posted).unix()+">\n"
+    html += "       <section class='post "+own_post+"' id="+post._id+" posted="+moment.utc(post.posted).unix()+">\n"
     html += "         <div class='post-img'>\n"
     html += "           <img src='/static/img/"+post.picture+"-icon.png' width='70', height='70'>\n"
     html += "         </div> <!-- end img part -->\n"
     html += "         <div class='post-alltext'>\n"
     html += "           <h2 class='post-name'>"+post.name+"</h2>\n"
-    html += "           <span class='post-time'>"+moment(post.posted).fromNow()+"</span>\n"
+    html += "           <span class='post-time'>"+moment.utc(post.posted).fromNow()+"</span>\n"
     html += "           <p class='post-body'>"+post.body+"</p>\n"
     html += "         </div> <!-- end text part -->\n"    
     html += "       </section> <!-- end post --><hr>\n\n"
@@ -46,16 +46,16 @@ function all_posts_to_dom(posts) {
 function add_new_posts_only(posts) {
   // This checks if there are any new posts to display given a set of latest posts from the server
   var newest_post_displayed = parseInt($('.post').first().attr('posted'))
-  var newest_post_on_server = moment(posts[0].posted).unix()
+  var newest_post_on_server = moment.utc(posts[0].posted).unix()
   if (newest_post_displayed < newest_post_on_server) {
     // html=""
     $.each( posts, function(index, post) {
-      if (moment(post.posted).unix() > newest_post_displayed) {
+      if (moment.utc(post.posted).unix() > newest_post_displayed) {
         add_single_post_to_top(post);
       }
     }) // end each
   } // end if
-  else{ console.log(moment().unix(), 'no new posts') }
+  else{ console.log(moment.utc().unix(), 'no new posts') }
 }
 
 function add_single_post_to_top(post) {
@@ -78,13 +78,13 @@ function add_single_post_to_top(post) {
     }
   // Add HTML
   html = "        <div class='hidden-new-post''>"
-  html += "       <section class='post "+own_post+"' id="+'test'+" posted="+moment(post.posted).unix()+">\n"
+  html += "       <section class='post "+own_post+"' id="+'test'+" posted="+moment.utc(post.posted).unix()+">\n"
   html += "         <div class='post-img'>\n"
   html += "           <img src='/static/img/"+post.picture+"-icon.png' width='70', height='70'>\n"
   html += "         </div> <!-- end img part -->\n"
   html += "         <div class='post-alltext'>\n"
   html += "           <h2 class='post-name'>"+post.name+"</h2>\n"
-  html += "           <span class='post-time'>"+moment(post.posted).fromNow()+"</span>\n"
+  html += "           <span class='post-time'>"+moment.utc(post.posted).fromNow()+"</span>\n"
   html += "           <p class='post-body'>"+post.body+"</p>\n"
   html += "         </div> <!-- end text part -->\n"    
   html += "       </section> <!-- end post --><hr>\n\n"

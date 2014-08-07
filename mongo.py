@@ -30,17 +30,26 @@ def return_last_X_posts(Posts, network, limit=10, skip=0):
 	"""
 	return Posts.find({'network':network}).sort([('posted',-1)]).skip(skip).limit(limit)
 
+def delete_all_data(db):
+	u = raw_input("Do you wish to delete all users? (Type 'y' to delete...) ")
+	if u=='y':
+		db.users.remove()
+
+	u = raw_input("Do you wish to delete all posts? (Type 'y' to delete...) ")
+	if u=='y':
+		db.posts.remove()
+
+	u = raw_input("Do you wish to delete all tokens? (Type 'y' to delete...) ")
+	if u=='y':
+		db.tokens.remove()
+
+
 def create_fake_users(db):
 	import datetime
 	import random
 	from werkzeug.security import generate_password_hash
 
-	u = raw_input("Do you wish to delete all existing first? (Type 'y' to delete...) ")
-
-	if u=='y':
-		db.users.remove()
-
-	network_name = 'test11'
+	network_name = 'test0'
 	to_add =  	[{ 	
 					'name':'David',
 					'email':'test0@gmail.com',
@@ -81,7 +90,7 @@ def create_fake_users(db):
 					'register' : datetime.datetime(2014,4,10), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'picture' : random.choice(animals),
 					'online' : False,
-					'network' : 'Smith',
+					'network' : network_name,
 					'role' : 0,
 					'completed_registration':True,
 				},
@@ -106,11 +115,6 @@ def create_fake_users(db):
 
 def create_fake_posts(db):
 	import datetime
-	u = raw_input("Do you wish to delete all existing first? (Type 'y' to delete...) ")
-	
-	if u=='y':
-		db.posts.remove()
-
 	network_name = 'test0'
 	to_add =  	[{ 	
 					'name':'David',
@@ -175,17 +179,13 @@ def create_fake_posts(db):
 def create_fake_tokens(db):
 	import datetime
 
-	u = raw_input("Do you wish to delete all existing first? (Type 'y' to delete...) ")
-
-	if u=='y':
-		db.tokens.remove()
-
+	network_name = 'test0'
 	to_add =  	[{ 	
 					'token' : 'exampletoken123',
 					'recipient_name' : 'Brenda',
 					'recipient_email' : 'davidabelman+brenda@gmail.com',
 					'token_sent' : datetime.datetime(2014,8,1),
-					'network' : 'abelman',
+					'network' : network_name,
 					'token_not_used':True
 				},
 				{ 	
@@ -193,7 +193,7 @@ def create_fake_tokens(db):
 					'recipient_name' : 'Martha',
 					'recipient_email' : 'davidabelman+martha@gmail.com',
 					'token_sent' : datetime.datetime(2014,6,1),
-					'network' : 'smith',
+					'network' : network_name,
 					'token_not_used':True
 				},
 				{ 	
@@ -201,7 +201,7 @@ def create_fake_tokens(db):
 					'recipient_name' : 'Wilma',
 					'recipient_email' : 'davidabelman+wilma@gmail.com',
 					'token_sent' : datetime.datetime(2014,8,1),
-					'network' : 'smith',
+					'network' : network_name,
 					'token_not_used':False
 				}
 				]		

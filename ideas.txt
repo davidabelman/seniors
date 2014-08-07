@@ -23,15 +23,19 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-** forgot password feature (if they don't have an email, it would have to send email to admin to reset it for them)
-* try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
+*** write documentation
+*** add basic analytics
+*** add 'see more posts' at bottom or automatically load
 
-
+** investigate testing with selenium
+** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 main page 
 ** update moment js every now and again
 ** add notification for new messages
 ** colour new messages as they pop up
-** add 'see more posts' at bottom or automatically load
+
+
+
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 
@@ -41,13 +45,15 @@ main page
 * dictate functionality
 * add video
 
-*** Add users - fade opposite half of the screen
+** Add users - fade opposite half of the screen
 
-*** write documentation
-** investigate testing with selenium
-** add basic analytics before sharing
+
+
 
 * colour messages by ObjID and not by name==name
+
 * do profile picture by ObjID (i.e. have it in hidden field when posts is loaded, then when you draw HTML to screen you look up the animal of the ObjID... probably should do the same for 'Name' as well actually)
+
+* try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
 
 ICONS: http://www.iconarchive.com/show/animal-icons-by-martin-berube.html

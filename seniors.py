@@ -109,9 +109,9 @@ def accept_invite(token):
 		if USER._('token_not_used'):
 			# Token not yet used
 			if app.debug:
-				print 'Days left on token:', token_expiry_days - ((datetime.datetime.now() - USER._('token_sent')).days )
+				print 'Days left on token:', token_expiry_days - ((datetime.datetime.utcnow() - USER._('token_sent')).days )
 
-			if (datetime.datetime.now() - USER._('token_sent')).days < token_expiry_days:
+			if (datetime.datetime.utcnow() - USER._('token_sent')).days < token_expiry_days:
 				# We have an unused token, and it is not yet expired.
 				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
 				return render_template('valid_token.html', name=USER._('name'), network=USER._('network'))
@@ -210,7 +210,7 @@ def submit_feed_entry():
 	if USER.is_logged_in():
 		to_add ={ 	
 					'name': USER._('name'),
-					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : content,
 					'network' : USER._('network'),
 					'picture' : USER._('picture')
@@ -287,7 +287,7 @@ def create_account_join_network():
 			{'_id':object_id}, {"$set": {
 													'name':name,
 													'password_hash':generate_password_hash(password),
-													'register' : datetime.datetime.now(),
+													'register' : datetime.datetime.utcnow(),
 													'completed_registration' : True,
 													'token_not_used' : False,
 										}
@@ -321,7 +321,7 @@ def create_account_create_network():
 						'name':name,
 						'email':email,
 						'password_hash': generate_password_hash(password),
-						'register' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+						'register' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 						'picture' : picture,
 						'online' : False, #TODO
 						'network' : network,
@@ -342,7 +342,7 @@ def create_account_create_network():
 		# Add just one post to get things going
 		to_add = { 	
 					'name':'The Salt&Pepper Robot',
-					'posted' : datetime.datetime.now(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 					'body' : 'Ta-daa! Your group is ready to go. Have fun!',
 					'network' : network,
 					'picture' : 'robo'
@@ -378,7 +378,7 @@ def add_user_on_behalf():
 						'admin_name' : USER._('name'),
 						'admin_email': USER._('email'),
 						'password_hash': generate_password_hash(password),
-						'register' : datetime.datetime.now(),
+						'register' : datetime.datetime.utcnow(),
 						'picture' : random.choice(animals),
 						'online' : False, #TODO
 						'network' : USER._('network'),
@@ -423,7 +423,7 @@ def add_user_via_access_token():
 							'role' : 0, # i.e. admin TODO
 							'token' : token,
 							'token_not_used' : True,
-							'token_sent' : datetime.datetime.now(),
+							'token_sent' : datetime.datetime.utcnow(),
 							'completed_registration' : False
 						}	
 			Users.insert(to_add)
