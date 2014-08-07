@@ -27,7 +27,7 @@ class User:
 		self.completed_registration = session_variables.get('completed_registration', '')
 		# self.name_changed_before = session_variables.get('name_changed_before', '')
 		self.session_variables = session_variables	
-		self.log_in_binary = session_variables.get('log_in_binary', '')
+		# self.log_in_binary = session_variables.get('log_in_binary', '')
 
 	def _(self, key):
 		return self.session_variables.get(key, '')
@@ -35,8 +35,8 @@ class User:
 	def is_admin(self):
 		return self.role
 
-	def is_logged_in(self):
-		return 1 if self.name and self.network and self.completed_registration and self.log_in_binary else 0
+	def is_a_user(self):
+		return 1 if self.name and self.network and self.completed_registration else 0
 
 	def to_console(self):
 		print "\nThe current user's object has keys:"

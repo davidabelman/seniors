@@ -60,12 +60,12 @@ def home():
 	print "DEBUG: This is session['user'] variable -->", session.get('user')
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
-	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
+	print "DEBUG: This is USER.is_a_user() -->", USER.is_a_user()
 	print "\n headers:"
 	print request.headers
 
 
-	if USER.is_logged_in() and session['logged_in']:
+	if USER.is_a_user() and session['logged_in']:
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -89,15 +89,14 @@ def logout():
 	"""
 	Resets the cookies etc. so the user is logged out
 	"""
-	session['user']['log_in_binary'] = 0
 	session['logged_in'] = 0
-	print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG LOGOUT PRE CLEAR: This is session -->", session.keys()
+	# print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
+	# print "DEBUG LOGOUT PRE CLEAR: This is session -->", session.keys()
 	session['user']=None
-	print "DEBUG LOGOUT POST CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG LOGOUT POST CLEAR: This is session -->", session.keys()
+	# print "DEBUG LOGOUT POST CLEAR: This is session['user'] variable -->", session.get('user')
+	# print "DEBUG LOGOUT POST CLEAR: This is session -->", session.keys()
 	time.sleep(0.1)
-	return redirect(url_for('finished'))
+	return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -167,7 +166,7 @@ def settings():
 	# name = session.get('name')
 	# email = session.get('email')
 	# network = session.get('network')
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		return render_template('settings.html', admin = USER._('role'), name=USER._('name'), email=USER._('email'), animals=animals)
 	else:
 		return redirect(url_for('home'))
@@ -223,7 +222,7 @@ def check_network_username_password():
 	if valid_password:
 		# Get user object to store as session variable
 		session['user'] = load_user(Users, {'name':username, 'network':network} )
-		session['user']['log_in_binary'] = 1
+		# session['user']['log_in_binary'] = 1
 		session['logged_in']=1
 		USER = session['user']
 
@@ -240,7 +239,7 @@ def submit_feed_entry():
 	On the client side the entry is added to the top of the page
 	"""
 	content = request.json['content']
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		to_add ={ 	
 					'name': USER._('name'),
 					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
@@ -268,7 +267,7 @@ def get_posts():
 	# USER = User( session.get( 'user', {} ) )
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		posts = mongo.return_last_X_posts(Posts, network=USER._('network'), limit=limit, skip=skip)
 		return json.dumps(list(posts), cls=Encoder)
 	else:
@@ -330,7 +329,7 @@ def create_account_join_network():
 
 		# Add session name as we didn't add it when they clicked on link (we didn't know name yet)
 		session['user'] = load_user(Users, {'_id':object_id} )
-		session['user']['log_in_binary'] = 1
+		# session['user']['log_in_binary'] = 1
 		session['logged_in']=1
 		return json.dumps('[1]')
 		
@@ -369,7 +368,7 @@ def create_account_create_network():
 
 		# Sign user in
 		session['user'] = load_user(Users, {'name':name, 'network':network} )
-		session['user']['log_in_binary'] = 1
+		# session['user']['log_in_binary'] = 1
 		session['logged_in']=1
 		USER = session['user']
 
@@ -493,7 +492,7 @@ def get_bing_image_urls():
 	"""
 	Given a query string and extra parameters (e.g. cartoon, funny), requests results from Bing and returns top X URLs
 	"""
-	if USER.is_logged_in():
+	if USER.is_a_user():
 
 		query = request.json['query']
 		funny = int(request.json['funny'])
@@ -520,7 +519,7 @@ def upload_img_to_dropbox():
 	"""
 	Decodes base 64 string to image file, then uploads file to dropbox
 	"""
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		base = request.json['base']
 		base_clean = base.replace('data:image/jpeg;base64,','')
 		url = dropbox_upload.convert_image_and_upload(base_clean)
@@ -536,7 +535,7 @@ def change_profile_picture():
 	"""
 	picture = request.json['animal']
 	
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'picture':picture} })
 		session['user']['picture'] = picture
 		return json.dumps(1)
@@ -551,7 +550,7 @@ def change_username():
 	Post request to change username
 	"""
 	new_name = request.json['new_name']
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		if not USER._('name_changed_before'):
 			# Check to make sure new name doesn't exist already
 			existing_user = Users.find_one({'network':USER._('network'), 'name':new_name})
@@ -582,7 +581,7 @@ def change_email():
 	password = request.json['password']
 	
 	# Check user is logged in
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
 		response = check_password_hash(str(known_password_hash), str(password))
 		# Check password correct
@@ -607,7 +606,7 @@ def change_password():
 	new_password = request.json['new_password']
 	
 	# Check user is logged in
-	if USER.is_logged_in():
+	if USER.is_a_user():
 		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
 		response = check_password_hash(str(known_password_hash), str(old_password))
 		# Check password correct
