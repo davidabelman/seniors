@@ -41,19 +41,19 @@ class Encoder(json.JSONEncoder):
 token_expiry_days = 30
 base_url = "http://salt-and-pepper.herokuapp.com/invite/"
 
-# @app.before_request
-# def before_request():
-# 	# If we have a user in our session variable, create a user object
-#     global USER 
-#     USER = User( session.get( 'user', {} ) )
-#     USER.to_console()
+@app.before_request
+def before_request():
+	# If we have a user in our session variable, create a user object
+    global USER 
+    USER = User( session.get( 'user', {} ) )
+    USER.to_console()
 
 @app.route('/')
 def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	USER = User( session.get( 'user', {} ) )
+	# USER = User( session.get( 'user', {} ) )
 	print "DEBUG: This is session['user'] variable -->", session.get('user')
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
@@ -246,7 +246,7 @@ def get_posts():
 	"""
 	Pulls posts from the server
 	"""
-	USER = User( session.get( 'user', {} ) )
+	# USER = User( session.get( 'user', {} ) )
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
 	if USER.is_logged_in():
