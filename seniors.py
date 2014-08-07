@@ -85,12 +85,12 @@ def logout():
 	"""
 	session['user']['log_in_binary'] = 0
 	print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG PRE CLEAR: This is session -->", session.keys()
+	print "DEBUG LOGOUT PRE CLEAR: This is session -->", session.keys()
 	session.clear()
-	print "DEBUG POST CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG POST CLEAR: This is session -->", session.keys()
+	print "DEBUG LOGOUT POST CLEAR: This is session['user'] variable -->", session.get('user')
+	print "DEBUG LOGOUT POST CLEAR: This is session -->", session.keys()
 	time.sleep(0.1)
-	return redirect(url_for('home'))
+	return redirect(url_for('finished'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -168,6 +168,19 @@ def add_image():
 	Temporary - this will probably be within main page?
 	"""
 	return render_template('add_image.html')
+
+@app.route('/finished')
+def finished():
+	"""
+	Page when user has logged out
+	"""
+	print "DEBUG FINISHED PRE CLEAR: This is session['user'] variable -->", session.get('user')
+	print "DEBUG FINISHED PRE CLEAR: This is session -->", session.keys()
+	session.clear()
+	print "DEBUG FINISHED POST CLEAR: This is session['user'] variable -->", session.get('user')
+	print "DEBUG FINISHED POST CLEAR: This is session -->", session.keys()
+	time.sleep(0.1)
+	return render_template('finished.html')
 
 ###################### AJAX REPONDERS ######################
 
