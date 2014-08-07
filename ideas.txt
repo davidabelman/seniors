@@ -30,9 +30,9 @@ Backend:
 *** add 'see more posts' at bottom or automatically load
 *** fix double firing of post checks (just record time of last check, and use within an if statment)
 
+** some sort of email to keep people engaged (either daily update, or maybe one every few days if they haven't posted)
 ** investigate testing with selenium
 ** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
-** some sort of email to keep people engaged (either daily update, or maybe one every few days if they haven't posted)
 
 main page 
 ** update moment js every now and again
