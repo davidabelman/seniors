@@ -55,3 +55,13 @@ main page
 * try to login without confirming token, message (i.e. if password_hash = '', it should tell them to follow their email token to create a password)
 
 ICONS: http://www.iconarchive.com/show/animal-icons-by-martin-berube.html
+
+
+Here's the thing:
+session variable doesn't want to properly clear. Not sure if it's O2 wifi or something. HTTPS seems to work. Mobile 3g seems to work.
+workaround may be to store logged in status in mongodb. Don't want to check mongodb every single time someone goes back to the homepage (probably)
+I can use
+request.headers['Referer']--->   Referer: http://localhost:5000/add_image
+to see where user came from when they try to load the home page. If they came from /add_image or /settings or /help then we don't need to check their logged in status(???? but what if they weren't logged in on the other pages either, argh) ... otherwise we make a quick call to the database to check if they're logged in
+
+Also the before_request is firing for every little js file etc... more efficient to just fire on HTML?

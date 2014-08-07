@@ -45,8 +45,11 @@ base_url = "http://salt-and-pepper.herokuapp.com/invite/"
 def before_request():
 	# If we have a user in our session variable, create a user object
     global USER 
-    USER = User( session.get( 'user', {} ) )
-    USER.to_console()
+    if session.get('user')==None:
+    	USER = User( {} )
+    else:
+    	USER = User( session.get('user') )
+    	USER.to_console()
 
 @app.route('/')
 def home():
@@ -58,8 +61,11 @@ def home():
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
 	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
+	print "\n headers:"
+	print request.headers
 
-	if USER.is_logged_in():
+
+	if USER.is_logged_in() and session['logged_in']:
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -84,9 +90,10 @@ def logout():
 	Resets the cookies etc. so the user is logged out
 	"""
 	session['user']['log_in_binary'] = 0
+	session['logged_in'] = 0
 	print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG LOGOUT PRE CLEAR: This is session -->", session.keys()
-	session.clear()
+	session['user']=None
 	print "DEBUG LOGOUT POST CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG LOGOUT POST CLEAR: This is session -->", session.keys()
 	time.sleep(0.1)
@@ -130,15 +137,18 @@ def accept_invite(token):
 				return render_template('valid_token.html', name=USER._('name'), network=USER._('network'))
 			else:
 				# We have a token, but it has expired
-				session.clear()
+				#session.clear()
+				session['user']=None
 				return render_template('expired_token.html', sender=USER._('admin_email'))
 		else:
 			# Token has been used already
-			session.clear()
+			#session.clear()
+			session['user']=None
 			return render_template('used_token.html', sender=USER._('admin_email'))
 	else:
 		# The link was invalid
-		session.clear()
+		#session.clear()
+		session['user']=None
 		return render_template('invalid_token.html')
 
 
@@ -174,12 +184,7 @@ def finished():
 	"""
 	Page when user has logged out
 	"""
-	print "DEBUG FINISHED PRE CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG FINISHED PRE CLEAR: This is session -->", session.keys()
-	session.clear()
-	print "DEBUG FINISHED POST CLEAR: This is session['user'] variable -->", session.get('user')
-	print "DEBUG FINISHED POST CLEAR: This is session -->", session.keys()
-	time.sleep(0.1)
+	session['logged_in'] = 0
 	return render_template('finished.html')
 
 ###################### AJAX REPONDERS ######################
@@ -219,6 +224,7 @@ def check_network_username_password():
 		# Get user object to store as session variable
 		session['user'] = load_user(Users, {'name':username, 'network':network} )
 		session['user']['log_in_binary'] = 1
+		session['logged_in']=1
 		USER = session['user']
 
 	else:
@@ -325,6 +331,7 @@ def create_account_join_network():
 		# Add session name as we didn't add it when they clicked on link (we didn't know name yet)
 		session['user'] = load_user(Users, {'_id':object_id} )
 		session['user']['log_in_binary'] = 1
+		session['logged_in']=1
 		return json.dumps('[1]')
 		
 	else:
@@ -363,6 +370,7 @@ def create_account_create_network():
 		# Sign user in
 		session['user'] = load_user(Users, {'name':name, 'network':network} )
 		session['user']['log_in_binary'] = 1
+		session['logged_in']=1
 		USER = session['user']
 
 		if app.debug:
