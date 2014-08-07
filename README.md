@@ -16,7 +16,7 @@ Loads Flask modules and other modules created within project. Passwords stored i
 
 {'name':'Joe', 'network':'MyFamily', 'role':1}
 
-We can then get the name by saying USER._('name'). The reason we don't just use the dictionary as an object in itself is that we want some extra methods to be available on it.
+We can then get the name by saying USER._('name'). The reason we don't just use the dictionary as an object in itself is that we want some extra methods to be available on it. Note that a silly workaround has been implemented using session['logged_in'] in addition to session['user'] as some issues over non HTTPS when trying to use session.clear() on Heroku (the session wasn't clearing upon logout - so instead we set session['user']=None and session['logged_in']=0)
 
 ## mongo.py
 Functionality for database access. db = start_up_mongo() to fire up database connection. Other functions to pull posts, delete all users, create test users etc.
