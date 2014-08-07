@@ -57,7 +57,8 @@ def home():
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
 	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
-	if USER.is_logged_in():
+	# if USER.is_logged_in():
+	if session.get('user'):
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -86,7 +87,6 @@ def logout():
 	session.clear()
 	print "DEBUG POST CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG POST CLEAR: This is session -->", session.keys()
-
 
 	time.sleep(0.5)
 	return redirect(url_for('home'))
