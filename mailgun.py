@@ -1,4 +1,6 @@
+import os
 import requests
+SENIORS_MAILGUN_KEY = os.environ.get('SENIORS_MAILGUN_KEY')
 
 def send_access_token_email_test():
     send_access_token_email('Cliff', 'cliff@gmail.com', 'Abelman',
@@ -8,7 +10,7 @@ def send_access_token_email(sender, sender_email, network, recipient, recipient_
 	print "SENDING EMAIL"
 	return requests.post(
 		"https://api.mailgun.net/v2/sandbox8c1ada18520d4bd7bc1fa83b271e0dda.mailgun.org/messages",
-        auth=("api", "key-4dccea8bd722ec8c58297a54ef87f837"),
+        auth=("api", SENIORS_MAILGUN_KEY),
         data={"from": "Salt & Pepper <postmaster@sandbox8c1ada18520d4bd7bc1fa83b271e0dda.mailgun.org>",
               "to": "%s <%s>" %(recipient, recipient_email),
               "subject": "%s has invited you to Salt & Pepper!" %sender,
