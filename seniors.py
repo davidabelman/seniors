@@ -41,12 +41,12 @@ class Encoder(json.JSONEncoder):
 token_expiry_days = 30
 base_url = "http://salt-and-pepper.herokuapp.com/invite/"
 
-@app.before_request
-def before_request():
-	# If we have a user in our session variable, create a user object
-    global USER 
-    USER = User( session.get( 'user', {} ) )
-    USER.to_console()
+# @app.before_request
+# def before_request():
+# 	# If we have a user in our session variable, create a user object
+#     global USER 
+#     USER = User( session.get( 'user', {} ) )
+#     USER.to_console()
 
 @app.route('/')
 def home():
@@ -57,6 +57,7 @@ def home():
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
 	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
+	USER = User( session.get( 'user', {} ) )
 	if USER.is_logged_in():
 		return render_template('posts.html')
 	else:
@@ -87,8 +88,7 @@ def logout():
 	session.clear()
 	print "DEBUG POST CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG POST CLEAR: This is session -->", session.keys()
-	session['user']['log_in_binary'] = 0
-	time.sleep(0.5)
+	time.sleep(0.1)
 	return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
