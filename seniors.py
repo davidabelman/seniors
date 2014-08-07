@@ -57,8 +57,7 @@ def home():
 	print "DEBUG: This is session -->", session.keys()
 	print "DEBUG: This is USER variable -->", USER
 	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
-	# if USER.is_logged_in():
-	if session.get('user'):
+	if USER.is_logged_in():
 		return render_template('posts.html')
 	else:
 		return render_template('info.html')
@@ -82,6 +81,7 @@ def logout():
 	"""
 	Resets the cookies etc. so the user is logged out
 	"""
+	session['user']['log_in_binary'] = 0
 	print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
 	print "DEBUG PRE CLEAR: This is session -->", session.keys()
 	session.clear()
@@ -204,6 +204,7 @@ def check_network_username_password():
 	if valid_password:
 		# Get user object to store as session variable
 		session['user'] = load_user(Users, {'name':username, 'network':network} )
+		session['user']['log_in_binary'] = 1
 		USER = session['user']
 
 	else:
@@ -308,6 +309,7 @@ def create_account_join_network():
 
 		# Add session name as we didn't add it when they clicked on link (we didn't know name yet)
 		session['user'] = load_user(Users, {'_id':object_id} )
+		session['user']['log_in_binary'] = 1
 		return json.dumps('[1]')
 		
 	else:
@@ -345,6 +347,7 @@ def create_account_create_network():
 
 		# Sign user in
 		session['user'] = load_user(Users, {'name':name, 'network':network} )
+		session['user']['log_in_binary'] = 1
 		USER = session['user']
 
 		if app.debug:
