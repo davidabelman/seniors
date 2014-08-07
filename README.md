@@ -35,7 +35,7 @@ activate --> source venv/bin/activate
 deactivate --> deactivate
 
 ## Pages
-# info
+### info
 '/' routes to both the logged out homepage (info) and the logged in homepage (posts).
 
 ### signup
