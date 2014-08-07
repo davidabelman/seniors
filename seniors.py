@@ -53,11 +53,12 @@ def home():
 	"""
 	If logged in, user sees main feed, if not, they see the main 'about' page
 	"""
-	# print "DEBUG: This is session['user'] variable -->", session.get('user')
-	# print "DEBUG: This is session -->", session.keys()
-	# print "DEBUG: This is USER variable -->", USER
-	# print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
 	USER = User( session.get( 'user', {} ) )
+	print "DEBUG: This is session['user'] variable -->", session.get('user')
+	print "DEBUG: This is session -->", session.keys()
+	print "DEBUG: This is USER variable -->", USER
+	print "DEBUG: This is USER.is_logged_in() -->", USER.is_logged_in()
+
 	if USER.is_logged_in():
 		return render_template('posts.html')
 	else:
@@ -245,6 +246,7 @@ def get_posts():
 	"""
 	Pulls posts from the server
 	"""
+	USER = User( session.get( 'user', {} ) )
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
 	if USER.is_logged_in():
