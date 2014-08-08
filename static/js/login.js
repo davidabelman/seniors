@@ -129,7 +129,7 @@ function check_form_and_login() {
                     mixpanel.people.set_once({  // This will only overwrite if not set before (i.e. not original group creator)
                               "Signup method": 'On behalf',
                               "$created": Date(),
-                              "Logins": 1,
+                              "Logins": 0,
                               "Text posts":0,
                               "Image posts":0,
                               "$first_name" : username,
@@ -144,8 +144,10 @@ function check_form_and_login() {
                     });
                     mixpanel.track('Login');
 
-                    // Go to posts page
-                    fade_page_in_out('out','/');
+                    // Go to posts page (leave gap for analytics)
+                    setTimeout( function() {
+                      fade_page_in_out('out','/');
+                    }, 300);
                     
                   }
                   else {
