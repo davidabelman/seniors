@@ -55,7 +55,7 @@ function add_new_posts_only(posts) {
       }
     }) // end each
   } // end if
-  else{ console.log(moment.utc().unix(), 'no new posts') }
+  else{ c( [ moment.utc().unix(), 'no new posts' ] ) }
 }
 
 function add_single_post_to_top(post) {
@@ -109,7 +109,11 @@ function submit_posts_button_ready() {
       var html = escapeHtml($('#post_input').val());
       hide_submit_button();
       create_post_from_html(html);
-      mixpanel.track('Posted text', {'Length (chars)':html.length})
+      
+      // Mixpanel
+      mixpanel.track('Posted text', {'Length (chars)':html.length}) // event
+      mixpanel.people.increment('Text posts', 1); // people
+
       setTimeout( function() {
         get_posts(full_refresh=false, 5,0) 
       }, 500) // Adding a delay to avoid two very close requests to server
@@ -121,7 +125,7 @@ function submit_posts_button_ready() {
 // TODO currently duplicated in post.js and add_image.js
 function create_post_from_html(html) {
   // Adds some HTML (or text etc) to the feed on the Database side
-  console.log('about to submit post')
+  c('About to submit post...')
   $.ajax({
                 url:'/_submit_post_entry',
                 data: JSON.stringify({
@@ -130,7 +134,7 @@ function create_post_from_html(html) {
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(result) { 
-                  console.log ('This is the result and type of result:',result,typeof(result))
+                  c (['Post submitted', result])
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -155,12 +159,23 @@ function nav_buttons_ready() {
   $('#logout-button').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
+    
+    // Track logout and clear mixpanel cookie
     mixpanel.track('Logout');
-    $('#whole-content').animate({
+    var id = window.setInterval(function() {
+      if (mixpanel.cookie && mixpanel.cookie.clear) {
+        mixpanel.cookie.clear();
+        window.clearInterval(id);
+      }
+      // Redirect away
+      $('#whole-content').animate({
       opacity: 0}, speed, function() {
         // When complete
         window.location.href = "logout";
       })
+    }, 50);
+
+    
   }) // end click event
 
   // Fade out and go to 'add_image screen' 
@@ -200,12 +215,12 @@ function nav_buttons_ready() {
 function recursive_check_for_new_posts(count, delay){
     // Loops the poll on server via AJAX to check for new posts
     // Count increments for tracking purposes, delay is millisecond delay
-    console.log("Refresh posts:", count);
+    c(["Refresh posts:", count]);
     var delays_per_min = 60000/delay
     if (count%delays_per_min==0) {
       // 1 minute passed
       mixpanel.track('Wall refreshes', {'Consecutive minutes': count/delays_per_min})
-      console.log("We have been going for",count/delays_per_min,'min')
+      c(["We have been going for",count/delays_per_min,'min'])
     }    
     setTimeout( function() {
       get_posts(full_refresh=false, 5,0);

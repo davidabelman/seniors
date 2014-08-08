@@ -42,6 +42,7 @@ log in to group
 			<!--hidden fields-->
 			<input type="hidden" id="name_initial" value='{{name}}'  />
 			<input type="hidden" id="network" value='{{network}}'  />
+			<input type="hidden" id="email" value='{{email}}'  />
 
 			<input type="text" name="name" id="name" value='{{name}}' class='big-input' required />
 		</div>
@@ -89,7 +90,6 @@ log in to group
 
 {% block scripts_bottom %}
 	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/valid_token.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 {% endblock %}

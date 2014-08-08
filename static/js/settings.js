@@ -66,7 +66,6 @@ $('#change-name-submit').click( function(evt) {
     	$('.page1of2').fadeOut( function() {
   		$('.page2of2').fadeTo(300,1)
         	})
-    	console.log('too short?')
         return;
       }
 

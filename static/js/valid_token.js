@@ -68,7 +68,7 @@ function submit_all_form_data() {
     return;
   }
 
-  mixpanel.track('Signup', {'Method':'Email'})
+  
   // Server check if all OK
   $.ajax({
             url:'/_create_account_join_network',
@@ -79,6 +79,26 @@ function submit_all_form_data() {
             contentType: 'application/json;charset=UTF-8',
             type: "POST",
             success: function(response) { 
+              // We have already identified through hidden form and in my_analytics.js
+              mixpanel.people.set({
+                            "Signup method": 'Email',
+                            "Logins": 1,
+                            "Text posts":0,
+                            "Image posts":0,
+                            "$email" : $('#email').val(),
+                            "$first_name" : $('#name').val(),
+                            "$created": Date(),
+                            "Network" : $('#network').val()
+                          });
+              //... Register super properties for this session
+              mixpanel.register({
+                            "Session method": 'Email invite',
+                            "Email" : $('#email').val(),
+                            "Name" : $('#name').val(),
+                            "Network" : $('#network').val(),
+                        });
+              mixpanel.track('Signup', {'Method':'Email'})
+
               $('#success-password').text("Success! Taking you to the group...").fadeIn( function() {
                             setTimeout( function() {
                               fade_page_in_out('out', "/")

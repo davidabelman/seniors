@@ -40,7 +40,6 @@ home
 
 {% block scripts_bottom %}
 	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/info.js', _external=True)}}"></script>
 {% endblock %}
 

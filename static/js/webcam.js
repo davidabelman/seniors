@@ -15,7 +15,7 @@ function activate_webcam_script() {
 			video = document.getElementById("webcam-video"),
 			videoObj = { "video": true },
 			errBack = function(error) {
-				console.log("Video capture error: ", error.code); 
+				c(["Video capture error: ", error.code]); 
 			};
 
 		// Put video listeners into place
@@ -72,7 +72,9 @@ function activate_webcam_script() {
 		$('#webcam-use-photo-button').click( function(evt) {
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
+			
 			mixpanel.track('Posted image', {'Method':'Webcam'});
+			mixpanel.people.increment('Image posts', 1);
 
 			$('#webcam-canvas, #webcam-take-another-button, #webcam-use-photo-button').hide()
 			$('#loading-spinner').html("<img src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif'>").show()
@@ -88,7 +90,7 @@ function activate_webcam_script() {
 // Sends image data to Flask, where we convert to PNG, save to Dropbox
 function save_image_to_cloud(base) {
 	// Post data to server
-	console.log('posting data to server')
+	c('Posting data to server...')
 		$.ajax({
                 url:'/_upload_img_to_dropbox',
                 data: JSON.stringify({
@@ -97,7 +99,7 @@ function save_image_to_cloud(base) {
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(url) { 
-                  console.log ('This is the url',url);
+                  c(['This is the url',url]);
                   img_link = "<p class='post-body'><img src="+url+"></p>";
 				  create_post_from_html(img_link);
 				  // When complete
@@ -106,7 +108,7 @@ function save_image_to_cloud(base) {
         			
                 }, // end success
                 error: function() {
-                  console.log('Server error')
+                  c('Server error')
                 }
               }) // end ajax
 

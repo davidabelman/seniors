@@ -26,6 +26,10 @@ db = mongo.start_up_mongo()
 Users = db.users
 Posts = db.posts
 
+# TOKENS
+token_expiry_days = 30
+base_url = "http://salt-and-pepper.herokuapp.com"
+
 # JSON ENCODING
 from bson.objectid import ObjectId
 class Encoder(json.JSONEncoder):
@@ -36,10 +40,6 @@ class Encoder(json.JSONEncoder):
         	return obj.isoformat()
         else:
             return obj
-
-# TOKENS
-token_expiry_days = 30
-base_url = "http://salt-and-pepper.herokuapp.com"
 
 @app.before_request
 def before_request():
@@ -156,7 +156,7 @@ def accept_invite(token):
 			if (datetime.datetime.utcnow() - USER._('token_sent')).days < token_expiry_days:
 				# We have an unused token, and it is not yet expired.
 				# This page lets the user register into this network, and then marks token as used (see create_account_join_network)
-				return render_template('valid_token.html', name=USER._('name'), network=USER._('network'))
+				return render_template('valid_token.html', name=USER._('name'), network=USER._('network'), email=USER._('email'))
 			else:
 				# We have a token, but it has expired
 				#session.clear()
@@ -253,7 +253,7 @@ def check_network_username_password():
 		session.clear()
 		return json.dumps({'status':0, 'data':'This is not the correct password.'})
 
-	return json.dumps({'status':int(valid_password)})
+	return json.dumps({'status':int(valid_password), 'user_id':session['user']['user_id']})
 
 @app.route('/_submit_post_entry', methods=['GET', 'POST'])
 def submit_feed_entry():
@@ -411,10 +411,11 @@ def create_account_create_network():
 					'picture' : 'robo'
 				}
 		Posts.insert(to_add)
-		return json.dumps(1)
+
+		return json.dumps({'status':1, 'user_id':session['user']['user_id']})
 
 	else:
-		return json.dumps("I'm sorry, it seems the group name is in use. Please try again.")
+		return json.dumps({'status':0, 'data':"I'm sorry, it seems the group name is now in use. Please try again."})
 
 @app.route('/_add_user_on_behalf', methods=['GET', 'POST'])
 def add_user_on_behalf():

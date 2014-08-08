@@ -7,18 +7,18 @@ if ( window.location.origin=="http://localhost:5000" ) {
 	//var token = "a54d273360d0c16af87f3eaacb84c2e4"
 	var token = "6fe9a2b63dfcdc26327bd00857dab569"
 }
+// Initialise Mixpanel
 mixpanel.init(token);
+// Track all page views
 mixpanel.track('Page view', 
 	{
 		'title':$(document).find("title").text().trim().replace(/\s{2,}/g, ' '),
 		'path':window.location.pathname
 	}
 );
-
-// mixpanel.identify("13487");
-// mixpanel.people.set({
-//     "$first_name": "Test",
-//     "$last_name": "User",
-//     "$created": "2013-04-01T09:02:00",
-//     "$email": "emailaddress@gmail.com"
-// });
+// Use user ID to identify if a user is logged in (put as hidden field on base template)
+var user_id_hidden = $('#user_id_hidden').val()
+if (user_id_hidden!=undefined) {
+	mixpanel.identify($('#user_id_hidden').val());
+	c( [ "Identified user as",$('#user_id_hidden').val() ] )
+}

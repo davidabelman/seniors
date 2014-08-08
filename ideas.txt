@@ -26,9 +26,10 @@ Backend:
 
 
 *** create heroku staging account
+*** change 'long' format to something better for invites
+*** ignore cases in usernames etc.
 *** add 'see more posts' at bottom or automatically load
 *** Email opt-out
-*** make enter/group/name log straight in if they are already logged in with session
 ** investigate testing with selenium
 ** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 

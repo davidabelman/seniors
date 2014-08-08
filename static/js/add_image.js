@@ -130,7 +130,7 @@ function draw_images() {
 	// Loops through URL list to draw to screen
 	html = "<row>"
 	$.each( urls, function(index, url) {
-		console.log(url)
+		c(url)
 		html += "<div class='div-in-img-grid'>"
 		html += "<a><img src='"+url+"' class='img-in-img-grid'></a>"
 		html += "</div>"
@@ -147,7 +147,10 @@ function click_image_to_post() {
 $('.img-in-img-grid').click( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
+		
 		mixpanel.track('Posted image', {'Method':'Search'});
+		mixpanel.people.increment('Image posts', 1);
+		
 		url = $(this).attr("src")
 		img_link = "<p class='post-body'><img src="+url+" width='40%'></p>"
 		create_post_from_html(img_link)
@@ -165,7 +168,7 @@ function create_post_from_html(html) {
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(result) { 
-                  console.log ('This is the result and type of result:',result,typeof(result))
+                  c (['Submitted post:', result])
                   // get_posts(full_refresh=true, 10,0)
                   // remove_text_from_input();
                   // When complete
@@ -184,7 +187,6 @@ function show_and_hide_submit_button() {
 	$('#img-input').keyup( function(evt) {
 		evt.preventDefault()
 		evt.stopImmediatePropagation()
-		console.log('asda')
 		if ($('#img-input').val().length >= 1 ) {
 				$('#bing-search-submit').show();
 				prepare_to_get_content_from_bing()

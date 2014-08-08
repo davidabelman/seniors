@@ -122,11 +122,33 @@ function check_form_and_login() {
                   result = JSON.parse(result)
                   if (result['status']=="1") {
                     // Let's go!
-                    mixpanel.track('Login')
-                    fade_page_in_out('out','/') 
+                    var user_id = result["user_id"]; // We sent the logged in user ID
+                    // Mixpanel
+                    //... Track person
+                    mixpanel.identify(user_id)
+                    mixpanel.people.set_once({  // This will only overwrite if not set before (i.e. not original group creator)
+                              "Signup method": 'On behalf',
+                              "$created": Date(),
+                              "Logins": 1,
+                              "Text posts":0,
+                              "Image posts":0,
+                              "$first_name" : username,
+                              "Network" : network,
+                      });
+                    mixpanel.people.increment('Logins', 1);
+                    //... Register super properties for this session
+                    mixpanel.register_once({  // This will only overwrite if not set before (i.e. not original group creator)
+                        "Session method": 'Log in',
+                        "Name" : username,
+                        "Network" : network,
+                    });
+                    mixpanel.track('Login');
+
+                    // Go to posts page
+                    fade_page_in_out('out','/') ;
                   }
                   else {
-                    console.log(result['data'])
+                    c(result['data'])
                     $('#password-error-message').text(result['data']).fadeIn();
                   }
                 },

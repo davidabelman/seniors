@@ -11,7 +11,8 @@ function validate_password() {
       $('#error-password').text(valid_response).fadeIn()
       return;
     }
-    mixpanel.track('Signup1', {'Method':'Original'}) // i.e. he/she created group, no referrer
+
+    // Server-side creation of account
     $.ajax({
                 url:'/_create_account_create_network',
                 data: JSON.stringify({
@@ -23,7 +24,35 @@ function validate_password() {
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(response) { 
-                  if (response==1) {
+                  response = JSON.parse(response);
+                  if (response["status"]==1) {
+
+                        var user_id = response["user_id"]; // We sent the newly created user ID
+                        // Mixpanel
+                        //... Register person for people tracking and event analytics
+                        mixpanel.identify(user_id) 
+                        c(["Set alias as", user_id])
+                        //... Track person
+                        mixpanel.people.set({
+                            "Signup method": 'Original',
+                            "Logins": 1,
+                            "Text posts":0,
+                            "Image posts":0,
+                            "$email" : $('#email-input').val(),
+                            "$first_name" : $('#name-input').val(),
+                            "$created": Date(),
+                            "Network" : $('#network-input').val()
+                          });
+                        //... Register super properties for this session
+                        mixpanel.register({
+                            "Session method": 'Original signup',
+                            "Email" : $('#email-input').val(),
+                            "Name" : $('#name-input').val(),
+                            "Network" : $('#network-input').val(),
+                        });
+                        mixpanel.track('Signup', {'Method':'Original'}) // i.e. he/she created group, no referrer
+
+                        // Forward on page to add_users
                         $('#success-password').fadeOut( function() {
                           $('#success-password').text("Success!").fadeIn( function() {
                             setTimeout( function() {
@@ -33,7 +62,8 @@ function validate_password() {
                         }) // end fadeOut
                       } // end response = 1
                   else {
-                    $('#error-password').text(response).fadeIn()
+                    c('Server error')
+                    $('#error-password').text(response['data']).fadeIn()
                   }
                 }, // end success
                 error: function() {
@@ -106,7 +136,6 @@ function check_network_already_exists(name) {
                 "network" : name
               },
               function(response) {
-                console.log(response)
                 if (response=='1') {
                       // $('#network-ok').hide()
                       $('#error-network').text("Group name already taken").fadeIn()

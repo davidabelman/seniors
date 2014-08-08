@@ -140,7 +140,6 @@ Signup
 
 {% block scripts_bottom %}
 	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/signup.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/seniors_validation.js', _external=True)}}"></script>
 {% endblock %}

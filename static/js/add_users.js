@@ -94,7 +94,7 @@ function check_form_and_add_user_to_db() {
           mixpanel.track('Signup', {'Method':'On behalf'})
 
           // We will show a message to user saying successful (clear page 1, show page 2b)
-          console.log('Added user successfully to database');
+          c('Added user successfully to database');
           network = $('#network_hidden').val();
 
           // Now redraw screen

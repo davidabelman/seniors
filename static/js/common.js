@@ -1,3 +1,12 @@
+function c(stuff) {
+  // Logs to console only on localhost
+  if ( window.location.origin=="http://localhost:5000" ) {
+    console.log("Debug:")
+    console.log(stuff)
+    console.log("")
+  }
+}
+
 function bind_left_hand_button_clicks() {
   // Enables click behaviour for buttons on LHS
   // Fades all other buttons when one is clicked
@@ -27,7 +36,6 @@ function bind_left_hand_button_clicks() {
       // Show relevant RHS content
       var id_to_show = $(this).attr('id').replace('-button','')
       setTimeout ( function() {
-        console.log('#'+id_to_show+'-rhs')
         $('#'+id_to_show+'-rhs').fadeIn(300)
       } , 51 ) 
     });
@@ -64,7 +72,7 @@ function make_enter_key_submit_form(input_id, button_id) {
   $(input_id).keyup(function(evt){
     evt.preventDefault();
     evt.stopImmediatePropagation();
-    if(event.keyCode == 13){
+    if(evt.keyCode == 13){
         $(button_id).click();
     }
   });
