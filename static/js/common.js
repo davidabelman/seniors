@@ -1,6 +1,8 @@
+var debug = true;
+
 function c(stuff) {
   // Logs to console only on localhost
-  if ( window.location.origin=="http://localhost:5000" ) {
+  if ( window.location.origin=="http://localhost:5000" || debug==true) {
     console.log("Debug:")
     console.log(stuff)
     console.log("")

@@ -9,6 +9,7 @@ if ( window.location.origin=="http://localhost:5000" ) {
 }
 // Initialise Mixpanel
 mixpanel.init(token);
+c (["Mixpanel initialised with token", token])
 // Track all page views
 mixpanel.track('Page view', 
 	{
@@ -18,6 +19,7 @@ mixpanel.track('Page view',
 );
 // Use user ID to identify if a user is logged in (put as hidden field on base template)
 var user_id_hidden = $('#user_id_hidden').val()
+c(['User id is', user_id_hidden])
 if (user_id_hidden!=undefined) {
 	mixpanel.identify($('#user_id_hidden').val());
 	c( [ "Identified user as",$('#user_id_hidden').val() ] )
