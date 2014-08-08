@@ -44,7 +44,7 @@ function check_form_and_show_password_page() {
                     $('#error-name').text("That name is already taken in this group.").fadeIn();
               }
               else {
-                    $('#success-name').text("Hello"+name+"!").fadeIn( function() {
+                    $('#success-name').text("Hello "+name+"!").fadeIn( function() {
                       setTimeout( function() {
                         focus_at_end_of_input_form('#password')
                         toggle_page_1_and_2(go_to_page=2)

@@ -4,10 +4,13 @@ def load_user(collection, search_dict):
 	This is used to load session variables, which are passed to User class
 	"""
 	u_dict = collection.find_one(search_dict)
-	u_dict.pop('password_hash', None) # Remove password from session variables
-	user_id = u_dict.pop('_id', None) # Pop ID and convert to string, then put it back
-	u_dict['user_id'] = str(user_id)
-	return u_dict
+	if u_dict:
+		u_dict.pop('password_hash', None) # Remove password from session variables
+		user_id = u_dict.pop('_id', None) # Pop ID and convert to string, then put it back
+		u_dict['user_id'] = str(user_id)
+		return u_dict
+	else:
+		return None  # no user found
 
 
 class User:

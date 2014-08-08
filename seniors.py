@@ -1,4 +1,4 @@
-import os
+import os, binascii, random, time, datetime
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask.ext.script import Manager
 from flask.ext.moment import Moment
@@ -11,9 +11,6 @@ from model import User, load_user
 import dropbox_upload
 import mongo
 import json, urllib, urllib2
-import datetime
-import random
-import time
 
 app = Flask(__name__)
 SECRET_KEY = os.environ['SENIORS_SECRET_KEY']
@@ -143,7 +140,11 @@ def accept_invite(token):
 	"""
 	Screen on which a user can join a group (only would reach this through secret access token)
 	"""
-	token = long(token)
+	try:
+		token = long(token)
+		print "This was a long token"
+	except:
+		print "This was a new style token"
 	user = load_user(Users, {'token':token} )
 	if user:	
 		session['user'] = user
@@ -336,7 +337,12 @@ def create_account_join_network():
 	"""
 	name = request.json['name']
 	password = request.json['password']
-	token = long(USER._('token'))
+	try:
+		token = long(USER._('token'))
+		print "Using the long token"
+	except:
+		token = USER._('token')
+		print "Ascii token being used"
 
 	object_id = Users.find_one({'token':token}).get('_id')
 
@@ -474,10 +480,11 @@ def add_user_via_access_token():
 		existing = Users.find_one({'network':USER._('network'), 'name':firstname})
 		if not existing:
 			# Generate access token and add user to database
-			token = random.getrandbits(32)
+			token = binascii.b2a_hex(os.urandom(6))
 			to_add = { 	
 							'name':firstname,
 							'email':email,
+							'admin_name':USER._('name'),
 							'admin_email':USER._('email'),
 							'password_hash': "",
 							'register' : "",

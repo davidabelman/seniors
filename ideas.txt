@@ -25,19 +25,20 @@ Backend:
 
 
 
-*** create heroku staging account
-*** change 'long' format to something better for invites
-*** ignore cases in usernames etc.
-*** add 'see more posts' at bottom or automatically load
-*** Email opt-out
-** investigate testing with selenium
-** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+Before i put it live
+1) *** change 'long' format to something better for invites
+2) *** add 'see more posts' at bottom or automatically load
+3) *** Email opt-out option
+4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+5) *** ignore cases in usernames etc.
 
 main page 
 ** update moment js every now and again
 ** add notification for new messages
 * colour new messages as they pop up
 
+** investigate testing with selenium
+** create heroku staging account
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** Add some webcam hint/message to help switch on
