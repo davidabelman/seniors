@@ -217,7 +217,7 @@ def unsubscribe(token):
 	Sets user corresponding to the token as unsubscribed, will not get automated emails any more
 	"""
 	user_id = str(Users.find_one({'unsubscribe_token':token})['_id'])
-	print "sending user id", user_id
+	print "Unsubscribing user", user_id, "from email."
 	Users.update({'unsubscribe_token':token}, {"$set": {'unsubscribed':True} })
 	return render_template('unsubscribe.html', user_id=user_id)
 
@@ -229,6 +229,12 @@ def finished():
 	session['logged_in'] = 0
 	return render_template('finished.html')
 
+@app.route('/feedback')
+def feedback():
+	"""
+	Feedback box
+	"""
+	return render_template('feedback.html')
 
 
 
@@ -695,11 +701,15 @@ def send_feedback():
 	"""
 	Send feedback from user to our email
 	"""
-	user_id = request.json['user_id']
+	try:
+		user_id = request.json['user_id']
+		feedback_user = Users.find_one({'_id':ObjectId(user_id)})
+	except:
+		user_id = None
+		feedback_user = None
 	message = request.json['message']
 	subject = request.json['subject']
-
-	feedback_user = Users.find_one({'_id':ObjectId(user_id)})
+	
 	receive_feedback_via_email(feedback_user, subject, message)
 
 	return json.dumps(1)

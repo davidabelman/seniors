@@ -14,6 +14,10 @@ def receive_feedback_via_email(feedback_user, subject, message):
   """
   Sends a message to my email address from a user 
   """
+  if not feedback_user:
+    feedback_user = {'name':'Unknown (logged out)', 'email':'unknown email'}
+  if not feedback_user['email']:
+    feedback_user['email'] = 'unknown email'
   print "Sending email via mailgun"
   return requests.post(
     "https://api.mailgun.net/v2/sandbox8c1ada18520d4bd7bc1fa83b271e0dda.mailgun.org/messages",

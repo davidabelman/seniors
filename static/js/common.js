@@ -150,4 +150,3 @@ function quick_fade() {
   }, x)
   x=x+gap
 }
-

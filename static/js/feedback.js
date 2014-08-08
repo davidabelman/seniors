@@ -7,11 +7,15 @@ $('#feedback-submit').click( function(evt) {
 	var user_id = $('#user_id_hidden').val();
 
 	// Check there is some feedback before sending
-	if (message.length<2) {
+	if (message.length<=2) {
+		$('#feedback-submit').text('Please type a longer message.')
 		return
 	}
 	// Change the button text
 	$('#feedback-submit').text('Sending...')
+
+	// Mixpanel track
+	mixpanel.track('Feedback', {'Message':message})
 
 	// Send to server (sends an email)
 	$.ajax({
@@ -19,12 +23,16 @@ $('#feedback-submit').click( function(evt) {
                 data: JSON.stringify({
                   "message":message,
                   "user_id":user_id,
-                  "subject":'Unsubscribe'
+                  "subject":'General feedback'
                 }, null, '\t'), // end data
                 contentType: 'application/json;charset=UTF-8',
                 type: "POST",
                 success: function(response) { 
-                	$('#feedback-submit').text('Sent! Thank you.')
+                	setTimeout( function() {
+                		$('#feedback-submit').hide()
+                		$('#back-to-group-button').show()
+                		 , 200 }) // end timeout
                 } // end success function
             }); // end ajax
 })
+

@@ -6,11 +6,15 @@
 
 {% block title %}
 {{ super() }}
-unsubscribed
+feedback
 {% endblock %}
 
 {% block body %}
 {{ super() }}
+
+{% block feedbacktab %}
+<!-- Removes the feedback tab from this page -->
+{% endblock %}
 
 <div class='centered-page'>
 
@@ -19,17 +23,16 @@ unsubscribed
 	<div class='horizontal-header'>
 		<div class='page-main-heading'>
 			<h1 class='page1of2'>
-				Sorry to hear you've unsubscribed
+				Get in touch
 			</h1>
 		</div>
 	</div> <!-- end horizontal-header container -->
 
 	<div class='container-fluid'>
-		<div class='page-main-subheading shift-down-3'>
-			<h2 class='shift-down-3'>If you have 1 minute, please let us know why, along with any other feedback on the site.</h2>
+		<div class='page-main-subheading shift-up-2'>
+			<h2>It's very useful to hear your feedback. How have you found the site? What's easy to use, and what's hard? Are there other features that you would like to see?</h2>
 			
 		</div>
-		<input type='hidden' value='{{user_id}}' id='user_id_hidden'/> <!-- hidden id for form -->
 		<div class='centered_80pc_width'>
 			<textarea		wrap="hard"
 							name="inputBox"
@@ -39,7 +42,8 @@ unsubscribed
 							value=''></textarea>
 		</div>
 		<div class='centered_50pc_width'>
-		<a href = "#" class='a-button' id='feedback-submit'>Submit your comment</a>
+		<a href = "/" class='a-button' id='back-to-group-button' style='display:none'>Thank you! Click to go back to home.</a>
+		<a href = "#" class='a-button' id='feedback-submit'>Submit your feedback</a>
 		</div>
 		
 	</div>
@@ -50,5 +54,5 @@ unsubscribed
 
 {% block scripts_bottom %}
 	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/unsubscribe.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/feedback.js', _external=True)}}"></script>
 {% endblock %}

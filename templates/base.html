@@ -35,7 +35,10 @@
     {% if session.get('user')!=None %}
       <input type='hidden' id='user_id_hidden' value="{{session.get('user').get('user_id')}}" />
     {% endif %}
-    {% endblock %}
+      {% block feedbacktab %}
+      <div id='send-feedback-tab'><a href='feedback' >Please send feedback - click here!</a></div>
+      {% endblock %}
+    {% endblock %}    
 
     {% block scripts_bottom %}
       <!-- Include all compiled plugins (below), or include individual files as needed -->
