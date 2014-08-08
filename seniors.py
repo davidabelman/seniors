@@ -239,7 +239,9 @@ def submit_feed_entry():
 	"""
 	Given a feed entry, this will check user is signed in, then add to database and return success or fail statement
 	On the client side the entry is added to the top of the page
+	Also pings database to update 'last_seen' value for user
 	"""
+	# Insert to posts database
 	content = request.json['content']
 	if USER.is_a_user():
 		to_add ={ 	
@@ -253,10 +255,9 @@ def submit_feed_entry():
 		response = 1
 	else:
 		response = 0
-	
-	if app.debug:
-		print "Information received:", content
-		print "Response:", response
+
+	# Update last seen parameter
+	mongo.update_last_seen_for_user(Users, USER._('name'), USER._('network'))
 	
 	return json.dumps(int(response))
 
@@ -271,6 +272,8 @@ def get_posts():
 	skip = int(request.args.get('skip', 0))
 	if USER.is_a_user():
 		posts = mongo.return_last_X_posts(Posts, network=USER._('network'), limit=limit, skip=skip)
+		# Update last seen parameter
+		mongo.update_last_seen_for_user(Users, USER._('name'), USER._('network'))
 		return json.dumps(list(posts), cls=Encoder)
 	else:
 		return "Authentication error: you are not logged in to your group."

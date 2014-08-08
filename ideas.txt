@@ -24,13 +24,13 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 Backend:
 
 
-*** write documentation
+
 *** create heroku staging account
-*** add basic analytics mixpanel and ga
 *** add 'see more posts' at bottom or automatically load
 *** fix double firing of post checks (just record time of last check, and use within an if statment)
-
-** some sort of email to keep people engaged (either daily update, or maybe one every few days if they haven't posted)
+*** some sort of email to keep people engaged (either daily update, or maybe one every few days if they haven't posted)
+*** Email opt-out
+*** make enter/group/name log straight in if they are already logged in with session
 ** investigate testing with selenium
 ** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 
@@ -65,3 +65,14 @@ request.headers['Referer']--->   Referer: http://localhost:5000/add_image
 to see where user came from when they try to load the home page. If they came from /add_image or /settings or /help then we don't need to check their logged in status(???? but what if they weren't logged in on the other pages either, argh) ... otherwise we make a quick call to the database to check if they're logged in
 
 Also the before_request is firing for every little js file etc... more efficient to just fire on HTML?
+
+
+At Midday -
+For each user:
+- check they have email
+- check they have confirmed account
+- check they have not unsubscribed
+- check last time seen on site
+- find all posts since this time
+- find all posters of these since this time
+- create email message based on these
