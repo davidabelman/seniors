@@ -25,10 +25,8 @@ Backend:
 
 Before i put it live
 Tes mixpanel
-3) *** Email opt-out option (1 hour)
 4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them) (2 hours)
 5) *** ignore cases in usernames etc. (1 hour)
-6) *** feedback option, reinstate computer upload and dictate button
 7) *** Basic fixes for smaller screens
 
 main page 
@@ -42,6 +40,7 @@ main page
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** write better help file
+* have a 'vote' screen for features that aren't there yet
 
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
