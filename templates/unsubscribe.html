@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+unsubscribed
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page'>
+
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				Sorry to hear you've unsubscribed
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<div class='container-fluid'>
+		<div class='page-main-subheading shift-down-3'>
+			<h2 class='shift-down-3'>If you have 1 minute, please let us know why, along with any other feedback on the site.</h2>
+			
+		</div>
+		<input type='hidden' value='{{user_id}}' id='user_id-input-hidden'/>
+		<div class='centered_80pc_width'>
+			<textarea		wrap="hard"
+							name="inputBox"
+							placeholder="Please type here..."
+							id='feedback-input'
+							class="big-input shift-down-1 centered-page"
+							value=''></textarea>
+		</div>
+		<div class='centered_50pc_width'>
+		<a href = "#" class='a-button' id='feedback-submit'>Submit your comment</a>
+		</div>
+		
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/unsubscribe.js', _external=True)}}"></script>
+{% endblock %}

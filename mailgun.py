@@ -9,6 +9,23 @@ company_name = "Salt & Pepper"
 company_url = 'http://salt-and-pepper.herokuapp.com'
 
 
+########################################## FEEDBACK #########################################
+def receive_feedback_via_email(feedback_user, subject, message):
+  """
+  Sends a message to my email address from a user 
+  """
+  print "Sending email via mailgun"
+  return requests.post(
+    "https://api.mailgun.net/v2/sandbox8c1ada18520d4bd7bc1fa83b271e0dda.mailgun.org/messages",
+    auth=("api", SENIORS_MAILGUN_KEY),
+    data={"from": "User <postmaster@sandbox8c1ada18520d4bd7bc1fa83b271e0dda.mailgun.org>",
+              "to": "David <davidabelman@gmail.com>",
+              "subject": "S&P Feedback - %s" %subject,
+              "text": "%s (%s) says: %s" %( feedback_user['name'], feedback_user['email'], message )
+          }
+    )
+
+
 ########################################## ACCESS TOKENS #########################################
 def send_access_token_email_test():
     send_access_token_email('Cliff', 'cliff@gmail.com', 'Abelman',
@@ -42,6 +59,7 @@ def send_daily_digest_to_all_users(testing=True):
   If there have been posts in their network since the user was last seen by us, an email is sent to them
   Email is customised according to how long ago they were seen, and how many messages there have been
   Email only sent on day 1, 2, 3 and X%5==0
+  Unsubscribe link uses a token which looks them up if they click on it
   """
   import mongo
   db = mongo.start_up_mongo()
@@ -58,7 +76,9 @@ def send_daily_digest_to_all_users(testing=True):
       completed_registration = u.get('completed_registration',None)
       name = u.get('name',None)
       network = u.get('network',None)
+      unsubscribe_token = u.get('unsubscribe_token',None)
       url = "%s/enter/%s/%s" %(company_url, network, name)
+      unsubscribe_url = "%s/unsubscribe/%s" %(company_url, unsubscribe_token)
 
       print "\n=====\nGot user! Variables:"
       print last_seen, email, unsubscribed, completed_registration, name, network, url
@@ -87,7 +107,7 @@ def send_daily_digest_to_all_users(testing=True):
             closing_line = create_closing_line()
 
             # Compose full message and send
-            full_message_body = create_full_message_body(name, opening_line, main_text, closing_line, company_name)
+            full_message_body = create_full_message_body(name, opening_line, main_text, closing_line, company_name, unsubscribe_url)
             print "Full subject and message body is this:"
             print subject_line, full_message_body
             if not testing:
@@ -146,14 +166,15 @@ def create_main_text(number_of_posts, senders, url):
 def create_closing_line():
   return random.choice(['Over and out.', 'With best wishes,', 'All the best,', 'Till next time,', 'See you soon!'])
 
-def create_full_message_body(name, opening_line, main_text, closing_line, company_name):
+def create_full_message_body(name, opening_line, main_text, closing_line, company_name, unsubscribe_url):
   return """
 \nDear %s,
 \n%s
 \n%s
 \n%s
 \nYour friends at %s.
-      """ %(name, opening_line, main_text, closing_line, company_name)
+\n\nPS - if you no longer wish to receive these updates, please click on %s.
+      """ %(name, opening_line, main_text, closing_line, company_name, unsubscribe_url)
 
 def send_one_daily_digest(company_name, recipient, recipient_email, subject_line, full_message_body):
   print "Sending email via mailgun..."

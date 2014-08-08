@@ -24,20 +24,23 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 Backend:
 
 Before i put it live
-3) *** Email opt-out option
-4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
-5) *** ignore cases in usernames etc.
+Tes mixpanel
+3) *** Email opt-out option (1 hour)
+4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them) (2 hours)
+5) *** ignore cases in usernames etc. (1 hour)
+6) *** feedback option, reinstate computer upload and dictate button
+7) *** Basic fixes for smaller screens
 
 main page 
-** update moment js every now and again
+** Add some webcam hint/message to help switch on
 ** add notification for new messages
 * colour new messages as they pop up
+* update moment js every now and again
 
 ** investigate testing with selenium
 ** create heroku staging account
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
-** Add some webcam hint/message to help switch on
 ** write better help file
 
 

@@ -1,13 +1,15 @@
-import os, binascii, random, time, datetime
+import os, random, time, datetime
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask.ext.script import Manager
 from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
 #from secret import SECRET_KEY
-from mailgun import send_access_token_email
+from mailgun import send_access_token_email, receive_feedback_via_email
 from tools.bing_search import bing_search_and_return_urls
 from tools.icons import animals
 from model import User, load_user
+from tools.general import generate_token
+from bson.objectid import ObjectId
 import dropbox_upload
 import mongo
 import json, urllib, urllib2
@@ -209,6 +211,16 @@ def add_image():
 	"""
 	return render_template('add_image.html')
 
+@app.route('/unsubscribe/<token>')
+def unsubscribe(token):
+	"""
+	Sets user corresponding to the token as unsubscribed, will not get automated emails any more
+	"""
+	user_id = str(Users.find_one({'unsubscribe_token':token})['_id'])
+	print "sending user id", user_id
+	Users.update({'unsubscribe_token':token}, {"$set": {'unsubscribed':True} })
+	return render_template('unsubscribe.html', user_id=user_id)
+
 @app.route('/finished')
 def finished():
 	"""
@@ -216,6 +228,11 @@ def finished():
 	"""
 	session['logged_in'] = 0
 	return render_template('finished.html')
+
+
+
+
+
 
 ###################### AJAX REPONDERS ######################
 
@@ -407,7 +424,9 @@ def create_account_create_network():
 						'online' : False, #TODO
 						'network' : network,
 						'role' : 1, # i.e. admin
-						'completed_registration':True
+						'completed_registration':True,
+						'unsubscribe_token':generate_token(10)
+
 				}
 		# Add user to DB		
 		Users.insert(to_add)
@@ -467,7 +486,8 @@ def add_user_on_behalf():
 						'online' : False, #TODO
 						'network' : USER._('network'),
 						'role' : 0, # i.e. admin
-						'completed_registration':True
+						'completed_registration':True,
+						'unsubscribe_token':generate_token(10)
 					}	
 			Users.insert(to_add)
 			return json.dumps(1)
@@ -494,7 +514,7 @@ def add_user_via_access_token():
 		existing = Users.find_one({'network':USER._('network'), 'name':firstname})
 		if not existing:
 			# Generate access token and add user to database
-			token = binascii.b2a_hex(os.urandom(6))
+			token = generate_token(6)
 			to_add = { 	
 							'name':firstname,
 							'email':email,
@@ -509,7 +529,8 @@ def add_user_via_access_token():
 							'token' : token,
 							'token_not_used' : True,
 							'token_sent' : datetime.datetime.utcnow(),
-							'completed_registration' : False
+							'completed_registration' : False,
+							'unsubscribe_token':generate_token(10)
 						}	
 			Users.insert(to_add)
 
@@ -668,6 +689,20 @@ def change_password():
 	else:
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
 		return json.dumps(message)
+
+@app.route('/_send_feedback', methods=['GET','POST'])
+def send_feedback():
+	"""
+	Send feedback from user to our email
+	"""
+	user_id = request.json['user_id']
+	message = request.json['message']
+	subject = request.json['subject']
+
+	feedback_user = Users.find_one({'_id':ObjectId(user_id)})
+	receive_feedback_via_email(feedback_user, subject, message)
+
+	return json.dumps(1)
 
 
 ###################### ERRORS ######################
