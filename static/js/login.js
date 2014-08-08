@@ -145,9 +145,7 @@ function check_form_and_login() {
                     mixpanel.track('Login');
 
                     // Go to posts page
-                    setTimeout( function() {
-                      fade_page_in_out('out','/') ;
-                    }, 5000)
+                    fade_page_in_out('out','/');
                     
                   }
                   else {
