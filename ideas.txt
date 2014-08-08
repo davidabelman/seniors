@@ -23,10 +23,7 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-
-
 Before i put it live
-2) *** add 'see more posts' at bottom or automatically load
 3) *** Email opt-out option
 4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 5) *** ignore cases in usernames etc.

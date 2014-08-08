@@ -4,8 +4,8 @@ for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElemen
 if ( window.location.origin=="http://localhost:5000" ) {
 	var token = "a54d273360d0c16af87f3eaacb84c2e4"
 } else if ( window.location.origin == "http://salt-and-pepper.herokuapp.com") {
-	//var token = "a54d273360d0c16af87f3eaacb84c2e4"
-	var token = "6fe9a2b63dfcdc26327bd00857dab569"
+	var token = "a54d273360d0c16af87f3eaacb84c2e4"
+	//var token = "6fe9a2b63dfcdc26327bd00857dab569"
 }
 // Initialise Mixpanel
 mixpanel.init(token);
