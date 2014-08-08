@@ -20,5 +20,5 @@ mixpanel.track('Page view',
 //     "$first_name": "Test",
 //     "$last_name": "User",
 //     "$created": "2013-04-01T09:02:00",
-//     "$email": "davidabelman@gmail.com"
+//     "$email": "emailaddress@gmail.com"
 // });

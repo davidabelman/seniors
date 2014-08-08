@@ -85,6 +85,27 @@ def enter_with_network_name(network):
 	"""
 	return render_template('login.html', network=network)
 
+@app.route('/enter/<network>/<username>', methods=['GET', 'POST'])
+def enter_with_network_name_and_username(network, username):
+	"""
+	Will try to take user straight to home page, providing they are already logged in on session
+	Useful for email linking, when you want to link someone to homepage
+	If they are already logged in, this will do so! If not, will still take to network page.
+	"""
+	#user = Users.find_one({'name':username, 'network':network})
+	print "Trying to go through link"
+	print USER._('name')==username
+	print USER._('network')==network
+	if USER._('name')==username and USER._('network')==network:
+		# They are already in a session
+		print "Logged in already"
+		return redirect(url_for('home'))
+	else:
+		# Will need to log in
+		print "Needs to log in"
+		return render_template('login.html', network=network)
+
+
 @app.route('/logout')
 def logout():
 	"""
