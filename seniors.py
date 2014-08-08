@@ -48,6 +48,13 @@ def before_request():
     	USER = User( session.get('user') )
     	USER.to_console()
 
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+	"""
+	This is where you enter group name (to login), then choose your group member name, then type your password
+	"""
+	return render_template('test.html')
+
 @app.route('/')
 def home():
 	"""
@@ -292,11 +299,18 @@ def get_posts():
 	# USER = User( session.get( 'user', {} ) )
 	limit = int(request.args.get('limit', 10))
 	skip = int(request.args.get('skip', 0))
+	skip_to_date = request.args.get('skip_to_date', False)
 	if USER.is_a_user():
-		posts = mongo.return_last_X_posts(Posts, network=USER._('network'), limit=limit, skip=skip)
+		print "Retrieving posts from mongo..."
+		start_time = time.time()
+		posts_and_remaining_count = mongo.return_last_X_posts(Posts, network=USER._('network'), limit=limit, skip=skip, skip_to_date=skip_to_date)
+		print "Received posts from mongo. Time =",(time.time() - start_time)
 		# Update last seen parameter
+		print "Updating user last seen parameter..."
+		start_time = time.time()
 		mongo.update_last_seen_for_user(Users, USER._('name'), USER._('network'))
-		return json.dumps(list(posts), cls=Encoder)
+		print "Updated. Time =",(time.time() - start_time)
+		return json.dumps(posts_and_remaining_count, cls=Encoder)
 	else:
 		return "Authentication error: you are not logged in to your group."
 		

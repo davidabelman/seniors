@@ -1,24 +1,33 @@
-function get_posts(full_refresh, limit, skip) {
+function get_posts(which_posts, limit, skip, skip_to_date) {
   // This requests new posts from the server
-  // Appends to DOM if called with full_refresh, or only appends new posts if not
+  // Appends to DOM if called with full_refresh, or only appends new posts if not or older ones if pressing 'see more' button
+  // Also returns number of posts that were not collected by the refresh (in 'remaining_count')
     $.getJSON('/_get_posts',
               { 
                 "limit":limit,
                 "skip":skip,
+                "skip_to_date":skip_to_date
               },
-              function(posts) {
-                if (full_refresh) {
-                  all_posts_to_dom(posts);
+              function(data) {
+                posts = data['posts']
+                remaining_count = data['remaining_count']
+                c(data)
+                if (which_posts=='all') {
+                  all_posts_to_dom(posts, remaining_count, append_or_replace='replace');
                 }
-                else {
-                  add_new_posts_only(posts);
+                else if (which_posts=='new') {
+                  add_new_posts_only(posts);  // Remaining count is not relevant here as only appending new data
+                }
+                else if (which_posts=='old') {
+                  all_posts_to_dom(posts, remaining_count, append_or_replace='append');
                 }
               }) // end JSON
 } // end get_posts
 
 
-function all_posts_to_dom(posts) {
+function all_posts_to_dom(posts, remaining_count, append) {
   // This replaces all posts currently shown in the DOM with a refreshed set
+  // or appends set of posts to the bottom
   html = ""
 
   $.each(posts, function(index, post) {
@@ -39,7 +48,28 @@ function all_posts_to_dom(posts) {
     html += "         </div> <!-- end text part -->\n"    
     html += "       </section> <!-- end post --><hr>\n\n"
   }) // end each
+
+  if (append_or_replace=='append') {
+    html_hidden = "<div class='hidden-new-post'>"+html+"</div>"
+    $('#post-list-area').append(html_hidden)
+    $('.hidden-new-post').fadeTo(300,1)
+  }
+  else {
     $('#post-list-area').html(html)
+  }
+
+  // Now finally we want to bring back our 'see more button' if there are more
+  if (remaining_count > 0) {
+    // More to show
+    $('#show-more-loading-icon').fadeOut('fast', function() {
+      $('#show-more-posts-button').fadeTo(500, 1);
+    })
+  }
+  else {
+    // No more to show - just fade out the loading icon
+    $('#show-more-loading-icon').fadeOut('fast')
+  }
+  
 }
 
 
@@ -48,7 +78,6 @@ function add_new_posts_only(posts) {
   var newest_post_displayed = parseInt($('.post').first().attr('posted'))
   var newest_post_on_server = moment.utc(posts[0].posted).unix()
   if (newest_post_displayed < newest_post_on_server) {
-    // html=""
     $.each( posts, function(index, post) {
       if (moment.utc(post.posted).unix() > newest_post_displayed) {
         add_single_post_to_top(post);
@@ -57,6 +86,7 @@ function add_new_posts_only(posts) {
   } // end if
   else{ c( [ moment.utc().unix(), 'no new posts' ] ) }
 }
+
 
 function add_single_post_to_top(post) {
   // Adds HTML for a single post as hidden, and then shows it at the end
@@ -115,7 +145,7 @@ function submit_posts_button_ready() {
       mixpanel.people.increment('Text posts', 1); // people
 
       setTimeout( function() {
-        get_posts(full_refresh=false, 5,0) 
+        get_posts(which_posts='new', limit=number_of_new_posts+1, skip=0, skip_to_date=null)  // add 1 since his/her own post is included
       }, 500) // Adding a delay to avoid two very close requests to server
       remove_text_from_input();
       $('#post_input').focus()
@@ -210,6 +240,18 @@ function nav_buttons_ready() {
         window.location.href = "help";
       })
   })
+
+  // When we want more posts, check to see what oldest post is
+  $('#show-more-posts-button').click ( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    var last_posted_time = $('.post:last').attr('posted');
+    get_posts(which_posts='old', limit=number_of_old_posts, skip=0, skip_to_date=last_posted_time)
+    $('#show-more-posts-button').fadeOut('fast', function() {
+      $('#show-more-loading-icon').fadeIn('fast');
+    })
+  })
+
 } // end function
 
 function recursive_check_for_new_posts(count, delay){
@@ -223,7 +265,7 @@ function recursive_check_for_new_posts(count, delay){
       c(["We have been going for",count/delays_per_min,'min'])
     }    
     setTimeout( function() {
-      get_posts(full_refresh=false, 5,0);
+      get_posts(which_posts='new', limit=number_of_new_posts, skip=0, skip_to_date=null);
       count+=1;
       recursive_check_for_new_posts(count, delay)
     }, delay)   
@@ -315,10 +357,15 @@ function get_scroll_navs_ready() {
 
 
 // START OF SCRIPT ON PAGE LOAD
+// How many posts to pull?
+number_of_new_posts = 3  // Checking for posts within the last X seconds (delay, see below)
+number_of_old_posts = 10  // When user clicks 'get more', how many older ones to display
+number_of_posts_initially = 15 // How many to load on page refresh
+
 mixpanel.track('Wall load')
 quick_fade()
-get_posts(full_refresh=true, 30,0)
-recursive_check_for_new_posts(count=1, delay=5000)
+get_posts(which_posts='all', limit=number_of_posts_initially, skip=0, skip_to_date=null)
+recursive_check_for_new_posts(count=1, delay=6000)
 submit_posts_button_ready()
 change_button_behaviour_when_typing_post()
 get_scroll_navs_ready()

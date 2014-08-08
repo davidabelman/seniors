@@ -3,7 +3,7 @@ This file starts up the mongo database, generates some fake data (can delete all
 """
 
 # from secret import SENIORS_MONGO_USERNAME, SENIORS_MONGO_PASSWORD
-import os
+import os, datetime
 from tools.icons import animals
 SENIORS_MONGO_USERNAME = os.environ.get('SENIORS_MONGO_USERNAME')
 SENIORS_MONGO_PASSWORD = os.environ.get('SENIORS_MONGO_PASSWORD')
@@ -24,11 +24,24 @@ def show_all_users(db):
 def show_all_posts(db):
 	print list(db.posts.find())
 
-def return_last_X_posts(Posts, network, limit=10, skip=0):
+def return_last_X_posts(Posts, network, limit=10, skip=0, skip_to_date=None):
 	"""
 	Given a Posts collection, and a network name, returns the last X posts, with optional skip parameter
+	If skip_to_date supplied, we only look for those before that date (i.e. reloading older posts only)
+	Also returns the number of remaining_posts (if <= 0, it means we don't need to show the 'show more posts' button on the screen)
 	"""
-	return Posts.find({'network':network}).sort([('posted',-1)]).skip(skip).limit(limit)
+	total_posts_count = Posts.find({'network':network}).count()  # total no of posts in group
+	if skip_to_date:
+		skip_to_date = datetime.datetime.utcfromtimestamp(int(skip_to_date))
+		print "Only looking at posts since", skip_to_date
+		query = Posts.find( { 'posted': {'$lt': skip_to_date }, 'network':network} )
+		remaining_count = query.count() - limit
+		posts = query.sort([('posted',-1)]).skip(skip).limit(limit)
+	else:
+		query = Posts.find({'network':network})
+		remaining_count = query.count() - limit
+		posts = query.sort([('posted',-1)]).skip(skip).limit(limit)
+	return {'posts':list(posts), 'remaining_count':remaining_count}
 
 def update_last_seen_for_user(Users, name, network):
 	"""

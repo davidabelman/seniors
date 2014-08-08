@@ -153,6 +153,14 @@ a.disabled {
 	padding-bottom: 10px;
 }
 
+#show-more-loading-icon {
+	display: none;
+}
+#show-more-posts-button {
+	opacity: 0;
+	margin-bottom: 30px;
+}
+
 
 /* NAVIGATION */
 .navigation-arrow {

@@ -1,7 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en"><head>
     
 
       <meta charset="utf-8">
@@ -9,18 +6,20 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>
         
-
-FineTime - 
-
-	abelman room
+   
+        S&amp;P -      
+        test43 room
 
       </title>
 
-      <!-- Bootstrap -->
-      <link src="static/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap and my own themes -->
+      <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/static/css/seniors.css" rel="stylesheet">
+
       
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://localhost:5000/static/js/moment.js"></script>
+        <script type="text/javascript" async="" src="//cdn.mxpnl.com/libs/mixpanel-2.2.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--<script src="http://localhost:5000/static/js/jquery-2.1.1.min.js"></script>-->
+        
       
 
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,61 +29,150 @@ FineTime -
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
     
-<link src="static/css/bootstrap.css" rel="stylesheet">
 
   </head>
   <body>
     
 
-<div class='jumbotron'>Common page content will go here</div>
-
-<div class='container'>
+    <!-- User ID for use in javascript -->
+    
+      <input type="hidden" id="user_id_hidden" value="53e4e18002f3d27965d158dc">
+    
+    
+<div class="container-fluid quick-fade quick-fade-1" id="whole-content" style="opacity: 1;">
 	<div class="row">
-		<div class='col-md-5' id='left-panel'>
+		
+		<div class="col-sm-4 grey-panel quick-fade quick-fade-2" id="left-panel" style="opacity: 1;">
+			<div class="padded-container">
+				
+				
+				<div id="welcome-messages" class="can-fade quick-fade quick-fade-2" style="opacity: 1;">
+					<h1>Welcome Zippy!</h1>
+					<input type="hidden" id="user_name_hidden" value="Zippy"> <!-- Store name -->
+				</div> <!-- end welcome-messages -->
+				
 
-					<h1>Welcome David!</h1>
+				<div id="add-a-text-post" class="quick-fade quick-fade-5" style="opacity: 1;">
+					<textarea wrap="hard" name="inputBox" placeholder="Join the conversation - type your message here!" id="post_input" class="big-input"></textarea>
+					
+				</div>
+					<a href="#" class="a-button disabled green-button" id="post_submit_button" style="opacity:0">Click when finished!</a>
 
-					<h2>You are in the 'abelman' room. Add your comment:</h2>
+				
 
-					<div id='post_submit'>
-						<form>
-							<input type="text" name="inputBox" placeholder="enter your text here" id='post_input'></input>
-							<input type="submit" value="Submit">
-						</form>
-					</div>
+				<div id="other-options" class=" quick-fade quick-fade-8" style="opacity: 1;">
+					<h2 class="can-fade">Or click to:</h2>
+					<row>
+						<div class="col-xs-6">
+							<br>
+							<p><a href="add_photo" class="a-button can-fade" id="add-image-button">Add a photo</a></p>
+							<!-- <p><a href = "#" class='a-button can-fade'>Add a video</a></p>
+							<p><a href = "#" class='a-button can-fade'>Dictate</a></p> -->
+							<br>
+							<p><a href="settings" class="a-button can-fade" id="settings-button">See settings</a></p>
+							
+						</div>
+						<div class="col-xs-6">
+							<br>
+							<p><a href="help" class="a-button can-fade" id="help-button">Get help</a></p>
+							<br>
+							<p><a href="logout" class="a-button can-fade grey-button" id="logout-button">Exit</a></p>
+						</div>
+					</row>
+					<row>
+						<div class="col-xs-12">
+							
+						</div>
+					</row>
+				</div>
 
-					Or:
-					<p><a href = "#">Add a photo</a></p>
-					<p><a href = "#">Add a video</a></p>
-					<p><a href = "help">Not sure? Click for help!</a></p>
-					<p><a href = "logout">Not David? Click to change!</a></p>
 
+			</div> <!-- end left panel container -->
+			
 		</div> <!-- end left panel -->
+		<div class="col-sm-8  quick-fade quick-fade-8" id="right-panel" style="opacity: 1;">
+			
+			<a class="navigation-arrow navigation-arrow-up">
+				<span class="glyphicon glyphicon-arrow-up" id="scrollUp"></span>
+				<p>Newer</p>
+			</a>
+			<a class="navigation-arrow navigation-arrow-down">
+				<span class="glyphicon glyphicon-arrow-down" id="scrollDown"></span>
+				<p>Older</p>
+			</a>
 
-		<div class='col-md-7' id='right-panel'>
-			<div id='post_list'>
-				<p>Retrieving posts...</p>
-			</div>
+			<div> <!-- could be a padded container?-->
+
+				<div id="post-list-area">
+        <section class="post " id="53e4e30f8603c6000acced83" posted="1407509263">
+         <div class="post-img">
+           <img src="/static/img/bat-icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Brav</h2>
+           <span class="post-time">5 minutes ago</span>
+           <p class="post-body"></p><p class="post-body"><img src="http://www.loveyourdog.com/images/shihpinkball.jpg" width="40%"></p><p></p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post " id="53e4e3058603c6000acced82" posted="1407509253">
+         <div class="post-img">
+           <img src="/static/img/bat-icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Brav</h2>
+           <span class="post-time">5 minutes ago</span>
+           <p class="post-body">asdas</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post self-post" id="53e4e1c602f3d27965d158de" posted="1407508934">
+         <div class="post-img">
+           <img src="/static/img/rabbit-icon.png" width="70" ,="" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">Zippy</h2>
+           <span class="post-time">10 minutes ago</span>
+           <p class="post-body">wohoo!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       <section class="post " id="53e4e17002f3d27965d158db" posted="1407508848">
+         <div class="post-img">
+           <img src="/static/img/robo-icon.png" width="70" height="70">
+         </div> <!-- end img part -->
+         <div class="post-alltext">
+           <h2 class="post-name">The Salt&amp;Pepper Robot</h2>
+           <span class="post-time">12 minutes ago</span>
+           <p class="post-body">Ta-daa! Your group is ready to go. Have fun!</p>
+         </div> <!-- end text part -->
+       </section> <!-- end post --><hr>
+
+       
+
+      </div>
+
+      <section>
+         <div class="a-button">
+           Click here to see older messages <span style='font-size:70%' class="glyphicon glyphicon-arrow-down"></span>
+         </div>
+       </section>
+       
+			</div> <!-- end div holding post list -->
 		</div> <!-- end right panel -->
 	</div> <!-- end row -->
 </div> <!-- end container -->
-	
-
-	
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="http://localhost:5000/static/js/bootstrap.min.js"></script>
-    
-	<script src="http://localhost:5000/static/js/post.js"></script>
-
-
 
 
     
 	
       <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="http://localhost:5000/static/js/common.js"></script>
+      <script src="http://localhost:5000/static/js/my_analytics.js"></script>
       <script src="http://localhost:5000/static/js/bootstrap.min.js"></script>
     
-	<script src="http://localhost:5000/static/js/post.js"></script>
+	<script src="http://localhost:5000/static/js/moment.js"></script>
+<!--<script src="http://localhost:5000/static/js/post.js"></script>-->
 
-  </body>
-</html>
+  
+</body></html>
