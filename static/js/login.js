@@ -147,7 +147,7 @@ function check_form_and_login() {
                     // Go to posts page (leave gap for analytics)
                     setTimeout( function() {
                       fade_page_in_out('out','/');
-                    }, 300);
+                    }, 50);
                     
                   }
                   else {
