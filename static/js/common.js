@@ -1,4 +1,4 @@
-var debug = true;
+var debug = false;
 
 function c(stuff) {
   // Logs to console only on localhost
