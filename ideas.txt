@@ -24,8 +24,7 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 Backend:
 
 Before i put it live
-Tes mixpanel
-4) *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them) (2 hours)
+4) 
 5) *** ignore cases in usernames etc. (1 hour)
 7) *** Basic fixes for smaller screens
 
@@ -40,6 +39,7 @@ main page
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** write better help file
+** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 * have a 'vote' screen for features that aren't there yet
 
 

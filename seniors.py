@@ -243,6 +243,20 @@ def lostpassword():
 	"""
 	return render_template('lostpassword.html')
 
+@app.route('/termsandconditions')
+def termsandconditions():
+	"""
+	Terms and conditions
+	"""
+	return render_template('termsandconditions.html',
+		trademark_name='Salt & Pepper',
+		company_name='Salt & Pepper',
+		company_email = 'saltandpepperit@gmail.com',
+		company_address='London',
+		registration_number='pending',
+		web_address=base_url)
+
+
 
 
 

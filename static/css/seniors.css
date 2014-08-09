@@ -125,15 +125,21 @@ a.disabled {
 	font-weight: 400 !important;
 }
 #send-feedback-tab { 
-	position: fixed; bottom:0%; left:3%; 
+	position: fixed; bottom:0%; left:0%; 
 	z-index: 100;
 	background: #0099ff;
-	border-radius: 10px 10px 0px 0px;
+	border-radius: 0px 10px 0px 0px;
 }
 #send-feedback-tab a {
 	color: white;
 	font-weight: 500;
 	padding: 10px 10px 10px 10px;
+}
+.fixed-bottom-note {
+	text-align: center;
+	font-size: 60%;
+	z-index: 100;
+	position: fixed; bottom:0%; right:1%;
 }
 
 
@@ -270,6 +276,8 @@ a.disabled {
 }
 .post-body {
 	font-size: 140%;
+	/*font-family: 'Lora', serif;*/
+	margin-top: 6px;
 }
 .self-post {
 	background: #def !important;
@@ -373,7 +381,7 @@ a.disabled {
 }
 
 .navbar {min-height:25px !important}
-#logotemp {text-align:left; padding-left:10px;}
+#logotemp {text-align:left; padding-left:10px; font-family: 'Lobster', cursive;}
 #saltandpepper {font-size: 17px; vertical-align: text-top; color: #eee;}
 #beta {font-size: 10px; vertical-align: text-top; color: #eee;}
 /*#salt { color: white; background:black; font-size:70%;vertical-align:text-top;}
@@ -463,12 +471,13 @@ a.disabled {
 /*========================================================================*/
 
 #home-logo {
+	font-family: 'Lobster', cursive;
 	background: black;
-	font-size: 400%;
+	font-size: 500%;
 	font-weight: bolder;
 	color: white;
-	padding: 30px;
-	height: 190px;
+	padding: 20px 30px;
+	height: 200px;
 }
 
 
@@ -499,7 +508,7 @@ a.disabled {
 }
 #home-left-content h1, #home-right-content h1 {
 	font-weight: bold;
-	font-size: 300%;
+	font-size: 290%;
 }
 #home-left-content h2 {
 	font-weight: 200;

@@ -18,7 +18,6 @@ function make_general_links_clickable() {
     fade_page_in_out('out', href)
   })
 }
-make_general_links_clickable()
 
 function bind_left_hand_button_clicks() {
   // Enables click behaviour for buttons on LHS
@@ -161,3 +160,6 @@ function quick_fade() {
   }, x)
   x=x+gap
 }
+
+// Functions to run
+make_general_links_clickable()
