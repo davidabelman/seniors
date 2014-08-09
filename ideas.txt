@@ -23,8 +23,6 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-*** Basic fixes for smaller screens
-
 main page 
 ** Add some webcam hint/message to help switch on
 ** add notification for new messages

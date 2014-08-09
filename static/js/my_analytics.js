@@ -3,13 +3,16 @@
 for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="//cdn.mxpnl.com/libs/mixpanel-2.2.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
 // Initialise Mixpanel with correct account
 if ( window.location.origin=="http://localhost:5000" ) {
-	var token = "a54d273360d0c16af87f3eaacb84c2e4"
+	var token = "a54d273360d0c16af87f3eaacb84c2e4"   // Staging account
 	mixpanel.init(token);
-	//var token = ' '
-} else if ( window.location.origin == "http://salt-and-pepper.herokuapp.com") {
+} else if ( window.location.origin == "http://salt-and-pepper-staging.herokuapp.com") {
 	// var token = "a54d273360d0c16af87f3eaacb84c2e4"
-	var token = "6fe9a2b63dfcdc26327bd00857dab569"
+	var token = "6fe9a2b63dfcdc26327bd00857dab569"  // Staging account
 	mixpanel.init(token, {cross_subdomain_cookie : false﻿})﻿;
+} else if ( window.location.origin == "http://salt-and-pepper.herokuapp.com") ) {
+	var token = "2824f3108a78ba0550ffc6e8bc239c78"  // Separate production account
+	mixpanel.init(token, {cross_subdomain_cookie : false﻿})﻿;
+
 }
 // Track all page views
 mixpanel.track('Page view', 
