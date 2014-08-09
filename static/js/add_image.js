@@ -60,6 +60,7 @@ function prepare_LHS_button_fading_behaviour () {
 			// Fade other buttons on click, and show relevant content on RHS
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
+		    mixpanel.track('Upload image panel loaded');
 
 		    // Fade all but current button
 		    $('#bing-button').css('opacity',0.6)
