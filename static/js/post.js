@@ -20,6 +20,7 @@ function get_posts(which_posts, limit, skip, skip_to_date) {
                 }
                 else if (which_posts=='old') {
                   all_posts_to_dom(posts, remaining_count, append_or_replace='append');
+                  scroll_page(500, 'down')
                 }
               }) // end JSON
 } // end get_posts
@@ -38,8 +39,8 @@ function all_posts_to_dom(posts, remaining_count, append) {
       var own_post = '';
     }
     html += "       <section class='post "+own_post+"' id="+post._id+" posted="+moment.utc(post.posted).unix()+">\n"
-    html += "         <div class='post-img'>\n"
-    html += "           <img src='/static/img/"+post.picture+"-icon.png' width='70', height='70'>\n"
+    html += "         <div class='post-img-div'>\n"
+    html += "           <img src='/static/img/"+post.picture+"-icon.png' class='post-img'>\n"
     html += "         </div> <!-- end img part -->\n"
     html += "         <div class='post-alltext'>\n"
     html += "           <h2 class='post-name'>"+post.name+"</h2>\n"
@@ -109,8 +110,8 @@ function add_single_post_to_top(post) {
   // Add HTML
   html = "        <div class='hidden-new-post''>"
   html += "       <section class='post "+own_post+"' id="+'test'+" posted="+moment.utc(post.posted).unix()+">\n"
-  html += "         <div class='post-img'>\n"
-  html += "           <img src='/static/img/"+post.picture+"-icon.png' width='70', height='70'>\n"
+  html += "         <div class='post-img-div'>\n"
+  html += "           <img src='/static/img/"+post.picture+"-icon.png' class='post-img'>\n"
   html += "         </div> <!-- end img part -->\n"
   html += "         <div class='post-alltext'>\n"
   html += "           <h2 class='post-name'>"+post.name+"</h2>\n"
@@ -307,23 +308,26 @@ function switch_the_can_fade_elements(fade_control) {
   
 };
 
+function scroll_page(amount, up_or_down) {
+  // Get current position
+    var pos = $('body').scrollTop()
+    if (up_or_down=='up') {change=-amount}
+    else {change=amount}
+    pos = pos+change
+    // Update position
+    $('body').animate({scrollTop: pos}, amount);
+    c('Scrolled')
+}
+
 function get_scroll_navs_ready() {
   // Scroll down
   $('#scrollDown').click( function() {
-    // Get current position
-    var pos = $('body').scrollTop()
-    pos = pos+=250
-    // Update position
-    $('body').animate({scrollTop: pos}, 200);
+    scroll_page(200, 'down')
   })
  
   // Scroll up
   $('#scrollUp').click( function() {
-    // Get current position
-    var pos = $('body').scrollTop()
-    pos = pos-=250
-    // Update position
-    $('body').animate({scrollTop: pos}, 200);
+     scroll_page(200, 'up')
   })
 
   //Hide when mouse not over posts
@@ -342,8 +346,14 @@ function get_scroll_navs_ready() {
 
   // Show and hide when scrolling
   $( window ).scroll(function() {
-    // Down arrow is always on
-    $('.navigation-arrow-down').fadeIn()
+    // Down arrow only if user not at bottom
+    if($(window).scrollTop() + $(window).height() < $(document).height()-100) {
+       $('.navigation-arrow-down').fadeIn()
+   }
+    else {
+       $('.navigation-arrow-down').fadeOut()
+    }
+    
     // Up arrow is only on if not near top
     if ($(window).scrollTop()>50) {
         $('.navigation-arrow-up').fadeIn()

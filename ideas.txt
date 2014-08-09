@@ -23,10 +23,7 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 ///////////////////////////////
 Backend:
 
-Before i put it live
-4) 
-5) *** ignore cases in usernames etc. (1 hour)
-7) *** Basic fixes for smaller screens
+*** Basic fixes for smaller screens
 
 main page 
 ** Add some webcam hint/message to help switch on
@@ -34,6 +31,7 @@ main page
 * colour new messages as they pop up
 * update moment js every now and again
 
+** posts added to bottom not top
 ** investigate testing with selenium
 ** create heroku staging account
 ** Add users - fade opposite half of the screen

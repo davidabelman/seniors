@@ -11,6 +11,14 @@ a:focus {
 body {
 	font-size: 200%;
 }
+@media only screen and (max-width : 767px) {
+	body {
+		font-size: 160%;
+	}
+	h1, h2 {
+		font-size: 170%;
+	}
+}
 .centered-page {
 	text-align: center;
 }
@@ -125,27 +133,94 @@ a.disabled {
 	font-weight: 400 !important;
 }
 #send-feedback-tab { 
-	position: fixed; bottom:0%; left:0%; 
+	position: fixed; bottom:0%; left:1%; 
 	z-index: 100;
 	background: #0099ff;
-	border-radius: 0px 10px 0px 0px;
+	border-radius: 7px 7px 0px 0px;
 }
 #send-feedback-tab a {
 	color: white;
-	font-weight: 500;
+	font-weight: 400;
 	padding: 10px 10px 10px 10px;
 }
-.fixed-bottom-note {
+.small-note {
 	text-align: center;
 	font-size: 60%;
-	z-index: 100;
-	position: fixed; bottom:0%; right:1%;
+}
+
+.green-text {
+	color: #20b571 !important;
+}
+
+.green-button {
+	background: #3c8 !important;
+	-webkit-box-shadow: 0px 3px 0px #173 !important;
+    -moz-box-shadow: 0px 3px 0px #173 !important;
+    box-shadow: 0px 3px 0px #173 !important;
+}
+
+.green-button:active{
+    -webkit-box-shadow: 0px 2px 0px #173 !important;
+    -moz-box-shadow: 0px 2px 0px #173 !important;
+    box-shadow: 0px 2px 0px #173 !important;
+    position:relative;
+    top:1px;
+}
+.green-button:hover {
+	background: #5d9 !important;
+}
+
+.blue-button {
+	background: #0099ff !important;
+	-webkit-box-shadow: 0px 3px 0px #227 !important;
+    -moz-box-shadow: 0px 3px 0px #227 !important;
+    box-shadow: 0px 3px 0px #227 !important;
+}
+
+.blue-button:active{
+    -webkit-box-shadow: 0px 2px 0px #227 !important;
+    -moz-box-shadow: 0px 2px 0px #227 !important;
+    box-shadow: 0px 2px 0px #227 !important;
+    position:relative;
+    top:1px;
+}
+.blue-button:hover {
+	background: #52b7f2 !important;
+}
+
+.grey-button {
+	background: #999 !important;
+	-webkit-box-shadow: 0px 3px 0px #400 !important;
+    -moz-box-shadow: 0px 3px 0px #400 !important;
+    box-shadow: 0px 3px 0px #400 !important;
+}
+
+.grey-button:active{
+    -webkit-box-shadow: 0px 2px 0px #400 !important;
+    -moz-box-shadow: 0px 2px 0px #400 !important;
+    box-shadow: 0px 2px 0px #400 !important;
+    position:relative;
+    top:1px;
+}
+.grey-button:hover {
+	background: #ccc !important;
+}
+
+.show-on-sm {
+	display: none;
+}
+
+@media only screen and (max-width : 767px) {
+	.show-on-sm {
+	/*Fixes 300px from top of screen*/
+		display: block;
+	}
 }
 
 
 /*DIVS*/
 .grey-panel {
-	background-image: -webkit-gradient(
+/*	background-image: -webkit-gradient(
 	linear,
 	left top,
 	left bottom,
@@ -156,15 +231,23 @@ a.disabled {
 	) !important;
 	background-image: -o-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
 	background-image: -moz-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
-	background-image: -webkit-linear-gradient(bottom, #E8E8E8 100%, #EBEBEB 59%, #FFFFFF 0%) !important; /*swapped for safari*/
+	background-image: -webkit-linear-gradient(bottom, #E8E8E8 100%, #EBEBEB 59%, #FFFFFF 0%) !important; 
 	background-image: -ms-linear-gradient(bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
-	background-image: linear-gradient(to bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;
+	background-image: linear-gradient(to bottom, #E8E8E8 0%, #EBEBEB 41%, #FFFFFF 100%) !important;*/
+	background-color: #eee;
 }
 
 #left-panel {
 	height: 100%;
-	padding-bottom:800px;
 	text-align: center;
+	padding-bottom: 50px;
+	border-radius: 0px 0px 20px 0px;
+}
+@media only screen and (max-width : 767px) {
+	#left-panel {
+		padding-bottom: 20px;
+		border-radius: 0px 0px 0px 0px;
+	}
 }
 
 #welcome-messages {
@@ -241,9 +324,7 @@ a.disabled {
 }
 
 /* POSTS */
-.post-list-area {
-	background: yellow;
-}
+
 
 .post {
 	padding-top: 20px;
@@ -252,11 +333,23 @@ a.disabled {
     background: #fff;
     margin-top: 20px;
 }
-.post-img {
-	margin-top: -8px;
+.post-img-div {
+	margin-top: -10px;
     width: 15%;
     float: left;
     padding: 2%;
+}
+.post-img {
+	width: 90%;
+}
+@media only screen and (max-width : 767px) {
+	.post-img {
+		margin-top: 5px;
+	}
+	.post {  /*make the post a bit wider to fit pictures in*/
+		margin-left: -2%;
+		width: 104%;
+	}
 }
 .post-alltext {
 	margin-left: 15%;
@@ -480,10 +573,15 @@ a.disabled {
 	height: 200px;
 }
 
-
-.verticalLine {
+.vertical-line-sm {
     border-left: 1px solid #ddd;
 }
+@media only screen and (max-width : 767px) {
+	.vertical-line-sm {
+		border-left: 0px solid #ddd;
+	}
+}
+
 
 #home-container, #home-right-content
 {
@@ -502,10 +600,21 @@ a.disabled {
 	border-right: 1px solid #ddd;
 }
 
-#home-left-content {
+#home-left-content, #home-right-content {
 	padding: 40px;
 	
 }
+@media only screen and (max-width : 480px) {
+	#home-left {
+	width: 100%;
+	}
+	#home-logo {
+	font-size: 400%;
+	font-weight: bolder;
+	height: 150px;
+	}
+}
+
 #home-left-content h1, #home-right-content h1 {
 	font-weight: bold;
 	font-size: 290%;
@@ -515,9 +624,6 @@ a.disabled {
 	font-size: 150%;
 	line-height: 140%;
 }
-#home-right-content {
-	padding: 40px;
-}
 
 #new-group-button, #join-group-button {
 	padding: 20px;
@@ -526,63 +632,7 @@ a.disabled {
 	margin-top: 40px;
 }
 
-.green-text {
-	color: #3c8;
-}
 
-.green-button {
-	background: #3c8;
-	-webkit-box-shadow: 0px 3px 0px #173;
-    -moz-box-shadow: 0px 3px 0px #173;
-    box-shadow: 0px 3px 0px #173;
-}
-
-.green-button:active{
-    -webkit-box-shadow: 0px 2px 0px #173;
-    -moz-box-shadow: 0px 2px 0px #173;
-    box-shadow: 0px 2px 0px #173;
-    position:relative;
-    top:1px;
-}
-.green-button:hover {
-	background: #5d9;
-}
-
-.blue-button {
-	background: #0099ff;
-	-webkit-box-shadow: 0px 3px 0px #227;
-    -moz-box-shadow: 0px 3px 0px #227;
-    box-shadow: 0px 3px 0px #227;
-}
-
-.blue-button:active{
-    -webkit-box-shadow: 0px 2px 0px #227;
-    -moz-box-shadow: 0px 2px 0px #227;
-    box-shadow: 0px 2px 0px #227;
-    position:relative;
-    top:1px;
-}
-.blue-button:hover {
-	background: #52b7f2;
-}
-
-.grey-button {
-	background: #999;
-	-webkit-box-shadow: 0px 3px 0px #400;
-    -moz-box-shadow: 0px 3px 0px #400;
-    box-shadow: 0px 3px 0px #400;
-}
-
-.grey-button:active{
-    -webkit-box-shadow: 0px 2px 0px #400;
-    -moz-box-shadow: 0px 2px 0px #400;
-    box-shadow: 0px 2px 0px #400;
-    position:relative;
-    top:1px;
-}
-.grey-button:hover {
-	background: #ccc;
-}
 
 /*========================================================================*/
 /*SIGN-UP FORM*/

@@ -36,13 +36,14 @@ home
 	        		<a href='signup' class='a-button  green-button' id='new-group-button'>Create a new group</a>
 					<a href='enter' class='a-button' id='join-group-button'>Enter an existing group</a>
 	        </div>
+	        {% include 'termsandconditionsnote.html' %}
 	    </div>
 	</div>
 </div>
 
 {% endblock %}
 
-{% include 'termsandconditionsnote.html' %}
+
 
 {% block scripts_bottom %}
 	{{ super() }}

@@ -211,10 +211,15 @@ def unsubscribe(token):
 	"""
 	Sets user corresponding to the token as unsubscribed, will not get automated emails any more
 	"""
-	user_id = str(Users.find_one({'unsubscribe_token':token})['_id'])
-	print "Unsubscribing user", user_id, "from email."
-	Users.update({'unsubscribe_token':token}, {"$set": {'unsubscribed':True} })
-	return render_template('unsubscribe.html', user_id=user_id)
+	user = Users.find_one({'unsubscribe_token':token})
+	
+	if user:
+		user_id = str(user['_id'])
+		print "Unsubscribing user", user_id, "from email."
+		Users.update({'unsubscribe_token':token}, {"$set": {'unsubscribed':True} })
+		return render_template('unsubscribe.html', user_id=user_id)
+	else:
+		return redirect(url_for('home'))
 
 @app.route('/finished')
 def finished():
