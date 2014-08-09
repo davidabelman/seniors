@@ -236,6 +236,13 @@ def feedback():
 	"""
 	return render_template('feedback.html')
 
+@app.route('/lostpassword')
+def lostpassword():
+	"""
+	Lost password page
+	"""
+	return render_template('lostpassword.html')
+
 
 
 

@@ -36,3 +36,5 @@ $('#feedback-submit').click( function(evt) {
             }); // end ajax
 })
 
+fade_page_in_out('in') // From common.js
+

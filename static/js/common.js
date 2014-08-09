@@ -9,6 +9,17 @@ function c(stuff) {
   }
 }
 
+function make_general_links_clickable() {
+  $('.general-link').click( function(evt) {
+    evt.preventDefault()
+    evt.stopImmediatePropagation()
+    var href = $(this).attr('href')
+    c(['Redirecting', href])
+    fade_page_in_out('out', href)
+  })
+}
+make_general_links_clickable()
+
 function bind_left_hand_button_clicks() {
   // Enables click behaviour for buttons on LHS
   // Fades all other buttons when one is clicked
