@@ -1,4 +1,4 @@
-def clean_str(string):
+def str_clean(string):
 	"""
 	Keep only alphanumerics and convert to lowercase
 	"""

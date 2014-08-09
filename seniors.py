@@ -8,7 +8,7 @@ from mailgun import send_access_token_email, receive_feedback_via_email
 from tools.bing_search import bing_search_and_return_urls
 from tools.icons import animals
 from model import User, load_user
-from tools.general import generate_token
+from tools.general import generate_token, str_clean
 from bson.objectid import ObjectId
 import dropbox_upload
 import mongo
@@ -99,7 +99,7 @@ def enter_with_network_name_and_username(network, username):
 	If they are already logged in, this will do so! If not, will still take to network page.
 	"""
 	#user = Users.find_one({'name':username, 'network':network})
-	print "Trying to go through link"
+	print "Trying to go enter site through personalised link"
 	print USER._('name')==username
 	print USER._('network')==network
 	if USER._('name')==username and USER._('network')==network:
@@ -118,11 +118,7 @@ def logout():
 	Resets the cookies etc. so the user is logged out
 	"""
 	session['logged_in'] = 0
-	# print "DEBUG LOGOUT PRE CLEAR: This is session['user'] variable -->", session.get('user')
-	# print "DEBUG LOGOUT PRE CLEAR: This is session -->", session.keys()
 	session['user']=None
-	# print "DEBUG LOGOUT POST CLEAR: This is session['user'] variable -->", session.get('user')
-	# print "DEBUG LOGOUT POST CLEAR: This is session -->", session.keys()
 	time.sleep(0.1)
 	return redirect(url_for('home'))
 
@@ -132,7 +128,6 @@ def signup():
 	This is where one person creates the group, he/she is then the admin
 	Other functions are called within this (via AJAX)
 	"""
-	print "loading"
 	return render_template('signup.html')
 
 @app.route('/add_users', methods=['GET', 'POST'])
@@ -273,8 +268,8 @@ def network_users_list():
 	session.clear()
 
 	# See if network exists already
-	network = request.args.get('network')
-	users = list(Users.find({'network':network}, { 'name': 1, 'picture': 1, '_id':0 }))  # Return certain fields only
+	network_clean = str_clean(request.args.get('network'))
+	users = list(Users.find({'network_clean':network_clean}, { 'name': 1, 'picture': 1, '_id':0 }))  # Return certain fields only
 	if not users:
 		message = "I'm sorry, it appears this group does not exist. Please try again."
 		return json.dumps({'status':0, 'data':message})
@@ -287,16 +282,16 @@ def check_network_username_password():
 	Given a network, username and password, this function will check the password and allow a login or not (True, False)
 	"""
 
-	network = request.json['network']
-	username = request.json['username']
+	network_clean = str_clean(request.json['network'])
+	username_clean = str_clean(request.json['username'])
 	password = request.json['password']	
-	user = Users.find_one({'name':username, 'network':network})
+	user = Users.find_one({'name_clean':username_clean, 'network_clean':network_clean})
 	known_password_hash = user['password_hash']
 	valid_password = check_password_hash(str(known_password_hash), str(password))
 	
 	if valid_password:
 		# Get user object to store as session variable
-		session['user'] = load_user(Users, {'name':username, 'network':network} )
+		session['user'] = load_user(Users, {'name_clean':username_clean, 'network_clean':network_clean} )
 		# session['user']['log_in_binary'] = 1
 		session['logged_in']=1
 		USER = session['user']
@@ -305,7 +300,7 @@ def check_network_username_password():
 		session.clear()
 		return json.dumps({'status':0, 'data':'This is not the correct password.'})
 
-	return json.dumps({'status':int(valid_password), 'user_id':session['user']['user_id']})
+	return json.dumps({'status':int(valid_password), 'user_id':session['user']['user_id']})  # Return the user's ID for mixpanel tracking purposes
 
 @app.route('/_submit_post_entry', methods=['GET', 'POST'])
 def submit_feed_entry():
@@ -363,8 +358,8 @@ def network_exists():
 	"""
 	Determines whether network already exists
 	"""
-	network = request.args.get('network')
-	users = list(Users.find({'network':network}))
+	network_clean = str_clean(request.args.get('network'))
+	users = list(Users.find({'network_clean':network_clean}))
 	if users:
 		response = 1
 	else:
@@ -374,11 +369,11 @@ def network_exists():
 @app.route('/_name_in_network_exists')
 def name_in_network_exists():
 	"""
-	Determines whether network already exists
+	Determines whether name already exists within a network
 	"""
-	network = request.args.get('network')
-	name = request.args.get('name')
-	users = list(Users.find({'network':network, 'name':name}))
+	network_clean = str_clean(request.args.get('network'))
+	name_clean = str_clean(request.args.get('name'))
+	users = list(Users.find({'network_clean':network_clean, 'name_clean':name_clean}))
 	if users:
 		response = 1
 		print "There were already users with this name"
@@ -394,8 +389,9 @@ def create_account_join_network():
 	This is the user adding their username & password from the email link
 	"""
 	name = request.json['name']
+	name_clean = str_clean(name)
 	password = request.json['password']
-	try:
+	try:  # We should remove this LONG token option
 		token = long(USER._('token'))
 		print "Using the long token"
 	except:
@@ -409,6 +405,7 @@ def create_account_join_network():
 		Users.update(
 			{'_id':object_id}, {"$set": {
 											'name':name,
+											'name_clean':name_clean,
 											'password_hash':generate_password_hash(password),
 											'register' : datetime.datetime.utcnow(),
 											'completed_registration' : True,
@@ -433,23 +430,27 @@ def create_account_create_network():
 	Creates a new user (with admin status) and group
 	"""
 	name = request.json['name']
+	name_clean = str_clean(name)
 	email = request.json['email']
 	network = request.json['network']
+	network_clean = str_clean(network)
 	password = request.json['password']
 	picture = random.choice(animals)
 
 	# Final check to make sure network not in use
-	u1 = Users.find_one({'network':network})
+	u1 = Users.find_one({'network_clean':network_clean})
 
 	if not u1:
 		to_add = { 	
 						'name':name,
+						'name_clean':name_clean,
 						'email':email,
 						'password_hash': generate_password_hash(password),
 						'register' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
 						'picture' : picture,
 						'online' : False, #TODO
 						'network' : network,
+						'network_clean': network_clean,
 						'role' : 1, # i.e. admin
 						'completed_registration':True,
 						'unsubscribe_token':generate_token(10)
@@ -459,13 +460,13 @@ def create_account_create_network():
 		Users.insert(to_add)
 
 		# Sign user in
-		session['user'] = load_user(Users, {'name':name, 'network':network} )
+		session['user'] = load_user(Users, {'name_clean':name_clean, 'network_clean':network_clean} )
 		# session['user']['log_in_binary'] = 1
 		session['logged_in']=1
 		USER = session['user']
 
 		if app.debug:
-			print "Added user (%s, %s) to database." %(name, network)
+			print "Added user (%s, %s) to database." %(name_clean, network_clean)
 			print to_add
 
 		# Add just one post to get things going
@@ -490,20 +491,18 @@ def add_user_on_behalf():
 	(needs to check that current session is by user who is able to do this, and they're adding to correct network)
 	"""
 	name = request.json['name']
+	name_clean = str_clean(name)
 	password = request.json['password']
-	# network = session.get('network')
-	# admin_name = session.get('name')
-	# admin_email = session.get('email')
-	# admin_role = Users.find_one({'network':network, 'name':admin_name}).get('role')
 
 	# Check someone is logged in and is an admin for that group
 	if USER.is_admin():
 		# Check that username does not exist already within this network
-		existing = Users.find_one({'network':USER._('network'), 'name':name})
+		existing = Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':name_clean})
 		if not existing:
 			# No user exists with this username, we can add them
 			to_add = { 	
 						'name':name,
+						'name_clean':name_clean,
 						'email':"",
 						'admin_name' : USER._('name'),
 						'admin_email': USER._('email'),
@@ -512,6 +511,7 @@ def add_user_on_behalf():
 						'picture' : random.choice(animals),
 						'online' : False, #TODO
 						'network' : USER._('network'),
+						'network_clean' : USER._('network_clean'),
 						'role' : 0, # i.e. admin
 						'completed_registration':True,
 						'unsubscribe_token':generate_token(10)
@@ -534,16 +534,18 @@ def add_user_via_access_token():
 	"""
 	email = request.json['email']
 	firstname = request.json['firstname']
+	firstname_clean = str_clean(firstname)
 	
 	# Check if allowed to add people
 	if USER.is_admin():
 		# Check that username does not exist already within this network
-		existing = Users.find_one({'network':USER._('network'), 'name':firstname})
+		existing = Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':firstname_clean})
 		if not existing:
 			# Generate access token and add user to database
 			token = generate_token(6)
 			to_add = { 	
 							'name':firstname,
+							'name_clean':firstname_clean,
 							'email':email,
 							'admin_name':USER._('name'),
 							'admin_email':USER._('email'),
@@ -552,6 +554,7 @@ def add_user_via_access_token():
 							'picture' : random.choice(animals),
 							'online' : False, #TODO
 							'network' : USER._('network'),
+							'network_clean' : USER._('network_clean'),
 							'role' : 0, # i.e. admin TODO
 							'token' : token,
 							'token_not_used' : True,
@@ -632,7 +635,7 @@ def change_profile_picture():
 	picture = request.json['animal']
 	
 	if USER.is_a_user():
-		Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'picture':picture} })
+		Users.update({'network_clean':USER._('network_clean'), 'name_clean':USER._('name_clean')}, {"$set": {'picture':picture} })
 		session['user']['picture'] = picture
 		return json.dumps(1)
 	else:
@@ -646,14 +649,21 @@ def change_username():
 	Post request to change username
 	"""
 	new_name = request.json['new_name']
+	new_name_clean = str_clean(new_name)
 	if USER.is_a_user():
 		if not USER._('name_changed_before'):
 			# Check to make sure new name doesn't exist already
-			existing_user = Users.find_one({'network':USER._('network'), 'name':new_name})
+			existing_user = Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':new_name_clean})
+			# If user is tweaking their name so that it is still the same 'clean' one (i.e. removing a space, etc)
+			# then there are no existing users
+			if new_name_clean == str_clean(USER._('name')):   # i.e. new name ~= existing name
+				existing_user = False
 			if not existing_user:
+				# We can update the name!
 				Users.update({'network':USER._('network'), 'name':USER._('name')},
-					{"$set": {'name':new_name, 'name_changed_before':True} })
+					{"$set": {'name':new_name, 'name_clean':new_name_clean, 'name_changed_before':True} })
 				session['user']['name']=new_name
+				session['user']['name_clean']=new_name_clean
 				session['user']['name_changed_before']=True
 				return json.dumps(1)
 			else:
@@ -678,11 +688,11 @@ def change_email():
 	
 	# Check user is logged in
 	if USER.is_a_user():
-		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
+		known_password_hash = Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':USER._('name_clean')})['password_hash']
 		response = check_password_hash(str(known_password_hash), str(password))
 		# Check password correct
 		if response:
-			Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'email':new_email} })
+			Users.update({'network_clean':USER._('network_clean'), 'name_clean':USER._('name_clean')}, {"$set": {'email':new_email} })
 			session['user']['email']=new_email
 			return json.dumps(1)
 		else:
@@ -703,11 +713,11 @@ def change_password():
 	
 	# Check user is logged in
 	if USER.is_a_user():
-		known_password_hash = Users.find_one({'network':USER._('network'), 'name':USER._('name')})['password_hash']
+		known_password_hash = Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':USER._('name_clean')})['password_hash']
 		response = check_password_hash(str(known_password_hash), str(old_password))
 		# Check password correct
 		if response:
-			Users.update({'network':USER._('network'), 'name':USER._('name')}, {"$set": {'password_hash':generate_password_hash(new_password)} })
+			Users.update({'network_clean':USER._('network_clean'), 'name_clean':USER._('name_clean')}, {"$set": {'password_hash':generate_password_hash(new_password)} })
 			return json.dumps(1)
 		else:
 			# This password didn't match known password
