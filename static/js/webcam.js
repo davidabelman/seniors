@@ -92,7 +92,7 @@ function save_image_to_cloud(base) {
 	// Post data to server
 	c('Posting data to server...')
 		$.ajax({
-                url:'/_upload_img_to_dropbox',
+                url:'/_upload_base_img_to_dropbox',
                 data: JSON.stringify({
                   "base":base
                 }, null, '\t'), // end data

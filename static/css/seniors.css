@@ -353,7 +353,6 @@ a.disabled {
 }
 .post-alltext {
 	margin-left: 15%;
-    
     padding-right: 10px;
 }
 .post-name {
@@ -372,6 +371,10 @@ a.disabled {
 	/*font-family: 'Lora', serif;*/
 	margin-top: 6px;
 }
+.post-body img {
+	border-radius: 15px;
+}
+
 .self-post {
 	background: #def !important;
 	border-radius: 16px;

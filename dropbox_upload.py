@@ -11,14 +11,31 @@ sess = session.DropboxSession(SENIORS_DROPBOX_APP_KEY, SENIORS_DROPBOX_APP_SECRE
 sess.set_token(SENIORS_DROPBOX_TOKEN_KEY, SENIORS_DROPBOX_TOKEN_SECRET)
 client = client.DropboxClient(sess)
  
-def convert_image_and_upload(img_string):
+# def convert_image_and_upload(img_string):
+# 	"""
+# 	Takes image string in BASE64 as input (e.g. from canvas object) and provides public dropbox link
+# 	"""
+# 	import base64, string, random
+# 	#filename = '%030x' % random.randrange(16**50) Less secure as uses a seed?
+	
+# 	img = base64.decodestring(img_string)
+# 	put = client.put_file('/%s.jpeg'%filename, img) 
+# 	share = client.share('/%s.jpeg'%filename, short_url=False)
+# 	return share['url'].replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')
+
+
+def upload_and_get_url(file_to_upload, extension):
 	"""
-	Takes image string in BASE64 as input (e.g. from canvas object) and provides public dropbox link
+	Takes a file and extension, uploads file to DBox at random URL with random flename+extension, returns the URL
 	"""
-	import base64, string, random
-	#filename = '%030x' % random.randrange(16**50) Less secure as uses a seed?
-	filename = binascii.b2a_hex(os.urandom(30))
-	img = base64.decodestring(img_string)
-	put = client.put_file('/%s.jpeg'%filename, img) 
-	share = client.share('/%s.jpeg'%filename, short_url=False)
-	return share['url'].replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/')
+	import string, random
+	filename = binascii.b2a_hex(os.urandom(30))+extension
+	put = client.put_file(filename, file_to_upload) 
+	share = client.share(filename, short_url=False)
+	return {'url':share['url'].replace('https://www.dropbox.com/', 'https://dl.dropboxusercontent.com/'), 'filename':filename}
+
+def delete_file(filename):
+	"""
+	Deletes a file on Dropbox
+	"""
+	print client.file_delete(filename)

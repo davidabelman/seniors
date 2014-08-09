@@ -95,6 +95,7 @@ add an image
 					<div id='webcam-available' style='display:none'>
 						<div class='page-main-subheading shift-down-1 padded-container-1'>
 							<h2>Click 'take photo' to take a photo!</h2>
+							<h3 class='shift-up-3'>(you may need to click 'allow' or 'share' somewhere near the top of the screen if your webcam image isn't on the screen)</h3>
 						</div>
 						<div id='loading-spinner' class='padded-container shift-down-3'></div>
 							<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
@@ -117,7 +118,21 @@ add an image
 				<!-- upload page -->
 				<div id='upload-rhs' class='rhs-to-disappear'>
 					<div class='page-main-subheading shift-down-2 padded-container-1'>
-						<h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2>
+						<!-- <h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2> -->
+						<h2 id='upload-h2-1of2'>Click the button below to get a picture from your computer</h2>
+						<h2 id='upload-h2-2of2' style='display:none'>Now you can send it to the group by clicking on the green button!</h2>
+						<div class='centered_80pc_width'>
+    						<a id="upload_link" class='a-button green-button' href="javascript:$('#file_upload').uploadifyUpload()" style='display:none'>Send my picture to the group</a>
+    						<img id='spinning_icon' src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif' class='shift-down-3' style='display:none'>
+    					</div>
+    					<div class='filler'></div>
+
+						<div id='file-upload-wrapper'>
+							<!-- <a href='#' class='a-button centered-page' id='orange-file-upload-button' width='100px'> --><input id="file_upload" name="file_upload" type="file" width='200px'>
+						</div>
+						
+    					
+    					
 					</div> 
 				</div>
 
@@ -136,6 +151,8 @@ add an image
 
 {% block scripts_bottom %}
 	{{ super() }}
+    <script src="{{url_for('static', filename = 'uploadify/swfobject.js', _external=True)}}"></script>
+    <script src="{{url_for('static', filename = 'uploadify/jquery.uploadify.v2.1.4.min.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/webcam.js', _external=True)}}"></script>
 {% endblock %}

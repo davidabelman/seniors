@@ -16,6 +16,7 @@ import json, urllib, urllib2
 
 app = Flask(__name__)
 SECRET_KEY = os.environ['SENIORS_SECRET_KEY']
+EMBEDLY_KEY = os.environ['SENIORS_EMBEDLY_KEY']
 app.secret_key = SECRET_KEY
 manager = Manager(app)
 moment = Moment(app)
@@ -618,16 +619,55 @@ def get_bing_image_urls():
 		return json.dumps({"status":0, "data":"Authorization error"})
 
 
-@app.route('/_upload_img_to_dropbox', methods=['GET', 'POST'])
-def upload_img_to_dropbox():
+@app.route('/_upload_base_img_to_dropbox', methods=['GET', 'POST'])
+def upload_base_img_to_dropbox():
 	"""
 	Decodes base 64 string to image file, then uploads file to dropbox
 	"""
+	import base64
 	if USER.is_a_user():
 		base = request.json['base']
 		base_clean = base.replace('data:image/jpeg;base64,','')
-		url = dropbox_upload.convert_image_and_upload(base_clean)
+		img = base64.decodestring(base_clean)
+		url = (dropbox_upload.upload_and_get_url(img, '.jpeg'))['url']
 		return json.dumps(url)
+	else:
+		return None
+
+
+@app.route('/upload_real_img_to_dropbox_and_create_post', methods=['GET','POST'])
+def upload_real_img_to_dropbox_and_create_post():
+	"""
+	Saves a file to dropbox
+	"""
+	if USER.is_a_user():
+		for _, filestorage in request.files.iteritems():
+			# We return at the end of this, so can only ever process one file
+			dropbox_big_upload = (dropbox_upload.upload_and_get_url(filestorage, '.jpeg'))
+			filename_big = dropbox_big_upload['filename']
+			url_big = dropbox_big_upload['url']
+			
+			# Resize image (25,000 per month with this key)
+			url_small = 'http://i.embed.ly/1/display/resize?width=%s&url=%s&key=%s' %(480,url_big,EMBEDLY_KEY)
+			image_data = urllib2.urlopen(url_small).read()
+			url_small_dropbox = dropbox_upload.upload_and_get_url(image_data, '.jpeg')['url']
+			
+			# Create content and put into a post
+			content = "<p class='post-body'><img src="+url_small_dropbox+" width='80%'></p>"
+			to_add ={ 	
+					'name': USER._('name'),
+					'posted' : datetime.datetime.utcnow(), #.strftime('%Y-%m-%dT%H:%M:%S'),
+					'body' : content,
+					'network' : USER._('network'),
+					'picture' : USER._('picture')
+				}
+			Posts.insert(to_add)
+
+			# Finally delete the big file from dropbox
+			print "Deleting dropbox file",filename_big
+			dropbox_upload.delete_file(filename_big)
+			
+			return json.dumps(1)
 	else:
 		return None
 

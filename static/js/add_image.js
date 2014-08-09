@@ -152,10 +152,57 @@ $('.img-in-img-grid').click( function(evt) {
 		mixpanel.people.increment('Image posts', 1);
 		
 		url = $(this).attr("src")
-		img_link = "<p class='post-body'><img src="+url+" width='40%'></p>"
+		img_link = "<p class='post-body'><img src="+url+" width='50%'></p>"
 		create_post_from_html(img_link)
 	})
 }
+
+
+function prepare_to_upload_photo() {
+	$('#upload_link').click( function() {
+		$('#upload_link').text("Please wait (this takes a few seconds)...")
+		$('#spinning_icon').fadeTo(400, 1);
+	})
+
+	$('#file_upload').uploadify({
+			'hideButton': false,
+			'height':30,
+    		'wmode'     : 'transparent',
+	        'uploader': '/static/uploadify/uploadify.swf',
+	        'script': '/upload_real_img_to_dropbox_and_create_post',
+	        'cancelImg': '',
+	        'auto': false,
+	        'multi': false,
+	        'fileExt'     : '*.jpg;*.gif;*.png;*.jpeg',
+	        'fileDesc'    : 'Image Files',
+	        'fileSizeLimit' : '300KB',
+		    'queueSizeLimit': 10,
+	        'removeCompleted': false, // Could set to true, then list completed uploads onComplete
+		    'onSelect': function(event, ID, fileObj) {
+	            
+		    	$('#upload-h2-1of2').fadeOut(500, function() {
+		    		$('#upload-h2-2of2').fadeIn(500);
+		    	})
+
+	            $('#file-upload-wrapper').fadeTo(500,0)
+	            setTimeout( function () {
+	            	$('#upload_link').fadeTo(400, 1);
+
+	            }, 501);
+
+	            
+	        },
+		    'onAllComplete': function(event, data) {
+		    	mixpanel.track('Posted image', {'Method':'Upload'});
+				mixpanel.people.increment('Image posts', 1);
+				setTimeout( function() { 
+	            	fade_page_in_out('out', '/');
+	        	}, 100)
+	            
+	        }
+	      });
+}
+prepare_to_upload_photo()
 
 // TODO currently duplicated in post.js and add_image.js
 function create_post_from_html(html) {

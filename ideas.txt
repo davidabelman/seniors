@@ -31,7 +31,6 @@ main page
 
 ** posts added to bottom not top
 ** investigate testing with selenium
-** create heroku staging account
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** write better help file
