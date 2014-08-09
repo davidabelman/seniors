@@ -60,7 +60,7 @@ function prepare_LHS_button_fading_behaviour () {
 			// Fade other buttons on click, and show relevant content on RHS
 			evt.preventDefault();
 		    evt.stopImmediatePropagation();
-		    mixpanel.track('Upload image panel loaded');
+		    mixpanel.track('Upload image panel load attempt');
 
 		    // Fade all but current button
 		    $('#bing-button').css('opacity',0.6)
@@ -256,9 +256,33 @@ function fade_page_in(fade_in_out) {
 	}
 }
 
+function browser_compatibility_checks() {
+	var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+	var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+	var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+	    // At least Safari 3+: "[object HTMLElementConstructor]"
+	var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+	var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
+
+	if (isChrome) {
+		$('.chrome').show()
+	}
+	else {
+		$('.no_chrome').show()
+	}
+
+	if (isFirefox) {
+		$('.mozilla').show()
+	}
+	if (isSafari) {
+		$('.safari').show()
+	}
+}
+
+browser_compatibility_checks()
 window.webcamActivated = 0 // Later switched to 1 if activated
 fade_page_in('in')
 prepare_LHS_button_fading_behaviour()
-
 show_and_hide_submit_button()
 

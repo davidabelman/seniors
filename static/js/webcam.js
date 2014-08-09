@@ -5,9 +5,9 @@ function activate_webcam_script() {
 		// Grab elements, create settings, etc.
 		
 		// Load webcam canvas straight away
-		$('#webcam-required-message').fadeOut(200, function() {
-		  	$('#webcam-available').fadeIn()
-		  })
+		// $('#webcam-required-message').fadeOut(200, function() {
+		//   	$('#webcam-available').fadeIn()
+		//   })
 		
 
 		var canvas = document.getElementById("webcam-canvas"),

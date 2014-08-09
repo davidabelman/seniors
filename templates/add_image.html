@@ -84,56 +84,66 @@ add an image
 				<!-- webcam page -->
 				<div id='webcam-rhs' class='rhs-to-disappear'>
 
-					<div class='page-main-subheading padded-container-1'>
-						<div class='shift-down-3' id='webcam-required-message'>
-							<h2 class='grey-note' >If you have a webcam, we need permission to use it. There should be a message near the top of your screen asking you for permission. You will need to press 'Share', or 'Allow' to continue. <a href='/webcam-help'>Click here for more help.</a></h2>
-						</div> <!-- end webcam message -->
-						<div class='shift-up-3' id='webcam-denied-message' style='display:none'>
-							<h2 class='grey-note' >Webcam unavailable. Please use one of the other methods on the right to add a photo.</h2>
-						</div> <!-- end webcam message -->
-					</div> 
-					<div id='webcam-available' style='display:none'>
-						<div class='page-main-subheading shift-down-1 padded-container-1'>
+					<!-- If safari -->
+					<div class='shift-down-3 safari' style='display:none'>
+						<div class='filler shift-down-2'></div>
+						<h2 >Unfortunately, this feature is not available on Safari. We recommend <a href='http://www.google.com/chrome/browser/' target='_blank'>Chrome</a>.</h2>
+					</div>
+
+					<!-- if chrome or mozilla -->
+					<div id='webcam-available' style='display:none' class='mozilla chrome'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
 							<h2>Click 'take photo' to take a photo!</h2>
-							<h3 class='shift-up-3'>(you may need to click 'allow' or 'share' somewhere near the top of the screen if your webcam image isn't on the screen)</h3>
+							
+							<h3 class='shift-up-3 chrome' style='display:none'>(you may need to click 'Allow' near the top right of your screen if you can't see your webcam image yet)</h3>
+							
+							<h3 class='shift-up-3 mozilla' style='display:none'>(you may need to click 'Share Selected Device' to the left of this message if you can't see your webcam image yet)</h3>
+						
 						</div>
 						<div id='loading-spinner' class='padded-container shift-down-3'></div>
-							<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
-							<canvas id="webcam-canvas" width="320" height="250"></canvas>
-							<div class='centered_50pc_width shift-down-3'>
-								<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+						<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
+						<canvas id="webcam-canvas" width="320" height="250"></canvas>
+						<div class='centered_50pc_width shift-down-3'>
+							<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+						</div>
+						<row>
+							<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
+								<a href='#' class='a-button inline float-right' >Take another...</a>
 							</div>
-							<row>
-								<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
-									<a href='#' class='a-button inline float-right' >Take another...</a>
-								</div>
-								<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
-									<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
-								</div>
-							</row>
-					</div>
+							<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
+								<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+							</div>
+						</row>
+					</div> <!-- end webcam available -->
 						
 				</div>
 
 				<!-- upload page -->
 				<div id='upload-rhs' class='rhs-to-disappear'>
-					<div class='page-main-subheading shift-down-2 padded-container-1'>
-						<!-- <h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2> -->
-						<h2 id='upload-h2-1of2'>Click the button below to get a picture from your computer</h2>
-						<h2 id='upload-h2-2of2' style='display:none'>Now you can send it to the group by clicking on the green button!</h2>
-						<div class='centered_80pc_width'>
-    						<a id="upload_link" class='a-button green-button' href="javascript:$('#file_upload').uploadifyUpload()" style='display:none'>Send my picture to the group</a>
-    						<img id='spinning_icon' src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif' class='shift-down-3' style='display:none'>
-    					</div>
-    					<div class='filler'></div>
+					<div class='no_chrome' style='display:none'>
+						<div class='filler shift-down-2'></div>
+						<h2>
+							Unfortunately, this feature is only currently available in the Chrome browser. You can get it <a href='http://www.google.com/chrome/browser/' target='_blank'>here</a>.
+						</h2>
+					</div> <!-- end chrome unavailable -->
 
-						<div id='file-upload-wrapper'>
-							<!-- <a href='#' class='a-button centered-page' id='orange-file-upload-button' width='100px'> --><input id="file_upload" name="file_upload" type="file" width='200px'>
+					<div class='chrome' style='display:none'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
+							<!-- <h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2> -->
+							<h2 id='upload-h2-1of2'>Click the button below to get a picture from your computer</h2>
+							<h2 id='upload-h2-2of2' style='display:none'>Now you can send it to the group by clicking on the green button!</h2>
+							<div class='centered_80pc_width'>
+	    						<a id="upload_link" class='a-button green-button' href="javascript:$('#file_upload').uploadifyUpload()" style='display:none'>Send my picture to the group</a>
+	    						<img id='spinning_icon' src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif' class='shift-down-3' style='display:none'>
+	    					</div>
+	    					<div class='filler'></div>
+
+							<div id='file-upload-wrapper'>
+								<!-- <a href='#' class='a-button centered-page' id='orange-file-upload-button' width='100px'> --><input id="file_upload" name="file_upload" type="file" width='200px'>
+							</div>
+							
 						</div>
-						
-    					
-    					
-					</div> 
+					</div> <!-- end chrome available --> 
 				</div>
 
 			</div>
