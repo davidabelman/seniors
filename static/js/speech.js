@@ -1,5 +1,8 @@
+// Start up speech app, check for browser compatiability
+// Ask for permission
+// Once given, start a new speechrecognition object, and then listen for 'results'
+// On results update the form
 function speech_app() {
-	$('#stop-listening-button').fadeTo(1, 0.4);
 	first_intermediate = true; // Can add 'listening' on to end of text again now
 	listening_string = ' (...listening...)'
 
@@ -14,15 +17,16 @@ function speech_app() {
 		
 			// If they have given permission
 			function(){ 
-				$('#speech-permission-needed').hide()
-				$('#speech-permission-granted').show()
-				$('#speech-input').focus()
+				$('#speech-permission-needed').hide();
+				$('#speech-permission-granted').show();
+				$('#speech-input').focus();
 				
 				recognition = new webkitSpeechRecognition();
 				recognition.lang = 'en-GB'
 				recognition.continuous = true;
 				recognition.interimResults = true;
 				recognition.maxAlternatives = 1;
+				start_listening();
 
 				//recognition.onstart = function() {  }
 				recognition.onresult = function(event) { 
@@ -39,7 +43,10 @@ function speech_app() {
 				    	var transcript = event.results[event.resultIndex][0].transcript;
 				    	console.log(transcript)
 					    var current_text = $('#speech-input').val().replace(listening_string, " ");
-					    $('#speech-input').val((current_text + " " + transcript).replace(/ +(?= )/g,''));
+					    //final_transcript = (current_text + " " + transcript).replace(/ +(?= )/g,'')
+					    final_transcript = current_text + transcript
+					    final_transcript = clean_text(final_transcript)
+					    $('#speech-input').val(final_transcript);
 					    $('#speech-input').css({'background-color':'#fff'});
 					    focus_at_end_of_input_form('#speech-input')
 					    first_intermediate = true; // Can add 'listening' on to end of text again now
@@ -57,8 +64,9 @@ function speech_app() {
 				    }
 				    
 				 }
-				recognition.onerror = function(event) { stop_listening() }
-				//recognition.onend = function() { alert('end') }
+				recognition.onerror = function(event) { 
+					show_speech_error_and_start_button()
+					 }
 			 
 			 }, // end permission granted
 
@@ -72,41 +80,81 @@ function speech_app() {
 
 } // end speech app
 
-function prepare_start_stop_speech_buttons () {
-	$('#start-listening-button').click ( function(evt) {
+// Get speech - dialog related buttons ready
+function prepare_speech_buttons () {
+	$('#speech-start-listening-button').click ( function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
 		start_listening();
 	})
 
-	$('#stop-listening-button').click ( function(evt) {
+	// When user posts, stop listening, send post to DB, get new posts
+	$('#speech-post-button').click (function(evt) {
 		evt.preventDefault();
 		evt.stopImmediatePropagation();
 		stop_listening();
+		message = $('#speech-input').val();
+		create_post_from_html(message);
+		$('#speech-modal').modal('hide');
+		
+		// Mixpanel
+	    mixpanel.track('Posted speech', {'Length (chars)':html.length}) // event
+	    mixpanel.people.increment('Text posts (speech)', 1); // people
+
+	    setTimeout( function() {
+	        get_posts(which_posts='new', limit=number_of_new_posts+1, skip=0, skip_to_date=null)  // add 1 since his/her own post is included
+	      }, 500) // Adding a delay to avoid two very close requests to server
+	    remove_text_from_speech_input();
+	})
+
+	// When the dialog box is closed
+	$('#speech-modal').on('hidden.bs.modal', function () {
+  		stop_listening();
+	})
+
+	// When testing error functionality (button hidden in HTML)
+	$('#speech-test-error-button').click ( function(evt) {
+		evt.preventDefault();
+		evt.stopImmediatePropagation();
+		recognition.stop()
+		show_speech_error_and_start_button();
 	})
 }
 
+// Cleans output and stops listening
 function stop_listening() {
 	recognition.stop();
-	$('#start-listening-button').fadeTo(100,1);
-	$('#stop-listening-button').fadeTo(100,0.4);
 	var current_text = $('#speech-input').val().replace(listening_string, "");
-	$('#speech-input').val((current_text + " ").replace(/ +(?= )/g,''));
+	$('#speech-input').val(clean_text(current_text))
+}
+
+// Shows 'dictate' instruction headline and starts recognition
+function start_listening() {
+	recognition.start();
+	c("Called 'start listening'")
+	$('#speech-intro-text-error').hide()
+	$('#speech-intro-text-speaking').show()
+}
+
+// When there is an error, shows button to start recognition again
+function show_speech_error_and_start_button() {
 	$('#speech-intro-text-div').fadeTo(300, 0, function() {
 		$('#speech-intro-text-speaking').hide()
-		$('#speech-intro-text-subsequent').show()
+		$('#speech-intro-text-error').show()
 		$('#speech-intro-text-div').fadeTo(300, 1)
 	})
 }
 
-function start_listening() {
-	recognition.start();
-	$('#start-listening-button').fadeTo(100,0.4);
-	$('#stop-listening-button').fadeTo(100,1);
-	$('#speech-intro-text-div').fadeTo(300, 0, function() {
-		$('#speech-intro-text-first, #speech-intro-text-subsequent').hide()
-		$('#speech-intro-text-speaking').show()
-		$('#speech-intro-text-div').fadeTo(300, 1)
-	})
+// Clears input box
+function remove_text_from_speech_input() {
+  	$('#speech-input').val('')
+}
+
+// Cleans text
+var first_char = /\S/;
+function clean_text(s) {
+  s = s.replace(first_char, function(m) { return m.toUpperCase(); });  // caps where appropriate
+  s = s.replace(/ +(?= )/g,'')  // remove extra spaces
+  return s
 }
 

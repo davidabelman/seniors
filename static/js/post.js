@@ -247,10 +247,11 @@ function nav_buttons_ready() {
     })
   })
 
-  // Click ditate button
+  // Click dictate button
   $('#dictate-button').click ( function(evt) {
     speech_app()
-    prepare_start_stop_speech_buttons()
+    prepare_speech_buttons()
+    mixpanel.track('Dictate dialog load') // event
   })
 
 } // end function
@@ -374,7 +375,7 @@ number_of_posts_initially = 15 // How many to load on page refresh
 mixpanel.track('Wall load')
 quick_fade()
 get_posts(which_posts='all', limit=number_of_posts_initially, skip=0, skip_to_date=null)
-recursive_check_for_new_posts(count=1, delay=6000)
+recursive_check_for_new_posts(count=1, delay=60000)
 submit_posts_button_ready()
 change_button_behaviour_when_typing_post()
 get_scroll_navs_ready()

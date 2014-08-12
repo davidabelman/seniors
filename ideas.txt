@@ -32,6 +32,7 @@ Priority list
 ** Make a 'how it works' page
 ** investigate testing with selenium
 ** protect usernames against HTML attack
+** fixed width for icons
 * update moment js every now and again
 * make some tutorial when design is more set
 

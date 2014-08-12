@@ -5,11 +5,14 @@
       
       <div class="modal-body">
         
-			<div id='speech-bad-browser' class='speech-hidden'>
-				<h2>Not supported in your browser</h2>
+			<div id='speech-bad-browser' class='speech-hidden padded-container shift-up-3'>
+				<h2>{% include 'browser_not_ok.html' %}</h2>
+				<div class='filler'></div>
+				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
 			</div>
-			<div id='speech-permission-needed' class='speech-hidden'>
-				<h2>You need to allow permission using these instructions </h2>
+			<div id='speech-permission-needed' class='speech-hidden padded-container shift-up-3'>
+				
+				<h2>Before you can dictate, you need to give us permission to switch on your microphone. Please follow these instructions:</h2>
 			</div>
 			<div id='speech-permission-denied' class='speech-hidden'>
 				<h2>Permission denied</h2>
@@ -18,27 +21,31 @@
 
 				<div id='speech-intro-text-div'>
 					<div class='page-main-subsubheading shift-up-3'>
-						<div id='speech-intro-text-first'>
+<!-- 						<div id='speech-intro-text-first'>
 							<h2>Click 'Start listening', and then begin talking.</h2>
-							<!-- <h3>(You can use the 'backspace' key on your keyboard to remove words if the computer mis-hears you)</h3> -->
+							<h3>(You can use the 'backspace' key on your keyboard to remove words if the computer mis-hears you)</h3>
 						</div>
 						<div id='speech-intro-text-subsequent' class='speech-hidden'>
 							<h2>You can now send your message! Or press 'Start listening' to keep going.</h2>
-						</div>
+						</div> -->
 						<div id='speech-intro-text-speaking' class='speech-hidden'>
-							<h2>Start dictating...</h2>
+							<h2>Start speaking and your words will appear.</h2>
 						</div>
+						<div id='speech-intro-text-error' class='speech-hidden'>
+							<h2>No sound was heard, and listening has been stopped.<br>Press 'Start listening' to try again.</h2>
+								<a href='#' class='a-button can-fade centered_50pc_width' id='speech-start-listening-button'>Start listening</a>
+							<div class='filler'></div>
+						</div>
+
 					</div>
 				</div>
-
+<!-- 
 				<row>
+					
 					<div class='col-xs-6 padded-container shift-up-3'>
-						<a href='#' class='a-button can-fade ' id='start-listening-button'>Start listening</a>
+						<a href='#' class='a-button can-fade' id='speech-stop-listening-button'>Stop listening</a>
 					</div>
-					<div class='col-xs-6 padded-container shift-up-3'>
-						<a href='#' class='a-button can-fade' id='stop-listening-button'>Stop listening</a>
-					</div>
-				</row>
+				</row> -->
 
 				<textarea
 						wrap="hard"
@@ -50,11 +57,16 @@
 				
 				<row>
 					<div class='col-xs-6 padded-container shift-up-2'>
-						<a href='#' class='a-button grey-button can-fade' id='cancel-button'  data-dismiss="modal">Go back - I don't want to dictate</a>
+						<a href='#' class='a-button grey-button can-fade' id='speech-cancel-button'  data-dismiss="modal">Go back - I don't want to dictate</a>
 					</div>
+					
 					<div class='col-xs-6 padded-container shift-up-2'>
-						<a href='#' class='a-button green-button can-fade' id='post-button'>Great, send this to the group!</a>
+						<a href='#' class='a-button green-button can-fade' id='speech-post-button'>Great, send this to the group!</a>
 					</div>
+<!-- 
+					<div class='col-xs-6 padded-container shift-up-2'>
+						<a href='#' class='a-button grey-button can-fade' id='speech-test-error-button'  data-dismiss="modal">Test error</a>
+					</div> -->
 				</row>
 
 				<div class='filler'></div>
