@@ -38,15 +38,17 @@ add users
 				<input type="hidden" value="{{session.get('user').get('network')}}" id='network_hidden'>
 				
 				<div class='one_line_entry_box centered_80pc_width'>
-					<input type="text" name="firstname" id='firstname' class='big-input' placeholder='Their first name...' /required>
+					<input type="text" name="firstname" id='firstname' class='big-input inline' placeholder='Their first name...' /required>
 				</div>
-				
 				<div class='one_line_entry_box centered_80pc_width'>
 					<input type="email" name="email" id='email' class='big-input' placeholder='Their email address...' /required>
 				</div>
 
 				<div class='centered_50pc_width'>
-					<a href='#' id='submit_email_invitation' class='a-button' >Send invite</a>
+					<a href='#' id='submit_email_invitation' class='a-button' >
+						<span class="icon-uniE60A inline"></span>
+						Send invite
+					</a>
 				</div>
 
 				<div class='flash-message' id='email_invitation_error'>
@@ -71,7 +73,10 @@ add users
 					<input type="text" name="password" id='password' class='big-input' placeholder='Their password...' /required>
 				</div>
 				<div class='centered_50pc_width'>
-					<a href='#' id='create_account_on_behalf' class='a-button' >Create account</a>
+					<a href='#' id='create_account_on_behalf' class='a-button' >
+						<span class="icon-uniE607 inline"></span>
+						Create account
+					</a>
 				</div>
 				<div class='flash-message' id='create_account_error'>
 					<!--Error message to go here-->
@@ -84,24 +89,34 @@ add users
 	</div> <!-- end page 1 of 2 -->
 
 	<div class='container-fluid page2of2'>
-		<div class='page-main-subheading shift-down-3'>
+		<div class='page-main-subheading shift-down-1'>
 			<h2 class='page2a green-text'><strong>User invited!</strong></h2>
 			<h2 class='page2b green-text'><strong>User created!</strong></h2>
 		</div>
 		<div class='pad-bottom-1 width-80'>
 		
-			<h2 class='page2a'>We have sent a link to <span class='invited-name'>your friend</span> inviting them to your group.</h2>
+			<h2 class='page2a'>We have sent a link to <span class='invited-name'>your friend</span> inviting them to your group. You can also print instructions for them on how to use the site, if this is useful.</h2>
 
 			<h2 class='page2b'>You now need to show <span class='invited-name'>your friend</span> how to log on at
 				<br><a href='{{base_url}}/enter/{{session.get('user').get('network')}}'>{{base_url}}/enter/{{session.get('user').get('network')}}</a><br>
-				using the name and password you just created.</h2>
+				using the name and password you just created.<br>You can print instructions for them below.</h2>
 
 			<!-- <p class='page2b shift-down-20'>Once logged, in <span class='invited-name'>they</span> will be able to change these, if desired. Any forgotten password requests will be sent to your email, unless <span class='invited-name'>he/she</span> adds their own email address.</p> -->
 		
 		</div>
-		<div class='shift-down-3'>
-			<a href='#' id='add_another_user' class='a-button inline padded-container-1 shift-left' >Add another user</a>
-			<a href='#' id='go_to_group' class='a-button inline padded-container-1' >Go to group!</a>
+		<div class='shift-down-2'>
+			<a href='#' id='add_another_user' class='a-button green-button inline padded-container-1 shift-left' >
+				<span class="icon-uniE628 inline"></span>
+				Print instructions
+			</a>
+			<a href='#' id='add_another_user' class='a-button inline padded-container-1 shift-left' >
+				<span class="icon-uniE625 inline"></span>
+				Add another user
+			</a>
+			<a href='#' id='go_to_group' class='a-button grey-button inline padded-container-1' >
+				<span class="icon-uniE61A inline"></span>
+				Go to group!
+			</a>
 		</div>
 		<div class='white-space'>
 		</div>

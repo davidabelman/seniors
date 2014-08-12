@@ -24,15 +24,19 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 
 
 Priority list
-*** Add dictate function
-*** Make language simpler and more consistent
-*** Simplify / change main interface - messages at bottom, group buttons?
+
+1 *** fixed width for icons
+2 *** Make a 'how it works' page
+
 *** Add webcam help dialogue box
-** Company name and copy
-** Make a 'how it works' page
+
+
+*** Make language simpler and more consistent
+*** Company name and copy
+*** Simplify / change main interface - messages at bottom, group buttons?
+*** customised instructions
 ** investigate testing with selenium
 ** protect usernames against HTML attack
-** fixed width for icons
 * update moment js every now and again
 * make some tutorial when design is more set
 
@@ -48,7 +52,7 @@ Priority list
 * have a 'vote' screen for features that aren't there yet
 
 
-* Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
+** Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
 * add video
 * colour messages by ObjID and not by name==name
 
@@ -69,19 +73,16 @@ to see where user came from when they try to load the home page. If they came fr
 Also the before_request is firing for every little js file etc... more efficient to just fire on HTML?
 
 
-At Midday -
-For each user:
-- check they have email
-- check they have confirmed account
-- check they have not unsubscribed
-- check last time seen on site
-- find all posts since this time
-- find all posters of these since this time
-- create email message based on these
-
-
+On the train:
 Northumbia students union
 IT classes
 Claire Turner
 
 Wild swans (china)
+
+
+How it works
+1) Someone creates a 'Group' for a small group of friends or family (2 to 10 people works best).
+2) People can be added to the group by email, or accounts can be created directly (a simpler option for those without email!)
+3) Dead-simple, customised instructions can be printed out for anyone in the group who needs it
+4) Everyone in the group can write text, dictate messages, take photos, and add pictures at the push of a button!

@@ -26,7 +26,7 @@ log in to group
 				{% endif %}
 			</h1>
 			
-			<h1 class='page2of2'>Choose your user</h1>
+			<h1 class='page2of2'>Who are you?</h1>
 		</div>
 	</div> <!-- end horizontal-header container -->
 
@@ -44,7 +44,11 @@ log in to group
 			<input type="text" name="network" id='network' value='{{network}}' placeholder='Type here...' class='big-input centered-page'>
 		</div>
 		<div class='centered_20pc_width'>
-			<a href='#' id='choose_network_submit' class='a-button' >Enter</a>
+			<a href='#' id='choose_network_submit' class='a-button' >
+				<span class="icon-uniE61D"></span>
+				Enter
+				
+			</a>
 		</div>
 
 		<div class='flash-message' id='network-error-message'>
@@ -52,22 +56,37 @@ log in to group
 		</div>
 	</div>
 
+	<!-- Page 2 of 2 -->
 	<div class='container-fluid page2of2'>
 		<row>
-			<div class='col-sm-8' id='user_grid'>
-				<!-- User list goes here -->
+
+			<div class='col-sm-8 shift-up-3'>
+				<div class='page-main-subsubheading' style='text-align:left'>
+						<h2>Please click on your name:</h2>
+				</div>
+				<div id='user_grid'>
+					<!-- User list goes here -->
+				</div>
+				<div class='filler'></div>
 			</div>
 
 			<div id='password_entry' style="display:none" class='col-sm-4 fix-300'>
 					
-				<div class='page-main-subsubheading'>
+				<div class='page-main-subsubheading '>
 					<h2>Welcome <span id='chosen_name'>X</span>! Please type your password to enter the room.</h2>
 				</div>
 				
-				<input type="password" id='password_enter_field' class='big-input centered-page' placeholder='Type here...'/required>
+				<div class='shift-up-2'>
+					<input type="password" id='password_enter_field' class='big-input centered-page' placeholder='Type here...'/required>
+				</div>
 				
-				<div class='centered_50pc_width'>
-					<a href='#' id='password_submit' class='a-button' >Enter</a>
+				<div class='centered_50pc_width shift-down-2'>
+					<a href='#' id='password_submit' class='a-button'>
+						<span class="icon-uniE61D"></span>
+						Enter
+						
+						
+					</a>
 				</div>
 				<div class='shift-down-2'>
 					<p>Forgot your password? <a href='lostpassword' class='general-link'>Click here.</a></p>
@@ -76,6 +95,8 @@ log in to group
 				<div class='flash-message shift-up-2' id='password-error-message'>
 					<h2><!-- Message goes here --></h2>
 				</div>
+
+				<div class='filler'></div><div class='filler'></div>
 
 			</div>
 
