@@ -251,7 +251,7 @@ function nav_buttons_ready() {
   $('#dictate-button').click ( function(evt) {
     speech_app()
     prepare_speech_buttons()
-    mixpanel.track('Dictate dialog load') // event
+    mixpanel.track('Dictate dialog load attempt') // event
   })
 
 } // end function

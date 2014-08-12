@@ -8,6 +8,7 @@ function speech_app() {
 
 	if (!('webkitSpeechRecognition' in window)) {
 		$('#speech-bad-browser').show()
+		mixpanel.track('Dictate dialog bad browser') // event
 
 	} else {
 		$('#speech-permission-needed').show()
@@ -17,10 +18,11 @@ function speech_app() {
 		
 			// If they have given permission
 			function(){ 
+				mixpanel.track('Dictate dialog permission granted') // event
 				$('#speech-permission-needed').hide();
 				$('#speech-permission-granted').show();
 				$('#speech-input').focus();
-				
+
 				recognition = new webkitSpeechRecognition();
 				recognition.lang = 'en-GB'
 				recognition.continuous = true;
@@ -72,8 +74,10 @@ function speech_app() {
 
 			// If they denied us permission
 			function(){
+				mixpanel.track('Dictate dialog permission denied') // event
 				$('#speech-permission-needed').hide()
 				$('#speech-permission-denied').show()
+				
 			} // end denied permission
 
 	);} // end permission needed
@@ -98,7 +102,7 @@ function prepare_speech_buttons () {
 		$('#speech-modal').modal('hide');
 		
 		// Mixpanel
-	    mixpanel.track('Posted speech', {'Length (chars)':html.length}) // event
+	    mixpanel.track('Posted speech', {'Length (chars)':message.length}) // event
 	    mixpanel.people.increment('Text posts (speech)', 1); // people
 
 	    setTimeout( function() {
