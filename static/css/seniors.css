@@ -217,6 +217,13 @@ a.disabled {
 	}
 }
 
+.modal-widest {
+	width: 98% !important;
+	margin-left: 1% !important;
+}
+
+
+
 
 /*DIVS*/
 .grey-panel {
@@ -759,4 +766,11 @@ a.disabled {
 	font-size: 100%;
 	width: 50%;
 	margin-top: 30px;
+}
+
+/*========================================================================*/
+/*DICTATE*/
+/*========================================================================*/
+#speech-input {
+	width: 80%;
 }

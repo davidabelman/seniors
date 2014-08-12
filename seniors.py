@@ -54,9 +54,9 @@ def before_request():
 @app.route('/test', methods=['GET', 'POST'])
 def test():
 	"""
-	This is where you enter group name (to login), then choose your group member name, then type your password
+	Testing
 	"""
-	return render_template('test.html')
+	return render_template('speech.html')
 
 @app.route('/')
 def home():
@@ -103,6 +103,8 @@ def enter_with_network_name_and_username(network, username):
 	print "Trying to go enter site through personalised link"
 	print USER._('name')==username
 	print USER._('network')==network
+	# network_clean = str_clean(network)
+	# name_clean = str_clean(name)
 	if USER._('name')==username and USER._('network')==network:
 		# They are already in a session
 		print "Logged in already"

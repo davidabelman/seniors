@@ -1,4 +1,6 @@
 venv/
+archive/
+da_readme.txt
 secret.py
 config.py
 set_environment_vars.sh

@@ -59,15 +59,18 @@ function all_posts_to_dom(posts, remaining_count, append) {
     $('#post-list-area').html(html)
   }
 
+  c('Checking if more posts...')
   // Now finally we want to bring back our 'see more button' if there are more
   if (remaining_count > 0) {
     // More to show
+    c('More posts to show, fading out spinner and bringing in orange button')
     $('#show-more-loading-icon').fadeOut('fast', function() {
       $('#show-more-posts-button').fadeTo(500, 1);
     })
   }
   else {
     // No more to show - just fade out the loading icon
+    c('No more posts to show, fading out spinner')
     $('#show-more-loading-icon').fadeOut('fast')
   }
   
@@ -128,6 +131,7 @@ function add_single_post_to_top(post) {
   })
 }
 
+
 function submit_posts_button_ready() {
   // Focus on input page load
   $('#post_input').focus()
@@ -156,7 +160,7 @@ function submit_posts_button_ready() {
 // TODO currently duplicated in post.js and add_image.js
 function create_post_from_html(html) {
   // Adds some HTML (or text etc) to the feed on the Database side
-  c('About to submit post...')
+  c('Submitting post to server')
   $.ajax({
                 url:'/_submit_post_entry',
                 data: JSON.stringify({
@@ -173,18 +177,10 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
-function escapeHtml(text) {
-  // This makes HTML submitted by user safer, is applied to text input by user
-  // Means they can't encode links, iframes, etc.
-  return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-}
 
 function nav_buttons_ready() {
+  // Get all navigation buttons on the page ready for action
+
   var speed = 200
   // Fade out and logout 
   $('#logout-button').click( function(evt) {
@@ -205,8 +201,6 @@ function nav_buttons_ready() {
         window.location.href = "logout";
       })
     }, 50);
-
-    
   }) // end click event
 
   // Fade out and go to 'add_image screen' 
@@ -305,7 +299,6 @@ function switch_the_can_fade_elements(fade_control) {
     $('.can-fade').css('opacity',1);
     $('#post_input').removeClass('green-border')
   }
-  
 };
 
 function scroll_page(amount, up_or_down) {
@@ -322,12 +315,12 @@ function scroll_page(amount, up_or_down) {
 function get_scroll_navs_ready() {
   // Scroll down
   $('#scrollDown').click( function() {
-    scroll_page(200, 'down')
+    scroll_page(450, 'down')
   })
  
   // Scroll up
   $('#scrollUp').click( function() {
-     scroll_page(200, 'up')
+     scroll_page(450, 'up')
   })
 
   //Hide when mouse not over posts

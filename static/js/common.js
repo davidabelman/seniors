@@ -9,6 +9,17 @@ function c(stuff) {
   }
 }
 
+function escapeHtml(text) {
+  // This makes HTML submitted by user safer, is applied to text input by user
+  // Means they can't encode links, iframes, etc.
+  return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
+
 function make_general_links_clickable() {
   $('.general-link').click( function(evt) {
     evt.preventDefault()
@@ -94,6 +105,7 @@ function focus_at_end_of_input_form(input_id) {
   // Focus at end of text of an input element
   $(input_id).prop("selectionStart", $(input_id).val().length) // set caret to length (end)
        .focus();
+  c('Focused at end.')
 }
 
 function toggle_page_1_and_2(go_to_page) {

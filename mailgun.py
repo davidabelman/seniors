@@ -3,6 +3,7 @@ import requests
 import random
 import datetime
 import time
+import urllib
 
 SENIORS_MAILGUN_KEY = os.environ.get('SENIORS_MAILGUN_KEY')
 company_name = "Salt & Pepper"
@@ -80,8 +81,10 @@ def send_daily_digest_to_all_users(testing=True):
       completed_registration = u.get('completed_registration',None)
       name = u.get('name',None)
       network = u.get('network',None)
+      # name_clean = u.get('name_clean',None)
+      # network_clean = u.get('network_clean',None)
       unsubscribe_token = u.get('unsubscribe_token',None)
-      url = "%s/enter/%s/%s" %(company_url, network, name)
+      url = "%s/enter/%s/%s" %(company_url, urllib.quote(network), urllib.quote(name))
       unsubscribe_url = "%s/unsubscribe/%s" %(company_url, unsubscribe_token)
 
       print "\n=====\nGot user! Variables:"

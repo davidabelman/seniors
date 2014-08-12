@@ -21,16 +21,25 @@ Maaaybe if you click on someone else's picture it adds their name to the filter 
 http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 
 ///////////////////////////////
-Backend:
 
-main page 
-** Add some webcam hint/message to help switch on
-** add notification for new messages
-* colour new messages as they pop up
-* update moment js every now and again
 
-** posts added to bottom not top
+Priority list
+*** Add dictate function
+*** Make language simpler and more consistent
+*** Simplify / change main interface - messages at bottom, group buttons?
+*** Add webcam help dialogue box
+** Company name and copy
+** Make a 'how it works' page
 ** investigate testing with selenium
+** protect usernames against HTML attack
+* update moment js every now and again
+* make some tutorial when design is more set
+
+** add little label notification for new messages
+* colour new messages as they pop up
+
+
+
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** write better help file
@@ -39,7 +48,6 @@ main page
 
 
 * Link 'add image' page and feed page (either link or on same page, just jquery between them with slide in) 
-* dictate functionality
 * add video
 * colour messages by ObjID and not by name==name
 
@@ -69,3 +77,10 @@ For each user:
 - find all posts since this time
 - find all posters of these since this time
 - create email message based on these
+
+
+Northumbia students union
+IT classes
+Claire Turner
+
+Wild swans (china)
