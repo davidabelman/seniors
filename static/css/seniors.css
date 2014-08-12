@@ -129,6 +129,7 @@ a.disabled {
 .initially-hidden {
 	display: none;
 }
+
 .lighter h1, .lighter h2, .lighter h3 {
 	font-weight: 400 !important;
 }
@@ -773,4 +774,8 @@ a.disabled {
 /*========================================================================*/
 #speech-input {
 	width: 80%;
+	height: 150px;
+}
+.speech-hidden {
+	display: none;
 }

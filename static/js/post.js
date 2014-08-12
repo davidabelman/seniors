@@ -247,6 +247,12 @@ function nav_buttons_ready() {
     })
   })
 
+  // Click ditate button
+  $('#dictate-button').click ( function(evt) {
+    speech_app()
+    prepare_start_stop_speech_buttons()
+  })
+
 } // end function
 
 function recursive_check_for_new_posts(count, delay){

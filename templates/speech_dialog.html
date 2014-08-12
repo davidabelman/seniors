@@ -1,21 +1,3 @@
-{% extends "base.html" %}
-
-{% block head %}
-{{ super() }}
-{% endblock %}
-
-{% block title %}
-Speech
-{% endblock %}
-
-{% block body %}
-{{ super() }}
-
-<!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#speech-modal">
-  Launch demo modal
-</button>
-
 <!-- Modal -->
 <div class="modal fade modal-widest" id="speech-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg  modal-widest centered-page">
@@ -68,7 +50,7 @@ Speech
 				
 				<row>
 					<div class='col-xs-6 padded-container shift-up-2'>
-						<a href='#' class='a-button grey-button can-fade' id='cancel-button'>Go back - I don't want to dictate</a>
+						<a href='#' class='a-button grey-button can-fade' id='cancel-button'  data-dismiss="modal">Go back - I don't want to dictate</a>
 					</div>
 					<div class='col-xs-6 padded-container shift-up-2'>
 						<a href='#' class='a-button green-button can-fade' id='post-button'>Great, send this to the group!</a>
@@ -88,12 +70,3 @@ Speech
     </div>
   </div>
 </div>
-
-
-
-
-{% endblock %}
-{% block scripts_bottom %}
-	{{ super() }}
-	<script src="{{url_for('static', filename = 'js/speech.js', _external=True)}}"></script>
-{% endblock %}
