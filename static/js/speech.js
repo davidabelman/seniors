@@ -43,7 +43,7 @@ function speech_app() {
 				    }
 				    if (event.results[event.resultIndex].isFinal) {
 				    	var transcript = event.results[event.resultIndex][0].transcript;
-				    	console.log(transcript)
+				    	c(transcript)
 					    var current_text = $('#speech-input').val().replace(listening_string, " ");
 					    //final_transcript = (current_text + " " + transcript).replace(/ +(?= )/g,'')
 					    final_transcript = current_text + transcript
@@ -55,8 +55,8 @@ function speech_app() {
 				    }
 				    else {
 				    	// We are getting intermediate results
-				    	console.log( event.results[event.resultIndex][0].transcript )
-				    	console.log(first_intermediate)
+				    	c( event.results[event.resultIndex][0].transcript )
+				    	c(first_intermediate)
 				    	var current_text = $('#speech-input').val()
 				    	if (first_intermediate) {
 				    		$('#speech-input').val(current_text + listening_string)
