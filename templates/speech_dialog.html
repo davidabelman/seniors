@@ -10,12 +10,24 @@
 				<div class='filler'></div>
 				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
 			</div>
-			<div id='speech-permission-needed' class='speech-hidden padded-container shift-up-3'>
+			<div id='speech-permission-needed' class='speech-hidden padded-container shift-up-3 centered-page'>
 				
-				<h2>Before you can dictate, you need to give us permission to switch on your microphone. Please follow these instructions:</h2>
+				<h2>Before you can dictate, you need to give us permission to switch on your microphone.</h2>
+				<br>
+				<p>Towards the top of your screen there should be a message saying that we want to use your microphone. You need to press the small button saying 'Allow' that appears on the right hand side of the message. The picture below shows where you need to click with an orange arrow.<br><br></p>
+				<img src='https://dl.dropboxusercontent.com/s/oa7a633203gs3sw/chrome_allow.png' class='img-responsive'/>
+				
+
+
 			</div>
-			<div id='speech-permission-denied' class='speech-hidden'>
-				<h2>Permission denied</h2>
+			<div id='speech-permission-denied' class='speech-hidden padded-container shift-up-3'>
+				<h2>It looks like you pressed denied us access to your microphone</h2>
+				<br>
+				<p>If you want to change this, you can always dictate by following these instructions. There is a small red cross near the top of your screen (indicated in the top right of the image below). If you click on this, you are then given the option to continue blocking microphone access, or to once again ask if we can use your microphone. You should select the option indicating that we can ask to use your microphone. You can then press 'Done', and reload the page.<br><br></p>
+				<img src='https://dl.dropboxusercontent.com/s/p9652s9em4qelk7/chrome_re-allow.png' class='img-responsive shift-up-3'/>
+				<div class='filler shift-up-2'></div>
+				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
+
 			</div>
 			<div id='speech-permission-granted' class='speech-hidden'>
 
@@ -33,7 +45,7 @@
 						</div>
 						<div id='speech-intro-text-error' class='speech-hidden'>
 							<h2>No sound was heard, and listening has been stopped.<br>Press 'Start listening' to try again.</h2>
-								<a href='#' class='a-button can-fade centered_50pc_width' id='speech-start-listening-button'>Start listening</a>
+								<a href='#' class='a-button centered_50pc_width' id='speech-start-listening-button'>Start listening</a>
 							<div class='filler'></div>
 						</div>
 
@@ -57,11 +69,11 @@
 				
 				<row>
 					<div class='col-xs-6 padded-container shift-up-2'>
-						<a href='#' class='a-button grey-button can-fade' id='speech-cancel-button'  data-dismiss="modal">Go back - I don't want to dictate</a>
+						<a href='#' class='a-button grey-button' id='speech-cancel-button'  data-dismiss="modal">Go back - I don't want to dictate</a>
 					</div>
 					
 					<div class='col-xs-6 padded-container shift-up-2'>
-						<a href='#' class='a-button green-button can-fade' id='speech-post-button'>Great, send this to the group!</a>
+						<a href='#' class='a-button green-button' id='speech-post-button'>Great, send this to the group!</a>
 					</div>
 <!-- 
 					<div class='col-xs-6 padded-container shift-up-2'>

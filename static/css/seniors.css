@@ -22,6 +22,9 @@ body {
 .centered-page {
 	text-align: center;
 }
+.centered-page .img-responsive {
+	margin: 0 auto;
+}
 body, html {
   height: 100%;
 }
