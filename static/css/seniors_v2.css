@@ -19,6 +19,17 @@ body {
 		font-size: 170%;
 	}
 }
+@media print {
+	body
+	{
+	  font-size: 160%;
+
+	}
+	@page {  
+	 margin-top: 1in;  
+	 margin-bottom: 1in;  
+	} 
+}
 .centered-page {
 	text-align: center;
 }
@@ -831,7 +842,8 @@ a.disabled {
 }
 .circle p {
 	font-size: 55px;
-	margin-top: 4px;
+	margin-top: 4px;	
+	color: #222;
 }
 
 #circle_container {
@@ -840,8 +852,14 @@ a.disabled {
 }
 
 .greyed {
-	color: #bbb;
+	color: #bbb !important;
 	border-color: #bbb;
+}
+.greyed p {
+	color: #bbb;
+}
+.greyed p:hover {
+	color: #999;
 }
 
 .about-left-hand-panel {

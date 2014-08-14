@@ -38,8 +38,8 @@ add users
 				<input type="hidden" value="{{session.get('user').get('network')}}" id='network_hidden'>
 				<!-- Hidden name, filled in when user submits either email or adds a user direct -->
 				<input type="hidden" value="" id='name_hidden'>
-				<!-- Hidden method, filled in when user submits either email or adds a user direct (email/behalf) -->
-				<input type="hidden" value="" id='method_hidden'>
+				<!-- Hidden user ID to create instruction pack with -->
+				<input type="hidden" value="" id='added_user_id_hidden'>
 				
 				<div class='one_line_entry_box centered_80pc_width'>
 					<input type="text" name="firstname" id='firstname' class='big-input inline' placeholder='Their first name...' /required>

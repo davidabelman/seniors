@@ -45,15 +45,19 @@ function check_form_and_invite_user_by_email() {
       contentType: 'application/json;charset=UTF-8',
       type: "POST",
       success: function(response) {
-        if (response=='1') {
+        // Returns status=1 and userID
+        response = JSON.parse(response);
+        status = response['status']
+        data = response['data']
+        if (status=='1') {
           // We will show a message to user saying successful (clear page 1, show page 2a)
           mixpanel.track('Invite send')
           $('#name_hidden').val($('#firstname').val()) // Filling in the hidden name with the latest name added
-          $('#method_hidden').val('email');
+          $('#added_user_id_hidden').val(data) // Filling in form with hidden ID
           redraw_screen(page_1_or_2='2', page_2a_or_2b='2a')
         }
         else {
-          display_error(response, '#email_invitation_error')
+          display_error(data, '#email_invitation_error')
         }
       },
       fail: function() {
@@ -92,20 +96,24 @@ function check_form_and_add_user_to_db() {
       contentType: 'application/json;charset=UTF-8',
       type: "POST",
       success: function(response) {
-        if (response=='1') {
+        // Returns status=1 and userID
+        response = JSON.parse(response);
+        status = response['status']
+        data = response['data']
+        if (status=='1') {
           mixpanel.track('Signup', {'Method':'On behalf'})
 
           // We will show a message to user saying successful (clear page 1, show page 2b)
-          c('Added user successfully to database');
+          c('Added user successfully to database, ID=', data);
           $('#name_hidden').val($('#initial_name').val()) // Filling in the hidden name with the latest name added
-          $('#method_hidden').val('behalf')
+          $('#added_user_id_hidden').val(data)
 
           // Now redraw screen
           redraw_screen(page_1_or_2='2', page_2a_or_2b='2b')
 
           } // end if
         else {
-          display_error(response, '#create_account_error')
+          display_error(data, '#create_account_error')
         }
       } // end success callback
     }) // end ajax
@@ -127,7 +135,7 @@ function get_page2_links_ready() {
   $('#print_instructions').click( function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
-    var instruction_url = '/instructions/'+$('#network_hidden')+'/'+$('#name_hidden')+'/'+$('#method_hidden') // network name and username to be passed to instructions as arguments
+    var instruction_url = '/instructions/'+$('#added_user_id_hidden').val() // network name and username to be passed to instructions as arguments
     fade_page_in_out('out',instruction_url)    
   })
 }

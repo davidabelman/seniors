@@ -45,13 +45,13 @@ def send_access_token_email(sender, sender_email, network, recipient, recipient_
               "to": "%s <%s>" %(recipient, recipient_email),
               "subject": "%s has invited you to Salt & Pepper!" %sender,
               "text": 
-              """
-              \nDear %s,
-              \nCongratulations, %s (%s) has just invited you to join the group '%s' on Salt & Pepper!
-              Here you can enjoy the simplest way ever to share messages and photos amongst a small group of trusted companions.
-              \nClick here to get started - %s.
-              \nCan't wait to see you there!
-              \nYour friends at Salt & Pepper.""" %(recipient, sender, sender_email, network, url)
+"""
+\nDear %s,
+\nCongratulations, %s (%s) has just invited you to join the group '%s' on Salt & Pepper!
+Here you can enjoy the simplest way ever to share messages and photos amongst a small group of trusted companions.
+\nClick here to get started - %s.
+\nCan't wait to see you there!
+\nYour friends at Salt & Pepper.""" %(recipient, sender, sender_email, network, url)
              	}
          )
 		

@@ -13,15 +13,23 @@ add an image
 {{ super() }}
 
 <div style='padding:30px 50px'>
+{% block feedbacktab %}
+<!-- Removes the feedback tab from this page -->
+{% endblock %}
 
-PRINT BUTTON
+<div class='centered_50pc_width' style='padding:20px'>
+<a href='#' class='a-button blue-button' onclick='$(this).hide(); window.print();'>
+	<span class="icon-uniE628 inline"></span>
+	Click to print this document
+</a>
+</div>
 
 <h1>Hello {{name}}! You've been added to the <strong>{{network}}</strong> group on {{company_name}}.</h1>
 
 <p>Welcome to {{company_name}} - it's great to have you join us. These instructions will give you a brief overview of what {{company_name}} is, and how to use it.</p>
 
 <h2>What is {{company_name}}?</h2>
-<p>{{company_name}} is a website ({{company_website}}) which allows small groups of trusted companions to send messages and share photos in a very simple way. Everything is designed to be used by people who have very little experience in using computers.</p>
+<p>{{company_name}} is a website ({{company_website}}) which allows small groups of trusted companions to send messages and share photos in a very simple way. Everything is designed for people who have very little experience in using computers.</p>
 
 <h2>How does it work?</h2>
 <p><ol>
@@ -38,7 +46,7 @@ We hope to have made everything on the website very easy to use. Everything you 
 You can move the mouse over an orange button and click, to make the website do something. (Occasionally the button will be green - this means you are about to share something that the rest of the group will be able to see - but clicking it works in exactly the same way!)
 
 <h2>How to I start?</h2>
-{% if method=='email' %}:
+{% if method=='email' %}
 {{company_name}} have sent you an email on behalf of {{inviter_name}}, with an 'invitation link' for you to click. By clicking this link, you will be taken to a screen where you can set your password.
 {% else %}
 {{inviter_name}} has set up a 'username' and a 'password' for you. Your username is '{{name}}', and {{inviter_name}} will have to tell you your password. To get going, you can type the following address into your web browser:
@@ -104,11 +112,11 @@ If you would like to add friends to your existing group, and you are not an 'adm
 If you would like to create your own group, go the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.
 
 <h2>Do I need any special programs on my computer?</h2>
-No - just by typing {{company_website}} into your browser you will be able to see the web page. Basic funcionality works whichever browser you are using - however, some features (such as dictation) require you to use the 'Google Chrome' browser. You can download that by typing this in your address bar: http://www.google.com/chrome/browser.
+No - just by typing {{company_website}} into your browser you will be able to see the web page. Basic functionality works whichever browser you are using - however, some features (such as dictation) require you to use the 'Google Chrome' browser. You can download that by typing this in your address bar: http://www.google.com/chrome/browser.
 PICTURE
 
 <h2>Can I contact you for help, or provide feedback?</h2>
-We love to help, and we love feedback! If you would like to contact us, you can email {{company_email}}. Alternatively, you can find a button on the website which will allow you to write feedback to us from the site.
+We love to help, and we love feedback! If you would like to contact us, you can email {{company_email}}. Alternatively, you can find a button on the website which will allow you to provide feedback from the site.
 
 </div>
 <div class='filler'>

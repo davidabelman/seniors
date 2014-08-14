@@ -263,22 +263,26 @@ def termsandconditions():
 		web_address=base_url)
 
 
-@app.route('/instructions/<network>/<name>/<method>', methods=['GET', 'POST'])
-def print_instructions(network, name, method):
+@app.route('/instructions/<userid>', methods=['GET', 'POST'])
+def print_instructions(userid):
 	"""
 	Same as enter, but network name already filled in and different instructions
 	"""
-	network_clean = str_clean(network)
+	try:
+		instructions_user = Users.find_one({'_id': ObjectId(userid)})
+	except:
+		return redirect(url_for('home'))
+		
 	return render_template('print_instructions.html',
-							network=network,
-							network_clean = network_clean,
-							name=name,
-							inviter_name=USER._('name'),
-							inviter_email=USER._('email'),
+							network=instructions_user['network'],
+							network_clean = instructions_user['network_clean'],
+							name=instructions_user['name'],
+							inviter_name=instructions_user['admin_name'],
+							inviter_email=instructions_user['admin_email'],
 							company_name = company_name,
 							company_email = company_email, 
 							company_website = base_url,
-							method = method
+							method = instructions_user.get('join_method','behalf')
 							)
 
 
@@ -480,7 +484,8 @@ def create_account_create_network():
 						'network_clean': network_clean,
 						'role' : 1, # i.e. admin
 						'completed_registration':True,
-						'unsubscribe_token':generate_token(10)
+						'unsubscribe_token':generate_token(10),
+						'join_method':'admin'
 
 				}
 		# Add user to DB		
@@ -541,16 +546,19 @@ def add_user_on_behalf():
 						'network_clean' : USER._('network_clean'),
 						'role' : 0, # i.e. admin
 						'completed_registration':True,
-						'unsubscribe_token':generate_token(10)
+						'unsubscribe_token':generate_token(10),
+						'join_method':'behalf'
 					}	
 			Users.insert(to_add)
-			return json.dumps(1)
+			user_id = str(Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':name_clean})['_id'])
+			print "Added a user", user_id
+			return json.dumps({'status':1, 'data':user_id})
 		else:
 			message =  "Name already exists in group. Please pick another name."
-			return json.dumps(message)
+			return json.dumps({'status':0, 'data':message})
 	else:
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
-		return json.dumps(message)
+		return json.dumps({'status':0, 'data':message})
 
 
 @app.route('/_add_user_via_access_token', methods=['GET', 'POST'])
@@ -587,9 +595,12 @@ def add_user_via_access_token():
 							'token_not_used' : True,
 							'token_sent' : datetime.datetime.utcnow(),
 							'completed_registration' : False,
-							'unsubscribe_token':generate_token(10)
+							'unsubscribe_token':generate_token(10),
+							'join_method':'email'
 						}	
 			Users.insert(to_add)
+			user_id = str(Users.find_one({'network_clean':USER._('network_clean'), 'name_clean':firstname_clean})['_id'])
+			print "Added a user", user_id
 
 			# Send user an access token type of link
 			access_url = base_url+'/invite/'+str(token)  #i.e. website.com/invite/1209312703
@@ -602,15 +613,15 @@ def add_user_via_access_token():
 					url=access_url
 				)
 			# All OK, return status 1
-			return json.dumps(1)
+			return json.dumps({'status':1, 'data':user_id})
 		
 		else:
 			message = "Name already exists in group. Please pick another name."
-			return json.dumps(message)
+			return json.dumps({'status':0, 'data':message})
 			
 	else:
 		message = "Authentication error: you are not logged in to your group. Please contact us if you require assistance."
-		return json.dumps(message)
+		return json.dumps({'status':0, 'data':message})
 
 
 @app.route('/_get_bing_image_urls', methods=['GET', 'POST'])

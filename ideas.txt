@@ -24,14 +24,12 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 
 
 Priority list
-2 *** Make a 'how it works' page
-3 *** Simplify / change main interface - messages at bottom, group buttons?
 4 *** Admin page
 *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 *** Company name and copy
 *** customised instructions pictures and username based content
 *** Make language simpler and more consistent
-
+3 *** Simplify / change main interface - messages at bottom, group buttons?
 
 
 
