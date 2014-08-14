@@ -13,6 +13,11 @@ function bind_clicks() {
 		evt.stopImmediatePropagation();
 		fade_page_in_out('out', '/enter')
 	})	
+	$('#about-button').click( function(evt) {
+		evt.preventDefault();
+		evt.stopImmediatePropagation();
+		fade_page_in_out('out', '/about')
+	})
 	
 }
 

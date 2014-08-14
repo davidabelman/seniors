@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+error
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page quick-fade quick-fade-1 initially-hidden'>
+
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header quick-fade quick-fade-3'>
+		<div class='page-main-heading'>
+			<h1 class='page1of2'>
+				How it works
+				<div id='circle_container'>
+					<a href='1' class="circle quick-fade quick-fade-4 navigation"> <p>1</p> </a>
+					<a href='2' class="circle greyed quick-fade quick-fade-6 navigation"> <p>2</p> </a>
+					<a href='3' class="circle greyed quick-fade quick-fade-8 navigation"> <p>3</p> </a>
+					<a href='4' class="circle greyed quick-fade quick-fade-10 navigation"> <p>4</p> </a>
+				</div>
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+	<div class='container-fluid page1of4 quick-fade quick-fade-10'>
+		
+			<row>
+				<div class='page-main-subheading centered_80pc_width'>
+					<div class='col-sm-6 about-left-hand-panel'>
+						<h2>Someone creates a 'Group' for a small group of friends or family</h2>
+						
+
+						<row>
+							<div class='col-xs-6'>
+								<a href='/' class='a-button grey-button back-to-group-button'>
+									<!-- <span class='icon-uniE61B inline'><span> -->
+									Back
+								</a>
+							</div>
+							<div class='col-xs-6'>
+								<a href = '2' class='a-button navigation'>							
+									Next 
+									<!-- <span class='icon-uniE61D'><span> -->
+								</a>
+							</div>
+						</row>
+
+					</div>
+					<div class='col-sm-6 big-icon'>
+						<h2><span class='icon-uniE603 inline'><span></h2>
+					</div>
+				</div>
+			</row>
+	</div>
+
+	<div class='container-fluid page2of4' style='display:none'>
+		
+			<row>
+				<div class='page-main-subheading centered_80pc_width'>
+					<div class='col-sm-6 about-left-hand-panel'>
+						<h2>People can be added to the group by email, or accounts can be created directly</h2>
+						<h3 class='shift-up-2' style='margin-bottom: 20px;'>(a simpler option for those without email)</h3>
+						
+
+						<row>
+							<div class='col-xs-6'>
+								<a href='1' class='a-button grey-button navigation'>
+									<!-- <span class='icon-uniE61B inline'><span> -->
+									Back
+								</a>
+							</div>
+							<div class='col-xs-6'>
+								<a href = '3' class='a-button navigation'>							
+									Next 
+									<!-- <span class='icon-uniE61D'><span> -->
+								</a>
+							</div>
+						</row>
+					</div>
+					<div class='col-sm-6 big-icon'>
+						<h2><span class='icon-uniE627 inline'><span></h2>
+					</div>
+				</div>
+			</row>
+	</div>
+
+	<div class='container-fluid page3of4' style='display:none'>
+		
+			<row>
+				<div class='page-main-subheading centered_80pc_width'>
+					<div class='col-sm-6 about-left-hand-panel'>
+						<h2>Clear, customised instructions can be printed out for anyone who needs them</h2>
+						
+
+						<row>
+							<div class='col-xs-6'>
+								<a href='2' class='a-button grey-button navigation'>
+									<!-- <span class='icon-uniE61B inline'><span> -->
+									Back
+								</a>
+							</div>
+							<div class='col-xs-6'>
+								<a href = '4' class='a-button navigation'>							
+									Next 
+									<!-- <span class='icon-uniE61D'><span> -->
+								</a>
+							</div>
+						</row>
+					</div>
+					<div class='col-sm-6 big-icon'>
+						<h2><span class='icon-uniE628 inline'><span></h2>
+					</div>
+				</div>
+			</row>
+	</div>
+
+	<div class='container-fluid page4of4' style='display:none'>
+		
+			<row>
+				<div class='page-main-subheading centered_80pc_width'>
+					<div class='col-sm-6 about-left-hand-panel'>
+						<h2>Write text, dictate, take photos, and add pictures at the push of a button!</h2>
+						
+
+						<row>
+							<div class='col-xs-6'>
+								<a href='3' class='a-button grey-button navigation'>
+									<!-- <span class='icon-uniE61B inline'><span> -->
+									Back
+								</a>
+							</div>
+							<div class='col-xs-6'>
+								<a href = '#' class='a-button back-to-group-button'>							
+									Let's go! 
+									<!-- <span class='icon-uniE61D'><span> -->
+								</a>
+							</div>
+						</row>
+					</div>
+					<div class='col-sm-6 big-icon'>
+						<h2><span class='icon-uniE608 inline'><span></h2>
+					</div>
+				</div>
+			</row>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/howitworks.js', _external=True)}}"></script>
+{% endblock %}

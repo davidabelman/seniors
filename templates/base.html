@@ -18,8 +18,8 @@
       <link href="{{url_for('static', filename = 'css/icomoon.css')}}" rel="stylesheet">
 
       {% block scripts_top %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <!--<script src="{{url_for('static', filename = 'js/jquery-2.1.1.min.js', _external=True)}}"></script>-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <script src="{{url_for('static', filename = 'js/jquery-2.1.1.min.js', _external=True)}}"></script>
         
       {% endblock %}
 
@@ -44,7 +44,7 @@
 
     {% block scripts_bottom %}
       <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="{{url_for('static', filename = 'js/common.js', _external=True)}}"></script>
+      <script src="{{url_for('static', filename = 'js/common_v2.js', _external=True)}}"></script>
       <script src="{{url_for('static', filename = 'js/my_analytics.js', _external=True)}}"></script>
       <script src="{{url_for('static', filename = 'js/bootstrap.min.js', _external=True)}}"></script>
     {% endblock %}

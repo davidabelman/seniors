@@ -54,12 +54,12 @@ def before_request():
     	USER = User( session.get('user') )
     	USER.to_console()
 
-@app.route('/test', methods=['GET', 'POST'])
+@app.route('/about', methods=['GET', 'POST'])
 def test():
 	"""
 	Testing
 	"""
-	return render_template('test.html')
+	return render_template('howitworks.html')
 
 @app.route('/')
 def home():

@@ -239,8 +239,6 @@ a.disabled {
 }
 
 
-
-
 /*DIVS*/
 .grey-panel {
 /*	background-image: -webkit-gradient(
@@ -812,4 +810,45 @@ a.disabled {
 
 .button-left span {
 	margin-right: 5px;
+}
+
+
+/*========================================================================*/
+/*ABOUT*/
+/*========================================================================*/
+.circle {
+	text-align: center;
+	vertical-align: center;
+	width: 90px;
+    height:90px;
+    background: #fff;
+    border: solid 10px #e60;
+    display: inline-block;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px; 
+    transition: border 0.5s;
+}
+.circle p {
+	font-size: 55px;
+	margin-top: 4px;
+}
+
+#circle_container {
+	display: inline-block;
+	padding-left: 20px;
+}
+
+.greyed {
+	color: #bbb;
+	border-color: #bbb;
+}
+
+.about-left-hand-panel {
+	margin-left: 40px;
+}
+
+.big-icon {
+	font-size: 800%;
+	margin: -40px 0px 0px -40px;
 }
