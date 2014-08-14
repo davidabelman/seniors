@@ -131,7 +131,7 @@
 {% block scripts_bottom %}
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/moment.js', _external=True)}}"></script>
-	<script src="{{url_for('static', filename = 'js/post_v1.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/post_v2.js', _external=True)}}"></script>
 	
 	<!-- Dictate -->
 	<script src="{{url_for('static', filename = 'js/speech.js', _external=True)}}"></script>
@@ -139,7 +139,7 @@
 	<!-- Add image -->
 	<script src="{{url_for('static', filename = 'uploadify/swfobject.js', _external=True)}}"></script>
     <script src="{{url_for('static', filename = 'uploadify/jquery.uploadify.v2.1.4.min.js', _external=True)}}"></script>
-	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
-	<script src="{{url_for('static', filename = 'js/webcam.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/add_image_v2.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/webcam_v2.js', _external=True)}}"></script>
 {% endblock %}
 
