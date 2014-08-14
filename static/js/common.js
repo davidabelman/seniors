@@ -36,6 +36,8 @@ function bind_left_hand_button_clicks() {
   // Brings up correct content on RHS
     $('.lhs-button').click( function(evt) {
 
+      c('LHS button clicked')
+      
       // Fade other buttons on click, and show relevant content on RHS
       evt.preventDefault();
       evt.stopImmediatePropagation();

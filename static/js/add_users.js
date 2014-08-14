@@ -48,7 +48,9 @@ function check_form_and_invite_user_by_email() {
         if (response=='1') {
           // We will show a message to user saying successful (clear page 1, show page 2a)
           mixpanel.track('Invite send')
-          redraw_screen(page_1_or_2='2', page_2a_or_2b='2a', name=$('#firstname').val())
+          $('#name_hidden').val($('#firstname').val()) // Filling in the hidden name with the latest name added
+          $('#method_hidden').val('email');
+          redraw_screen(page_1_or_2='2', page_2a_or_2b='2a')
         }
         else {
           display_error(response, '#email_invitation_error')
@@ -95,10 +97,11 @@ function check_form_and_add_user_to_db() {
 
           // We will show a message to user saying successful (clear page 1, show page 2b)
           c('Added user successfully to database');
-          network = $('#network_hidden').val();
+          $('#name_hidden').val($('#initial_name').val()) // Filling in the hidden name with the latest name added
+          $('#method_hidden').val('behalf')
 
           // Now redraw screen
-          redraw_screen(page_1_or_2='2', page_2a_or_2b='2b', name=$('#initial_name').val())
+          redraw_screen(page_1_or_2='2', page_2a_or_2b='2b')
 
           } // end if
         else {
@@ -120,6 +123,13 @@ function get_page2_links_ready() {
     evt.stopImmediatePropagation();
     fade_page_in_out('out','/')
   })
+
+  $('#print_instructions').click( function(evt) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    var instruction_url = '/instructions/'+$('#network_hidden')+'/'+$('#name_hidden')+'/'+$('#method_hidden') // network name and username to be passed to instructions as arguments
+    fade_page_in_out('out',instruction_url)    
+  })
 }
 
 
@@ -128,7 +138,7 @@ function redraw_screen(page_1_or_2, page_2a_or_2b, name) {
 
   if (page_1_or_2 == '2') {
     // Fill in page 2 with the correct values
-    $('.invited-name').text(name)
+    $('.invited-name').text($('#name_hidden').val())  // Get name that was added
 
     // Show the correct version of page 2
     if (page_2a_or_2b == '2b') {
@@ -156,6 +166,7 @@ function redraw_screen(page_1_or_2, page_2a_or_2b, name) {
     })
   }
 }
+
 
 function display_error(message, id) {
   // id should be #create_account_error or #email_invitation_error, i.e. shows where to place the error message

@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+add an image
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page initially-hidden'>
+	
+	<!-- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  <div id='logotemp'>
+	  	<span id='saltandpepper'>Salt&Pepper</span><span id='beta'> beta</span>
+	  </div>
+	</nav> -->
+
+
+	<!-- Page 1 of 2, i.e. enter network -->
+	<div class='container-fluid'>
+
+		<row>
+			
+			<div class='col-md-5'> <!-- left panel -->
+				<div class='page-main-subheading shift-down-2 padded-container-1'>
+					<h2>How shall we add your picture?</h2>
+				</div> 
+				
+				<div class='centered_80pc_width  shift-down-2'>
+					<a href='#' id='webcam-button' class='a-button shift-down-3' >
+						<span class="icon-uniE605"></span>
+						Take a photo
+					</a>
+				</div>
+
+				<div class='centered_80pc_width  shift-down-2'>
+					<a href='#' id='bing-button' class='a-button' >
+						<span class="icon-uniE60B"></span>
+						Type a description
+					</a>
+				</div>
+
+				<div class='centered_80pc_width shift-down-2'>
+					<a href='#' id='upload-button' class='a-button shift-down-3' >
+						<span class="icon-uniE60C"></span>
+						From my computer
+					</a>
+				</div>
+
+				<hr>
+
+				<div class='centered_80pc_width'>
+					<a href='#' id='back-to-group-button' class='a-button shift-down-3 grey-button' >
+						<span class="icon-uniE618"></span>
+						Go back to group page
+					</a>
+				</div>
+
+			</div> <!-- end left panel -->
+
+			<div class='col-md-7'> <!-- right panel -->
+
+				<!-- bing pages 1 and 2 -->
+				<div id='bing-rhs' class='rhs-to-disappear'>
+					
+					<div id='bing-page1of2'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
+							<h2>Type one or more words into the box describing your desired photo:</h2>
+						</div> 
+							
+						<div class='one_line_entry_box centered_80pc_width'>
+							<input type="text" name="img-input" id='img-input' placeholder='Type here...' class='big-input centered-page'>
+						</div>
+						
+						<div class='centered_50pc_width shift-down-3'>
+							<a href='#' id='bing-search-submit' class='a-button' >Click to get pictures!</a>
+						</div>
+					</div> <!-- end bing page 1 of 2 -->
+						
+					<div id='bing-page2of2' class='shift-down-3'>
+						<div class='padded-container'>
+							<h2>
+								Here we go! Click on an image to send it to the group.
+							</h2>
+						</div>
+						<div id='bing-img-grid'><!-- Images will go here --></div>
+					</div> <!-- end bing page 2 of 2 -->
+
+				</div>
+
+				<!-- webcam page -->
+				<div id='webcam-rhs' class='rhs-to-disappear'>
+
+					<!-- If safari -->
+					<div class='shift-down-3 safari' style='display:none'>
+						<div class='filler'></div>
+						<h2 >{% include 'browser_not_ok.html' %}</h2>
+						<div class='filler shift-down-2'></div>
+					</div>
+
+					<!-- if chrome or mozilla -->
+					<div id='webcam-available' style='display:none' class='mozilla chrome'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
+							<h2>Click 'take photo' to take a photo!</h2>
+							
+							<h3 class='shift-up-3 chrome' style='display:none'>(you may need to click 'Allow' near the top right of your screen if you can't see your webcam image yet)</h3>
+							
+							<h3 class='shift-up-3 mozilla' style='display:none'>(you may need to click 'Share Selected Device' to the left of this message if you can't see your webcam image yet)</h3>
+						
+						</div>
+						<div id='loading-spinner' class='padded-container shift-down-3'></div>
+						<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
+						<canvas id="webcam-canvas" width="320" height="250"></canvas>
+						<div class='centered_50pc_width shift-down-3'>
+							<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+						</div>
+						<row>
+							<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
+								<a href='#' class='a-button inline float-right' >Take another...</a>
+							</div>
+							<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
+								<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+							</div>
+						</row>
+					</div> <!-- end webcam available -->
+						
+				</div>
+
+				<!-- upload page -->
+				<div id='upload-rhs' class='rhs-to-disappear'>
+					<div class='no_chrome' style='display:none'>
+						<div class='filler shift-down-2'></div>
+						<h2>
+							Unfortunately, this feature is only currently available in the Chrome browser. You can get it <a href='http://www.google.com/chrome/browser/' target='_blank'>here</a>.
+						</h2>
+						<div class='filler shift-down-2'></div>
+					</div> <!-- end chrome unavailable -->
+
+					<div class='chrome' style='display:none'>
+						<div class='page-main-subheading shift-down-2 padded-container-1'>
+							<!-- <h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2> -->
+							<h2 id='upload-h2-1of2'>Click the button below to get a picture from your computer</h2>
+							<h2 id='upload-h2-2of2' style='display:none'>Now you can send it to the group by clicking on the green button!</h2>
+							<div class='centered_80pc_width'>
+	    						<a id="upload_link" class='a-button green-button' href="javascript:$('#file_upload').uploadifyUpload()" style='display:none'>Send my picture to the group</a>
+	    						<img id='spinning_icon' src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif' class='shift-down-3' style='display:none'>
+	    					</div>
+	    					<div class='filler'></div>
+
+							<div id='file-upload-wrapper'>
+								<!-- <a href='#' class='a-button centered-page' id='orange-file-upload-button' width='100px'> --><input id="file_upload" name="file_upload" type="file" width='200px'>
+							</div>
+							
+						</div>
+					</div> <!-- end chrome available --> 
+				</div>
+
+			</div>
+
+
+		</row> <!-- end LH RH page split -->
+
+
+	</div> <!-- end container -->
+</div> <!-- end centred page -->
+
+{% endblock %}
+				
+
+
+{% block scripts_bottom %}
+	{{ super() }}
+    <script src="{{url_for('static', filename = 'uploadify/swfobject.js', _external=True)}}"></script>
+    <script src="{{url_for('static', filename = 'uploadify/jquery.uploadify.v2.1.4.min.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/webcam_v2.js', _external=True)}}"></script>
+{% endblock %}
+
+
+

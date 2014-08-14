@@ -1,0 +1,202 @@
+<div class="modal fade modal-widest" id="image-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg  modal-widest centered-page">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+
+		<div class='container-fluid centered-page'>
+
+			<row>
+				
+				<div class='col-md-5 shift-up-2'> <!-- left panel -->
+					<div class='page-main-subheading'>
+						<h2>How shall we add your picture?</h2>
+					</div> 
+					
+					<div class='centered_80pc_width  shift-down-2'>
+						<a href='#' id='webcam-button' class='a-button lhs-button' >
+							<span class="icon-uniE605"></span>
+							Take a photo
+						</a>
+					</div>
+
+					<div class='centered_80pc_width  shift-down-2'>
+						<a href='#' id='bing-button' class='a-button lhs-button' >
+							<span class="icon-uniE60B"></span>
+							Type a description
+						</a>
+					</div>
+
+					<div class='centered_80pc_width shift-down-2'>
+						<a href='#' id='upload-button' class='a-button lhs-button' >
+							<span class="icon-uniE60C"></span>
+							From my computer
+						</a>
+					</div>
+
+					<hr>
+
+					<div class='centered_80pc_width'>
+						<a href='#' id='img-back-to-group-button' class='a-button grey-button' data-dismiss="modal" >
+							<span class="icon-uniE618"></span>
+							Go back to group page
+						</a>
+					</div>
+					<div class='filler'></div>
+
+				</div> <!-- end left panel -->
+
+				<div class='col-md-7 shift-up-2'> <!-- right panel -->
+
+					<!-- bing pages 1 and 2 -->
+					<div id='bing-rhs' class='rhs-to-disappear'>
+						
+						<div id='bing-page1of2' class='page1of2'>
+							<div class='page-main-subheading shift-down-2 padded-container-1'>
+								<h2>Type one or more words into the box describing your desired photo:</h2>
+							</div> 
+								
+							<div class='one_line_entry_box centered_80pc_width'>
+								<input type="text" name="img-input" id='img-input' placeholder='Type here...' class='big-input centered-page'>
+							</div>
+							
+							<div class='centered_50pc_width shift-down-3'>
+								<a href='#' id='bing-search-submit' class='a-button' >Click to get pictures!</a>
+							</div>
+						</div> <!-- end bing page 1 of 2 -->
+							
+						<div id='bing-page2of2' class='page2of2 shift-down-3'>
+							<div class='padded-container'>
+								<h2>
+									Here we go! Click on an image to send it to the group.
+								</h2>
+							</div>
+							<div id='bing-img-grid'><!-- Images will go here --></div>
+						</div> <!-- end bing page 2 of 2 -->
+
+					</div>
+
+					<!-- webcam page -->
+					<div id='webcam-rhs' class='rhs-to-disappear'>
+
+						<!-- If safari -->
+						<div class='shift-down-2 not_chrome_mozilla' style='display:none'>
+							<div class='webcam-pre-permission'>
+								<div class='filler'></div>
+								<h2 >{% include 'browser_not_ok.html' %}</h2>
+								<div class='filler shift-down-2'></div>
+							</div>
+						</div>
+
+						<!-- If chrome -->
+						<div class='shift-down-2 chrome' style='display:none'>
+							<div class='webcam-pre-permission'>
+								<div class='filler-15'></div>
+									{% include 'chrome_permission_needed.html' %}
+								<div class='filler shift-up-2'></div>
+							</div> <!-- end pre permission -->
+						
+							<div class='webcam-permission-denied' style='display:none'>
+								<div class='filler-15'></div>
+									{% include 'chrome_permission_denied.html' %}
+								<div class='filler shift-up-2'></div>
+							</div> <!-- end permission denied -->
+						</div>
+
+						<!-- If mozilla -->
+						<div class='shift-down-2 mozilla' style='display:none'>
+							<div class='webcam-pre-permission'>
+								<div class='filler-15'></div>
+
+									{% include 'mozilla_permission_needed.html' %}
+								<div class='filler shift-up-2'></div>
+							</div> <!-- end pre permission -->
+						
+							<div class='webcam-permission-denied' style='display:none'>
+								<div class='filler-15'></div>
+									
+									{% include 'mozilla_permission_denied.html' %}
+								<div class='filler shift-up-2'></div>
+							</div> <!-- end permission denied -->
+						</div>
+
+						<!-- if chrome or mozilla and webcam permission granted -->
+						<div id='webcam-permission-granted' style='display:none'>
+							<div class='filler'></div>
+							
+							<div id='pre-photo-take'>
+								<video id="webcam-video" width="400" height="300" style='display:inline' autoplay></video>
+								<div class='centered_50pc_width shift-down-3'>
+									<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+								</div>
+							</div>
+
+							<div id='post-photo-take' style='display:none'>
+								<canvas id="webcam-canvas" width="400" height="300"></canvas>
+								<row>
+									<div class='col-xs-6' id='webcam-take-another-button'>
+										<a href='#' class='a-button inline float-right' >Take another...</a>
+									</div>
+									<div class='col-xs-6' id='webcam-use-photo-button'>
+										<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+									</div>
+								</row>
+							</div>
+
+							<div id = 'post-photo-submit' style='display:none'>
+							<!-- Spinner displays when submitting photo -->
+								<div id='loading-spinner' class='padded-container shift-down-3'>
+									<img src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif'>
+								</div>
+							</div>
+
+							<div class='filler'></div>
+							<!-- End buttons -->
+
+						</div> <!-- end webcam available -->
+							
+					</div>
+
+					<!-- upload page -->
+					<div id='upload-rhs' class='rhs-to-disappear'>
+						<div class='not_chrome_mozilla mozilla' style='display:none'>
+							<div class='filler shift-down-2'></div>
+							<h2>
+								{% include 'browser_not_ok.html' %}
+							</h2>
+							<div class='filler shift-down-2'></div>
+						</div> <!-- end chrome unavailable -->
+
+						<div class='chrome' style='display:none'>
+							<div class='page-main-subheading shift-down-2 padded-container-1'>
+								<!-- <h2>Unfotunately this functionality is not yet available. If this is something you think would be useful for you, let us know by sending some feedback!</h2> -->
+								<h2 id='upload-h2-1of2'>Click the button below to get a picture from your computer</h2>
+								<h2 id='upload-h2-2of2' style='display:none'>Now you can send it to the group by clicking on the green button!</h2>
+								<div class='centered_80pc_width'>
+		    						<a id="upload_link" class='a-button green-button' href="javascript:$('#file_upload').uploadifyUpload()" style='display:none'>Send my picture to the group</a>
+		    						<img id='spinning_icon' src='http://cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif' class='shift-down-3' style='display:none'>
+		    					</div>
+		    					<div class='filler'></div>
+
+								<div id='file-upload-wrapper'>
+									<!-- <a href='#' class='a-button centered-page' id='orange-file-upload-button' width='100px'> --><input id="file_upload" name="file_upload" type="file" width='200px'>
+								</div>
+								
+							</div>
+						</div> <!-- end chrome available --> 
+					</div> <!-- end upload section -->
+
+				</div>
+
+
+			</row> <!-- end LH RH page split -->
+
+
+		</div> <!-- end container -->
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>

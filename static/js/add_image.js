@@ -1,89 +1,39 @@
-function prepare_LHS_button_fading_behaviour () {
-	// Enables click behaviour for buttons on LHS
-	// Fades all other buttons when one is clicked
-	// Brings up correct content on RHS
-			$('#bing-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-		    mixpanel.track('Bing panel loaded');
-
-		    // Fade all but current button
-		    $('#bing-button').css('opacity',1)
-			$('#webcam-button').css('opacity',0.6)
-			$('#upload-button').css('opacity',0.6)
-			$('#cancel-button').css('opacity',0.6)
-
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
-
-			// Show relevant RHS content
+function prepare_img_buttons () {
+	// General click behavour for LHS buttons already taken care of through bind_left_hand_button_clicks()
+	// This just adds a little extra functionality
+	// No prevent default, as this would override the bind_left_hand_button_clicks() functionality
+		$('#bing-button').click( function(evt) {
 			setTimeout ( function() {
-				$('#bing-rhs').fadeIn(300)
 				// Focus on search box
 	    		$('#img-input').focus()
 	    		// Return = submit
 				$("#img-input").keyup(function(event){
 				    if(event.keyCode == 13){ $("#bing-search-submit").click();  }
 				});
-			} , 51 ) 
+			} , 200 ) 
+			toggle_page_1_and_2(go_to_page=1)
 		});
 
 		$('#webcam-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-		    mixpanel.track('Webcam panel load attempt');
-
+		    // mixpanel.track('Webcam panel load attempt');
 		    // When button is clicked, load webcam script stuff
 		    if (window.webcamActivated == 0) {
 		    	window.webcamActivated = 1;
-		    	activate_webcam_script()
+		    	 activate_webcam_script()
 		    }
-
-		    // Fade all but current button
-		    $('#bing-button').css('opacity',0.6)
-			$('#webcam-button').css('opacity',1)
-			$('#upload-button').css('opacity',0.6)
-			$('#cancel-button').css('opacity',0.6)
-
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#webcam-rhs').fadeIn(300)
-			} , 51 ) 
 		});
 
-		$('#upload-button').click( function(evt) {
-			// Fade other buttons on click, and show relevant content on RHS
-			evt.preventDefault();
-		    evt.stopImmediatePropagation();
-		    mixpanel.track('Upload image panel load attempt');
+		// When image modal closes
+		$('#image-modal').on('hidden.bs.modal', function () {
+			// Webcam
+  			$('#post-photo-submit').hide();
+  			$('#post-photo-take').hide();
+			$('#pre-photo-take').show();  // Get ready for next time
 
-		    // Fade all but current button
-		    $('#bing-button').css('opacity',0.6)
-			$('#webcam-button').css('opacity',0.6)
-			$('#upload-button').css('opacity',1)
-			$('#cancel-button').css('opacity',0.6)
-
-			// Fade all RHS content
-			$('.rhs-to-disappear').fadeOut(50)
-
-			// Show relevant RHS content
-			setTimeout ( function() {
-				$('#upload-rhs').fadeIn(300)
-			} , 51 ) 
-		});
-
-		$('#back-to-group-button').click( function(evt) {
-			// Reload main page
-			evt.preventDefault()
-			evt.stopImmediatePropagation()
-			fade_page_in('out')
-			setTimeout( function() {window.location.href = "/"}, 500)
+			// Bing
+			toggle_page_1_and_2(go_to_page=1)
 		})
+
 } // end fading behaviour for LHS buttons
 
 
@@ -188,7 +138,6 @@ function prepare_to_upload_photo() {
 	            $('#file-upload-wrapper').fadeTo(500,0)
 	            setTimeout( function () {
 	            	$('#upload_link').fadeTo(400, 1);
-
 	            }, 501);
 
 	            
@@ -197,7 +146,8 @@ function prepare_to_upload_photo() {
 		    	mixpanel.track('Posted image', {'Method':'Upload'});
 				mixpanel.people.increment('Image posts', 1);
 				setTimeout( function() { 
-	            	fade_page_in_out('out', '/');
+	            	// Reload the page here as can't get interface to reset properly
+	            	fade_page_in_out('out', '/')
 	        	}, 100)
 	            
 	        }
@@ -217,11 +167,11 @@ function create_post_from_html(html) {
                 type: "POST",
                 success: function(result) { 
                   c (['Submitted post:', result])
-                  // get_posts(full_refresh=true, 10,0)
-                  // remove_text_from_input();
                   // When complete
-				  fade_page_in('out')
-				  setTimeout( function() {window.location.href = "/"}, 200)
+				  setTimeout( function() {
+				  	$('#image-modal').modal('hide');
+				  	get_posts(which_posts='new', limit=number_of_new_posts+1, skip=0, skip_to_date=null)  // add 1 since his/her own post is included
+				  }, 200)
                 }, // end success
                 error: function() {
                   alert('Server error')
@@ -230,7 +180,7 @@ function create_post_from_html(html) {
               }) // end ajax
 }
 
-function show_and_hide_submit_button() {
+function show_and_hide_bing_submit_button() {
 	$('#bing-search-submit').hide();
 	$('#img-input').keyup( function(evt) {
 		evt.preventDefault()
@@ -267,22 +217,26 @@ function browser_compatibility_checks() {
 
 	if (isChrome) {
 		$('.chrome').show()
-	}
-	else {
-		$('.no_chrome').show()
+		c('Browser is chrome')
 	}
 
-	if (isFirefox) {
+	else if (isFirefox) {
 		$('.mozilla').show()
+		c('Browser is mozilla')
 	}
-	if (isSafari) {
-		$('.safari').show()
+	
+	else {
+		$('.not_chrome_mozilla').show()
+		c('Browser not mozilla or chrome')
 	}
 }
 
-browser_compatibility_checks()
+
+
+browser_compatibility_checks() // Displays correct message before webcam is activated
 window.webcamActivated = 0 // Later switched to 1 if activated
 fade_page_in('in')
-prepare_LHS_button_fading_behaviour()
-show_and_hide_submit_button()
+prepare_img_buttons()
+bind_left_hand_button_clicks()
+show_and_hide_bing_submit_button()
 

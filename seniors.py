@@ -29,6 +29,9 @@ Posts = db.posts
 # TOKENS
 token_expiry_days = 30
 base_url = "http://salt-and-pepper.herokuapp.com"
+company_name = "Salt & Pepper"
+company_email = "saltandpepperit@gmail.com"
+
 
 # JSON ENCODING
 from bson.objectid import ObjectId
@@ -56,7 +59,7 @@ def test():
 	"""
 	Testing
 	"""
-	return render_template('speech.html')
+	return render_template('test.html')
 
 @app.route('/')
 def home():
@@ -260,7 +263,23 @@ def termsandconditions():
 		web_address=base_url)
 
 
-
+@app.route('/instructions/<network>/<name>/<method>', methods=['GET', 'POST'])
+def print_instructions(network, name, method):
+	"""
+	Same as enter, but network name already filled in and different instructions
+	"""
+	network_clean = str_clean(network)
+	return render_template('print_instructions.html',
+							network=network,
+							network_clean = network_clean,
+							name=name,
+							inviter_name=USER._('name'),
+							inviter_email=USER._('email'),
+							company_name = company_name,
+							company_email = company_email, 
+							company_website = base_url,
+							method = method
+							)
 
 
 

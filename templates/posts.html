@@ -44,7 +44,7 @@
 					<row>
 						<div class='col-md-6'>
 							
-							<p><a href = "add_photo" class='a-button can-fade' id='add-image-button'>
+							<p><a href = "#" class='a-button can-fade' id='add-image-button' data-toggle="modal" data-target="#image-modal">
 								<span class="icon-uniE605"></span>
 								Pictures
 							</a></p>
@@ -123,6 +123,7 @@
 </div> <!-- end container -->
 
 {% include 'speech_dialog.html' %}
+{% include 'add_image_dialog.html' %}
 
 
 {% endblock %}
@@ -131,6 +132,14 @@
 	{{ super() }}
 	<script src="{{url_for('static', filename = 'js/moment.js', _external=True)}}"></script>
 	<script src="{{url_for('static', filename = 'js/post_v1.js', _external=True)}}"></script>
+	
+	<!-- Dictate -->
 	<script src="{{url_for('static', filename = 'js/speech.js', _external=True)}}"></script>
+
+	<!-- Add image -->
+	<script src="{{url_for('static', filename = 'uploadify/swfobject.js', _external=True)}}"></script>
+    <script src="{{url_for('static', filename = 'uploadify/jquery.uploadify.v2.1.4.min.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/add_image.js', _external=True)}}"></script>
+	<script src="{{url_for('static', filename = 'js/webcam.js', _external=True)}}"></script>
 {% endblock %}
 

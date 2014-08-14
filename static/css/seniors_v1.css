@@ -44,6 +44,12 @@ a.disabled {
 	color: white;
 	background: white;
 }
+.filler-15 {
+	height: 15px;
+	display: block;
+	color: white;
+	background: white;
+}
 .display-block {
 	display: block;
 }
@@ -749,12 +755,9 @@ a.disabled {
 }
 
 #webcam-canvas {
-	display: none;
+	margin-bottom: 30px;
 }
 
-#loading-spinner {
-	display: none;
-}
 
 /*========================================================================*/
 /*SETTINGS*/

@@ -24,23 +24,29 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 
 
 Priority list
-
-1 *** fixed width for icons
 2 *** Make a 'how it works' page
-
-*** Add webcam help dialogue box
-
-
-*** Make language simpler and more consistent
+3 *** Simplify / change main interface - messages at bottom, group buttons?
+4 *** Admin page
+*** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
 *** Company name and copy
-*** Simplify / change main interface - messages at bottom, group buttons?
-*** customised instructions
+*** customised instructions pictures and username based content
+*** Make language simpler and more consistent
+
+
+
+
+
+
+
+
+
 ** investigate testing with selenium
 ** protect usernames against HTML attack
 * update moment js every now and again
 * make some tutorial when design is more set
 
 ** add little label notification for new messages
+** Admin area where admin can see list of users, print instructions for each, delete users, make other users admin
 * colour new messages as they pop up
 
 
@@ -48,7 +54,7 @@ Priority list
 ** Add users - fade opposite half of the screen
 ** clean up posts.js and add_image.js
 ** write better help file
-** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+
 * have a 'vote' screen for features that aren't there yet
 
 

@@ -36,6 +36,10 @@ add users
 
 				<!-- Hidden network name -->
 				<input type="hidden" value="{{session.get('user').get('network')}}" id='network_hidden'>
+				<!-- Hidden name, filled in when user submits either email or adds a user direct -->
+				<input type="hidden" value="" id='name_hidden'>
+				<!-- Hidden method, filled in when user submits either email or adds a user direct (email/behalf) -->
+				<input type="hidden" value="" id='method_hidden'>
 				
 				<div class='one_line_entry_box centered_80pc_width'>
 					<input type="text" name="firstname" id='firstname' class='big-input inline' placeholder='Their first name...' /required>
@@ -95,19 +99,19 @@ add users
 		</div>
 		<div class='pad-bottom-1 width-80'>
 		
-			<h2 class='page2a'>We have sent a link to <span class='invited-name'>your friend</span> inviting them to your group. You can also print instructions for them on how to use the site, if this is useful.</h2>
+			<h2 class='page2a'>We have sent a link to <span class='invited-name'>your friend</span> inviting them to your group. You can also print customised instructions for them on how to use the site, if this is useful.</h2>
 
 			<h2 class='page2b'>You now need to show <span class='invited-name'>your friend</span> how to log on at
-				<br><a href='{{base_url}}/enter/{{session.get('user').get('network')}}'>{{base_url}}/enter/{{session.get('user').get('network')}}</a><br>
-				using the name and password you just created.<br>You can print instructions for them below.</h2>
+				<br><a href='{{base_url}}/enter/{{session.get("user").get("network")}}'>{{base_url}}/enter/{{session.get('user').get('network')}}</a><br>
+				using the name and password you just created.<br>You can print customised instructions for them below.</h2>
 
 			<!-- <p class='page2b shift-down-20'>Once logged, in <span class='invited-name'>they</span> will be able to change these, if desired. Any forgotten password requests will be sent to your email, unless <span class='invited-name'>he/she</span> adds their own email address.</p> -->
 		
 		</div>
 		<div class='shift-down-2'>
-			<a href='#' id='add_another_user' class='a-button green-button inline padded-container-1 shift-left' >
+			<a href='#' id='print_instructions' class='a-button green-button inline padded-container-1 shift-left' >
 				<span class="icon-uniE628 inline"></span>
-				Print instructions
+				Customised instructions
 			</a>
 			<a href='#' id='add_another_user' class='a-button inline padded-container-1 shift-left' >
 				<span class="icon-uniE625 inline"></span>
@@ -120,6 +124,10 @@ add users
 		</div>
 		<div class='white-space'>
 		</div>
+	</div>
+
+	<div class='container-fluid instructions_page' style='display:none'>
+		{% include 'print_instructions.html' %}
 	</div>
 
 

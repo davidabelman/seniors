@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade modal-widest" id="speech-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade modal-widest" id="speech-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg  modal-widest centered-page">
     <div class="modal-content">
       
@@ -8,38 +8,29 @@
 			<div id='speech-bad-browser' class='speech-hidden padded-container shift-up-3'>
 				<h2>{% include 'browser_not_ok.html' %}</h2>
 				<div class='filler'></div>
-				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
+				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">
+					<span class="icon-uniE618"></span>
+					Go back to group
+				</a>
 			</div>
+
 			<div id='speech-permission-needed' class='speech-hidden padded-container shift-up-3 centered-page'>
-				
-				<h2>Before you can dictate, you need to give us permission to switch on your microphone.</h2>
-				<br>
-				<p>Towards the top of your screen there should be a message saying that we want to use your microphone. You need to press the small button saying 'Allow' that appears on the right hand side of the message. The picture below shows where you need to click with an orange arrow.<br><br></p>
-				<img src='https://dl.dropboxusercontent.com/s/oa7a633203gs3sw/chrome_allow.png' class='img-responsive'/>
-				
-
-
+				{% include 'chrome_permission_needed.html' %}
 			</div>
+
 			<div id='speech-permission-denied' class='speech-hidden padded-container shift-up-3'>
-				<h2>It looks like you pressed denied us access to your microphone</h2>
-				<br>
-				<p>If you want to change this, you can always dictate by following these instructions. There is a small red cross near the top of your screen (indicated in the top right of the image below). If you click on this, you are then given the option to continue blocking microphone access, or to once again ask if we can use your microphone. You should select the option indicating that we can ask to use your microphone. You can then press 'Done', and reload the page.<br><br></p>
-				<img src='https://dl.dropboxusercontent.com/s/p9652s9em4qelk7/chrome_re-allow.png' class='img-responsive shift-up-3'/>
+				{% include 'chrome_permission_denied.html' %}
 				<div class='filler shift-up-2'></div>
-				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
-
+				<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">
+					<span class="icon-uniE618"></span>
+					Go back to group
+				</a>
 			</div>
+
 			<div id='speech-permission-granted' class='speech-hidden'>
 
 				<div id='speech-intro-text-div'>
 					<div class='page-main-subsubheading shift-up-3'>
-<!-- 						<div id='speech-intro-text-first'>
-							<h2>Click 'Start listening', and then begin talking.</h2>
-							<h3>(You can use the 'backspace' key on your keyboard to remove words if the computer mis-hears you)</h3>
-						</div>
-						<div id='speech-intro-text-subsequent' class='speech-hidden'>
-							<h2>You can now send your message! Or press 'Start listening' to keep going.</h2>
-						</div> -->
 						<div id='speech-intro-text-speaking' class='speech-hidden'>
 							<h2>Start speaking and your words will appear.</h2>
 						</div>
@@ -86,7 +77,7 @@
 						</a>
 					</div>
 				</div>
-<!-- 
+				<!-- 
 					<div class='col-xs-6 padded-container shift-up-2'>
 						<a href='#' class='a-button grey-button can-fade' id='speech-test-error-button'  data-dismiss="modal">Test error</a>
 					</div> -->

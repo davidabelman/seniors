@@ -20,9 +20,7 @@ add an image
 	  </div>
 	</nav> -->
 
-
-	<!-- Page 1 of 2, i.e. enter network -->
-	<div class='container-fluid'>
+	<div class='container-fluid centered-page'>
 
 		<row>
 			
@@ -97,46 +95,102 @@ add an image
 				<div id='webcam-rhs' class='rhs-to-disappear'>
 
 					<!-- If safari -->
-					<div class='shift-down-3 safari' style='display:none'>
-						<div class='filler shift-down-2'></div>
-						<h2 >{% include 'browser_not_ok.html' %}</h2>
-						<div class='filler shift-down-2'></div>
+					<div class='shift-down-2 not_chrome_mozilla' style='display:none'>
+						<div class='webcam-pre-permission' style='display:none'>
+							<div class='filler'></div>
+							<h2 >{% include 'browser_not_ok.html' %}</h2>
+							<div class='filler shift-down-2'></div>
+						</div>
+					</div>
+
+					<!-- If chrome -->
+					<div class='shift-down-2 chrome' style='display:none'>
+						<div class='webcam-pre-permission' style='display:none'>
+							<div class='filler'></div>
+							
+								<h2>Before you can dictate, you need to give us permission to switch on your microphone.</h2>
+								<br>
+								<p>Towards the top of your screen there should be a message saying that we want to use your microphone. You need to press the small button saying 'Allow' that appears on the right hand side of the message. The picture below shows where you need to click with an orange arrow.<br><br></p>
+								<img src='https://dl.dropboxusercontent.com/s/oa7a633203gs3sw/chrome_allow.png' class='img-responsive'/>
+
+
+							<div class='filler shift-down-2'></div>
+						</div> <!-- end pre permission -->
+					
+						<div class='webcam-permission-denied' style='display:none'>
+							<div class='filler'></div>
+						
+							<h2>It looks like you pressed denied us access to your microphone</h2>
+							<br>
+							<p>If you want to change this, you can always dictate by following these instructions. There is a small red cross near the top of your screen (indicated in the top right of the image below). If you click on this, you are then given the option to continue blocking microphone access, or to once again ask if we can use your microphone. You should select the option indicating that we can ask to use your microphone. You can then press 'Done', and reload the page.<br><br></p>
+							<img src='https://dl.dropboxusercontent.com/s/p9652s9em4qelk7/chrome_re-allow.png' class='img-responsive shift-up-3'/>
+							<div class='filler shift-up-2'></div>
+							<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
+							<div class='filler shift-down-2'></div>
+						</div> <!-- end permission denied -->
+					</div>
+
+					<!-- If mozilla -->
+					<div class='shift-down-2 mozilla' style='display:none'>
+						<div class='webcam-pre-permission' style='display:none'>
+							<div class='filler'></div>
+							
+								<h2>Before you can dictate, you need to give us permission to switch on your microphone.</h2>
+								<br>
+								<p>Towards the top of your screen there should be a message saying that we want to use your microphone. You need to press the small button saying 'Allow' that appears on the right hand side of the message. The picture below shows where you need to click with an orange arrow.<br><br></p>
+								<img src='https://dl.dropboxusercontent.com/s/oa7a633203gs3sw/chrome_allow.png' class='img-responsive'/>
+
+
+							<div class='filler shift-down-2'></div>
+						</div> <!-- end pre permission -->
+					
+						<div class='webcam-permission-denied' style='display:none'>
+							<div class='filler'></div>
+						
+							<h2>It looks like you pressed denied us access to your microphone</h2>
+							<br>
+							<p>If you want to change this, you can always dictate by following these instructions. There is a small red cross near the top of your screen (indicated in the top right of the image below). If you click on this, you are then given the option to continue blocking microphone access, or to once again ask if we can use your microphone. You should select the option indicating that we can ask to use your microphone. You can then press 'Done', and reload the page.<br><br></p>
+							<img src='https://dl.dropboxusercontent.com/s/p9652s9em4qelk7/chrome_re-allow.png' class='img-responsive shift-up-3'/>
+							<div class='filler shift-up-2'></div>
+							<a href='#' class='a-button grey-button centered_50pc_width' data-dismiss="modal">Go back to group</a>
+							<div class='filler shift-down-2'></div>
+						</div> <!-- end permission denied -->
 					</div>
 
 					<!-- if chrome or mozilla -->
-					<div id='webcam-available' style='display:none' class='mozilla chrome'>
-						<div class='page-main-subheading shift-down-2 padded-container-1'>
-							<h2>Click 'take photo' to take a photo!</h2>
-							
-							<h3 class='shift-up-3 chrome' style='display:none'>(you may need to click 'Allow' near the top right of your screen if you can't see your webcam image yet)</h3>
-							
-							<h3 class='shift-up-3 mozilla' style='display:none'>(you may need to click 'Share Selected Device' to the left of this message if you can't see your webcam image yet)</h3>
+					<div id='webcam-permission-granted' style='display:none'>
+						<div id='pre-photo'>
+							<div class='page-main-subheading shift-down-2 padded-container-1'>
+								<h2>Click 'take photo' to take a photo!</h2>						
+							</div>
+							<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
+							<canvas id="webcam-canvas" width="320" height="250"></canvas>
+							<div class='centered_50pc_width shift-down-3'>
+								<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
+							</div>
+							<row>
+								<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
+									<a href='#' class='a-button inline float-right' >Take another...</a>
+								</div>
+								<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
+									<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
+								</div>
+							</row>
+						</div>
+						<div id='post-photo'>
+							<div id='loading-spinner' class='padded-container shift-down-3'></div>
+						</div>
 						
-						</div>
-						<div id='loading-spinner' class='padded-container shift-down-3'></div>
-						<video id="webcam-video" width="320" height="250" style='display:inline' autoplay></video>
-						<canvas id="webcam-canvas" width="320" height="250"></canvas>
-						<div class='centered_50pc_width shift-down-3'>
-							<a href='#' id='webcam-take-photo-button' class='a-button' >Take photo!</a>
-						</div>
-						<row>
-							<div class='col-xs-6' id='webcam-take-another-button' style='display:none' >
-								<a href='#' class='a-button inline float-right' >Take another...</a>
-							</div>
-							<div class='col-xs-6' id='webcam-use-photo-button' style='display:none' >
-								<a href='#' class='a-button inline float-left green-button' >Use this photo!</a>
-							</div>
-						</row>
 					</div> <!-- end webcam available -->
 						
 				</div>
 
 				<!-- upload page -->
 				<div id='upload-rhs' class='rhs-to-disappear'>
-					<div class='no_chrome' style='display:none'>
+					<div class='not_chrome_mozilla mozilla' style='display:none'>
 						<div class='filler shift-down-2'></div>
 						<h2>
-							Unfortunately, this feature is only currently available in the Chrome browser. You can get it <a href='http://www.google.com/chrome/browser/' target='_blank'>here</a>.
+							{% include 'browser_not_ok.html' %}
 						</h2>
 						<div class='filler shift-down-2'></div>
 					</div> <!-- end chrome unavailable -->
@@ -158,7 +212,7 @@ add an image
 							
 						</div>
 					</div> <!-- end chrome available --> 
-				</div>
+				</div> <!-- end upload section -->
 
 			</div>
 

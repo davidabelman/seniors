@@ -204,15 +204,15 @@ function nav_buttons_ready() {
   }) // end click event
 
   // Fade out and go to 'add_image screen' 
-  $('#add-image-button').click ( function(evt) {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-    $('#whole-content').animate({
-      opacity: 0}, speed, function() {
-        // When complete
-        window.location.href = "add_image";
-      })
-  })
+  // $('#add-image-button').click ( function(evt) {
+  //   evt.preventDefault();
+  //   evt.stopImmediatePropagation();
+  //   $('#whole-content').animate({
+  //     opacity: 0}, speed, function() {
+  //       // When complete
+  //       window.location.href = "add_image";
+  //     })
+  // })
 
   // Fade out and go to 'settings screen' 
   $('#settings-button').click ( function(evt) {
@@ -252,6 +252,11 @@ function nav_buttons_ready() {
     speech_app()
     prepare_speech_buttons()
     mixpanel.track('Dictate dialog load attempt') // event
+  })
+
+  // Click image button
+  $('#add-image-button').click ( function(evt) {
+    
   })
 
 } // end function
@@ -375,7 +380,7 @@ number_of_posts_initially = 15 // How many to load on page refresh
 mixpanel.track('Wall load')
 quick_fade()
 get_posts(which_posts='all', limit=number_of_posts_initially, skip=0, skip_to_date=null)
-recursive_check_for_new_posts(count=1, delay=60000)
+recursive_check_for_new_posts(count=1, delay=6000)
 submit_posts_button_ready()
 change_button_behaviour_when_typing_post()
 get_scroll_navs_ready()
