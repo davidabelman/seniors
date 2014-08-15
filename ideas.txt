@@ -25,13 +25,16 @@ http://www.nia.nih.gov/health/publication/making-your-website-senior-friendly
 
 Priority list
 4 *** Admin page
-*** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+5 *** customised instructions pictures and username based content
+6 *** forgot password feature (and if they don't have an email, it would have to send email to admin to reset it for them)
+7 *** protect usernames against HTML attack
+GET IT OUT THERE>>>!>!>>!>!!>>!!!!
+
 *** Company name and copy
-*** customised instructions pictures and username based content
 *** Make language simpler and more consistent
-3 *** Simplify / change main interface - messages at bottom, group buttons?
+*** Simplify / change main interface - messages at bottom, group buttons?
 
-
+*** Copy database to my machine (encrypted) once per day??
 
 
 
@@ -39,7 +42,7 @@ Priority list
 
 
 ** investigate testing with selenium
-** protect usernames against HTML attack
+
 * update moment js every now and again
 * make some tutorial when design is more set
 

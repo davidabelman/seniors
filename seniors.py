@@ -285,7 +285,23 @@ def print_instructions(userid):
 							method = instructions_user.get('join_method','behalf')
 							)
 
-
+@app.route('/edit_users')
+def edit_users():
+	"""
+	Admin control for editing users
+	"""
+	if USER.is_admin():
+		# Get all users in network and send to template
+		network_clean = USER._('network_clean')
+		found_users = Users.find({'network_clean':network_clean})
+		network_users = []
+		for u in found_users:
+			email=1 if u['email'] else 0
+			network_users.append({'name':u['name'], 'role':u['role'], 'user_id':str(u['_id']), 'email':email})
+		return render_template('edit_users.html', network_users = network_users)
+	else:
+		# Not admin, go back home
+		return redirect(url_for('home'))
 
 ###################### AJAX REPONDERS ######################
 
@@ -821,6 +837,50 @@ def send_feedback():
 	receive_feedback_via_email(feedback_user, subject, message)
 
 	return json.dumps(1)
+
+
+@app.route('/_make_user_admin', methods=['GET', 'POST'])
+def make_user_admin():
+	"""
+	Make a specific ID admin
+	"""
+	if USER.is_admin():
+		user_id = request.json['user_id']
+		# Check they are in the same network
+		change_network = Users.find_one({'_id': ObjectId(user_id)})['network_clean']
+		if change_network == USER._('network_clean'):
+			print "Check: Yes, they are in the same network"
+			Users.update({'_id': ObjectId(user_id)}, {"$set": {'role':1} })
+			# Should send message to say they are now an admin TODO
+			return json.dumps({'status':1})
+		else:
+			print "Error: Not the correct network"
+			return json.dumps({'status':0, 'data':"Not correct network"})
+	else:
+		print "Error: Not authenticated"
+		return json.dumps({'status':0, 'data':"Not authenticated"})
+
+@app.route('/_delete_user', methods=['GET', 'POST'])
+def delete_user():
+	"""
+	Delete a user
+	"""
+	if USER.is_admin():
+		user_id = request.json['user_id']
+		# Check they are in the same network
+		change_network = Users.find_one({'_id': ObjectId(user_id)})['network_clean']
+		if change_network == USER._('network_clean'):
+			print "Check: Yes, they are in the same network"
+			Users.remove({'_id': ObjectId(user_id)})
+			return json.dumps({'status':1})
+
+		else:
+			print "Error: Not the correct network"
+			return json.dumps({'status':0, 'data':"Not correct network"})
+		
+	else:
+		print "Error: Not authenticated"
+		return json.dumps({'status':0, 'data':"Not authenticated"})
 
 
 ###################### ERRORS ######################

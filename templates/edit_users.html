@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+add users
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class='centered-page initially-hidden'>
+	
+	{% include 'navbar.html' %}
+
+	<div class='horizontal-header'>
+		<div class='page-main-heading'>
+			<h1>
+				Edit users
+			</h1>
+		</div>
+	</div> <!-- end horizontal-header container -->
+
+
+	<div class='container-fluid'>
+		<div>
+			<h3>Please make changes carefully - these cannot be undone.<br>Also note that users who have not registered an email address cannot be made administrators.</h3>
+	</div>
+		
+		{% for u in network_users %}
+			<div class='shift-down-4'>
+				<row>
+					<div class='col-md-3'>
+						<row>
+							<div class='col-xs-8 username'>
+								{{u.name}}
+							</div>
+							<div class='col-xs-4 userrole'>
+								{% if u.role==1 %}
+								<div class='color-success' style='font-weight:500'>Admin</div>
+								{% else %}
+								<div>User</div>
+								{% endif %}
+							</div>
+						</row>
+					</div>
+					<div class='col-md-9'>
+						<row>
+							<div class='col-xs-4'>
+								<!-- Creates direct hyperlink to the instructions for this user -->
+								<a href='/instructions/{{u.user_id}}' class='a-button blue-button font-size-120'>
+									<span class="icon-uniE628"></span>
+									Instructions
+								</a>
+							</div>
+							<div class='col-xs-4'>
+								<!-- Hyperlink not actually used, just stores ID -->
+								<a href='{{u.user_id}}' class='make-admin-button a-button green-button font-size-120 {% if u.role==1 or u.email==0 %}disabled-button disabled{% endif %}' >
+									<span class="icon-uniE60E"></span>
+									Make admin
+								</a>
+							</div>
+							<div class='col-xs-4'>
+								<!-- Hyperlink not actually used, just stores ID -->
+								<a href='{{u.user_id}}' class='delete-user-button a-button red-button font-size-120 {% if u.role==1 %}disabled-button disabled{% endif %}'>
+									<span class="icon-uniE61E"></span>
+									Delete user
+								</a>
+							</div>
+						</row>
+					</div>
+				</row>
+			</div>
+			<br>
+		{% endfor %}
+		
+
+		<!-- Add more users -->
+		<br><hr>
+		<row class='shift-down-4'>
+
+			<div class='col-xs-6'>
+				<a href='/' class='a-button grey-button general-link'>
+					<span class="icon-uniE618"></span>
+					Back to group
+				</a>
+			</div>
+			<div class='col-xs-6'>
+				<a href='/add_users' class='a-button general-link'>
+					<span class="icon-uniE627"></span>
+					Add more users
+				</a>
+			</div>
+		</row>
+		<br><br><div class='filler'></div>
+
+
+
+	</div> <!-- end container -->
+
+</div>
+
+{% endblock %}
+
+{% block scripts_bottom %}
+	{{ super() }}
+	<script src="{{url_for('static', filename = 'js/edit_users.js', _external=True)}}"></script>
+{% endblock %}
+
+

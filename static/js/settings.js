@@ -1,19 +1,3 @@
-function bind_clicks () {
-	$('#back-to-group-button').click( function(evt) {
-		// Reload main page
-		evt.preventDefault()
-		evt.stopImmediatePropagation()
-		fade_page_in_out('out','/')
-	})
-	$('#users-button').click( function(evt) {
-		// Reload main page
-		evt.preventDefault()
-		evt.stopImmediatePropagation()
-		fade_page_in_out('out','/add_users')
-	})
-} // end fading behaviour for LHS buttons
-
-
 $('.icon-pick').click( function(evt) {
 	// Update database to use this icon as user's icon
 	evt.preventDefault()
@@ -210,6 +194,6 @@ $('#change-password-submit').click( function(evt) {
               }) // end ajax
 })
 
-bind_clicks()
+make_general_links_clickable()
 bind_left_hand_button_clicks() // from common.js
 fade_page_in_out('in')
