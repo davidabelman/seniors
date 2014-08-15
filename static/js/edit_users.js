@@ -13,7 +13,7 @@ function make_user_admin(user_id) {
         status = response['status']
         data = response['data']
         if (status=='1') {
-          // We will show a message to user saying successful (clear page 1, show page 2a)
+          mixpanel.track('User made admin')
           fade_page_in_out('out','/edit_users')
         }
         else {
@@ -41,7 +41,7 @@ function delete_user(user_id) {
         status = response['status']
         data = response['data']
         if (status=='1') {
-          // We will show a message to user saying successful (clear page 1, show page 2a)
+          mixpanel.track('User deleted')
           fade_page_in_out('out','/edit_users')
         }
         else {

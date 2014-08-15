@@ -6,7 +6,7 @@
 
 {% block title %}
 {{ super() }}
-add an image
+Instructions
 {% endblock %}
 
 {% block body %}
@@ -120,7 +120,14 @@ We love to help, and we love feedback! If you would like to contact us, you can 
 
 </div>
 <div class='filler'>
-
-
 {% endblock %}
+
+{% block scripts_bottom %}
+{{super()}}
+<script type="text/javascript">
+mixpanel.track("Instructions viewed")
+</script>
+{% endblock %}
+
+
 
