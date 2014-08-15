@@ -51,7 +51,7 @@ def send_access_token_email(sender, sender_email, network, recipient, recipient_
 Here you can enjoy the simplest way ever to share messages and photos amongst a small group of trusted companions.
 \nClick here to get started - %s.
 \nCan't wait to see you there!
-\nYour friends at Salt & Pepper.""" %(recipient, sender, sender_email, network, url)
+Your friends at Salt & Pepper.""" %(recipient, sender, sender_email, network, url)
              	}
          )
 		
@@ -179,7 +179,7 @@ def create_full_message_body(name, opening_line, main_text, closing_line, compan
 \n%s
 \n%s
 \n%s
-\nYour friends at %s.
+Your friends at %s.
 \n\nPS - if you no longer wish to receive these updates, please click on %s.
       """ %(name, opening_line, main_text, closing_line, company_name, unsubscribe_url)
 

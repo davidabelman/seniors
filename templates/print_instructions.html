@@ -25,13 +25,18 @@ Instructions
 </div>
 
 {% if method!='admin' %}
-<h1>Hello {{name}}! You've been added to the <strong>{{network}}</strong> group on {{company_name}}.</h1>
-{% else %}
-<h1>Hello {{name}}! Thanks for creating the <strong>{{network}}</strong> group on {{company_name}}.</h1>
+
+	<h1>Hello {{name}}! You've been added to the <strong>{{network}}</strong> group on {{company_name}}.</h1>
+	<p>Welcome to {{company_name}} - it's great to have you join us. These instructions will give you a brief overview of what {{company_name}} is, and how to use it.</p>
+
+	{% else %}
+
+	<h1>Hello {{name}}! Thanks for creating the <strong>{{network}}</strong> group on {{company_name}}.</h1>
+	<p>These simple instructions are designed to show you how {{company_name}} works. Note that each user can see their own personalised instructions through their own help page, or you can print them on their behalf by visiting '<strong>Settings > Users (admin only)</strong>' and selecting the relevant user. Note also that we recommend Google Chrome for users of this site - this allows dictation, and photo uploads. Feel free to help other users install Google Chrome from <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>, and also help them bookmark the {{company_name}} website ({{company_website}})!
+
 {% endif %}
 
 
-<p>Welcome to {{company_name}} - it's great to have you join us. These instructions will give you a brief overview of what {{company_name}} is, and how to use it.</p>
 
 <h2>What is {{company_name}}?</h2>
 <p>{{company_name}} is a website ({{company_website}}) which allows small groups of trusted companions to send messages and share photos in a very simple way. Everything is designed for people who have very little experience in using computers.</p>
@@ -49,64 +54,75 @@ Instructions
 </ol></p>
 
 <h2>The basics</h2>
-We hope to have made everything on the website very easy to use. Everything you can interact with is marked as an orange button, looking something like this:
-<div class='centered_20pc_width' style='padding:20px'>
+<p>We hope to have made everything on the website very easy to use. Everything you can interact with is marked as an orange button, looking something like this:</p>
+<div class='centered_20pc_width' style='padding-bottom:20px'>
 <a class='a-button' onclick='$(this).text("Well done!")'>Click me!</a>
 </div>
-You can move the mouse over an orange button and click, to make the website do something. (Occasionally the button will be green - this means you are about to share something that the rest of the group will be able to see - but clicking it works in exactly the same way!)
+<p>You can move the mouse over an orange button and click, to make the website do something. (Occasionally the button will be green - this means you are about to share something that the rest of the group will be able to see - but clicking it works in exactly the same way!)</p>
 
 <h2>How to I start?</h2>
+<p>
 {% if method=='email' %}
 {{company_name}} have sent you an email on behalf of {{inviter_name}}, with an 'invitation link' for you to click. By clicking this link, you will be taken to a screen where you can set your password.
+
 {% elif method=='behalf' %}
-{{inviter_name}} has set up a 'username' and a 'password' for you. Your username is '{{name}}', and {{inviter_name}} will have to tell you your password. To get going, you can type the following address into your web browser:
-{{company_website}}/enter/{{network_clean}}.
-PICTURE
-
+{{inviter_name}} has set up a 'username' and a 'password' for you. Your username is '<strong>{{name}}</strong>', and {{inviter_name}} will have to tell you your password. To get going, you can type the following address into your web browser:
+<br>
+<strong>{{company_website}}/enter/{{network_clean}}</strong>.
+<br><br>
 You will see a page like this (with your group name written in the box). Click 'Enter'.
-PICTURE
+<img src='https://dl.dropboxusercontent.com/s/atv0ooi608pu5ny/enter1.jpg' class='instructions-img' style='width:600px !important;'><br>
 
-Next, click on your name from the list. Once you have done this, some text will appear asking you to enter your password. Type in the password, then press the 'Enter' button below the password. Then you're in!
-PICTURE
+<p>You will see a list of names of everyone in the group. Click on your name (<strong>{{name}}</strong>).</p>
+<img src='https://dl.dropboxusercontent.com/s/xmyrbeu0mal0rat/enter2.jpg' class='instructions-img' style='width:500px !important;'><br>
+<p>Once you have done this, you will be asked to enter your password. Type in the password, then press the 'Enter' button below the password. Then you're in!</p>
+<img src='https://dl.dropboxusercontent.com/s/wdwavx4spa7xgn0/enter3.jpg' class='instructions-img' style='width:550px !important;'><br>
+
 {% else %}
 As the creator of the group, you have been able to invite other users. You can continue to add more in future by navigating to 'Settings', and then clicking on the 'Users' button. You then have the option to edit the existing users, and add more using the link at the bottom of the page.
 {% endif %}
 
 <h2>How do I access the {{network}} group on {{company_name}} again in future?</h2>
-If you type in {{company_website}} into your web browser, you will be taken either directly to your group (if you are still 'logged in') or to our generic home page (if you are 'logged out').
-PICTURE
+<p>Type <strong>{{company_website}}</strong> into your web browser (we recommend 'bookmarking' it, so you don't need to type this each time). If you are still 'logged in', you will be taken directly to your group, and that's it! However, if you are 'logged out', you will be taken to our homepage, as shown below.</p>
 
-If you find yourself at the home page, you should click the 'Enter an existing group' button.
-PICTURE
+<p>If you find yourself at the home page, you should click the 'Enter an existing group' button.</p>
+<img src='https://dl.dropboxusercontent.com/s/hte8zkfcw1lb44m/login1.jpg' class='instructions-img'><br>
 
-Then, type your group name into the orange box, and press 'Enter'.
-PICTURE
+<p>Then, type your group name (<strong>{{network}}</strong>) into the orange box, and press 'Enter'.</p>
+<img src='https://dl.dropboxusercontent.com/s/ofsrdo6dsb82gwh/login2.jpg' style='width:600px !important;' class='instructions-img'><br>
 
-You will see a list of names of everyone in the group. Click on your name from the list. Once you have done this, some text will appear asking you to enter your password. Type in the password, then press the 'Enter' button below the password. Then you're in!
-PICTURE
+<p>You will see a list of names of everyone in the group. Click on your name (<strong>{{name}}</strong>).</p>
+<img src='https://dl.dropboxusercontent.com/s/xmyrbeu0mal0rat/enter2.jpg' class='instructions-img' style='width:500px !important;'><br>
+<p>Once you have done this, you will be asked to enter your password. Type in the password, then press the 'Enter' button below the password. Then you're in!</p>
+<img src='https://dl.dropboxusercontent.com/s/wdwavx4spa7xgn0/enter3.jpg' class='instructions-img' style='width:550px !important;'><br>
+
+<!-- <h2>The 'home' screen</h2>
+<p>There is only one primary screen on {{company_name}}. On one side, you can type a message, or explore other options (such as adding a picture or dictating a message). On the other side is the list of all messages/pictures sent by everyone in the group. The newest messages appear at the top. As new messages are sent from anyone in the group, the screen will automatically update.</p> -->
+
 
 <h2>How do I send a message?</h2>
-Sending a message is easy! From your group's page, type the message into the box with the orange border, as shown in the image below. Once you start typing, the box will turn green, and a green button will appear, labelled 'Click when finished'. Once you have written your message, click this button, and your message will be added to the page!
-PICTURE
-Caption: Before you start typing / After you start typing
+<p>Sending a message is easy! From your group's page, type the message into the box with the orange border, as shown in the image below.</p>
+<img src='https://dl.dropboxusercontent.com/s/ioq5ti3g1pdywvu/type1.jpg' class='instructions-img'><br>
+
+<p>Once you start typing, the box will turn green, and a green button will appear, labelled 'Click when finished!'. Once you have written your message, click this button, and your message will be added to the page!</p>
+<img src='https://dl.dropboxusercontent.com/s/6za6urk78towsy5/type2.jpg' class='instructions-img'><br>
 
 <h2>Typing is hard. How can I dictate a message?</h2>
-From your group's page, click on the orange button that says 'Dictate'.
-PICTURE
+<p>From your group's page, click on the orange button that says 'Dictation'.</p>
+<img src='https://dl.dropboxusercontent.com/s/93j2kxsu29m7x2z/dictate1.jpg' class='instructions-img'><br>
 
-You may see instructions appear on how to give us permission to use your microphone (we can't hear you dictate without your permission!). These instructions require you to click a small button saying 'Allow' or 'Share', and a picture will be provided to help you. Once you have done this, you will see the following screen:
-PICTURE
+<p>You may see instructions appear on how to give us permission to use your microphone (we can't hear you dictate without your permission!). These instructions require you to click a small button saying 'Allow' or 'Share', and a picture will be provided to help you. Once you have done this, you will see the following screen:</p>
+<img src='https://dl.dropboxusercontent.com/s/wk3zb0btb1rgkkh/dictate2.jpg' class='instructions-img'><br>
 
-Just start talking, loud and clear! Your words will begin to appear in the box after a short delay. Once you are happy, click on the green button saying 'Great, send to the group!'.
-PICTURE
+<p>Just start talking, loud and clear! Your words will begin to appear in the box after a short delay. Once you are happy, click on the green button saying 'Great, send to the group!'.</p>
 
-Note that this functionality will only work if you are using the 'Google Chrome' browser (which we recommend). You can download this by typing the following in your browser address bar: http://www.google.com/chrome/browser.
+<p>Note that this functionality will only work if you are using the 'Google Chrome' browser (which we recommend). You can download this by typing the following in your browser address bar: <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>.</p>
 
 <h2>How do I add a picture?</h2>
-From your group's page, click on the orange button that says 'Picture'.
-PICTURE
+<p>From your group's page, click on the orange button that says 'Picture'.</p>
+<img src='https://dl.dropboxusercontent.com/s/4ps6bos47b9clbw/picture1.jpg' class='instructions-img'><br>
 
-You are presented with three options for adding a picture.
+<p>You are presented with three options for adding a picture.</p>
 <ul>
 	<li><strong>Taking a photo</strong>: If you have a webcam connected to your computer, you can take a photo using this and send it directly to the group. Follow the instructions on the screen to give us permission to use your webcam, and then click the orange 'Take a photo' button to take your photo.</li>
 	<li><strong>Typing a description</strong>: If you would like to include a picture of something (let's say, 'The Queen') you can type 'The Queen' into the orange box as shown below, and we will find you a selection of pictures matching your description. To share one of these photos with the group, you can simply click on it.</li>
@@ -114,23 +130,23 @@ You are presented with three options for adding a picture.
 </ul>
 
 <h2>How do I read older messages?</h2>
-All content sent by group members is stored on the main group page, one above the other. Once there are more than one or two messages in the group, they can't all fit on the screen! However, if you move your mouse over the messages, you will see an orange arrow appear on the right side of your screen, labelled 'Older'. By clicking this arrow, you can move the screen position to see older messages.
+<p>All content sent by group members is stored on the main group page, one above the other. Once there are more than one or two messages in the group, they can't all fit on the screen! However, if you move your mouse over the messages, you will see an orange arrow appear on the right side of your screen, labelled 'Older'. By clicking this arrow, you can move the screen position to see older messages.</p>
 
-Alternatively, you can use the 'scrollbar' on the browser (or the wheel on your mouse) if this is something you are already comfortable with.
+<p>Alternatively, you can use the 'scrollbar' on the browser (or the wheel on your mouse) if this is something you are already comfortable with.</p>
 
 <h2>How can I add other friends or family?</h2>
-If you would like to add friends to your existing group, and you are not an 'administrator' for the group, you need to ask a group administrator 
+<p>If you would like to add friends to your existing group, and you are not an 'administrator' for the group, you need to ask a group administrator 
 {% if method !='admin' %}(for example, {{inviter_name}}) {% endif %}
-to add members to the group. They can do this within their 'Settings' section.
+to add members to the group. They can do this within their 'Settings' section.</p>
 
-If you would like to create your own group, go the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.
+<p>If you would like to create your own group, go the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.</p>
 
 <h2>Do I need any special programs on my computer?</h2>
-No - just by typing {{company_website}} into your browser you will be able to see the web page. Basic functionality works whichever browser you are using - however, some features (such as dictation) require you to use the 'Google Chrome' browser. You can download that by typing this in your address bar: http://www.google.com/chrome/browser.
-PICTURE
+<p>No - just by typing {{company_website}} into your browser you will be able to see the web page. Basic functionality works whichever browser you are using - however, some features (such as dictation) require you to use the 'Google Chrome' browser. You can download that by typing this in your address bar: <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>.</p>
+<img src='https://dl.dropboxusercontent.com/s/oinkrmbvbpc3v0r/chromeaddress.png' class='instructions-img' style='width:850px !important;'><br>
 
 <h2>Can I contact you for help, or provide feedback?</h2>
-We love to help, and we love feedback! If you would like to contact us, you can email {{company_email}}. Alternatively, you can find a button on the website which will allow you to provide feedback from the site.
+<p>We love to help, and we love feedback! If you would like to contact us, you can email <strong>{{company_email}}</strong>. Alternatively, you can find a button on the website which will allow you to provide feedback from the site.<p>
 
 </div>
 <div class='filler'>
