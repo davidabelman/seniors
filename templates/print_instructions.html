@@ -24,7 +24,12 @@ Instructions
 </a>
 </div>
 
+{% if method!='admin' %}
 <h1>Hello {{name}}! You've been added to the <strong>{{network}}</strong> group on {{company_name}}.</h1>
+{% else %}
+<h1>Hello {{name}}! Thanks for creating the <strong>{{network}}</strong> group on {{company_name}}.</h1>
+{% endif %}
+
 
 <p>Welcome to {{company_name}} - it's great to have you join us. These instructions will give you a brief overview of what {{company_name}} is, and how to use it.</p>
 
@@ -33,7 +38,12 @@ Instructions
 
 <h2>How does it work?</h2>
 <p><ol>
-<li>Someone creates a 'group', and invites a small number of friends and family to become group members (in your case {{inviter_name}} has already done this). </li>
+<li>Someone creates a 'group', and invites a small number of friends and family to become group members
+	{% if method!='admin' %}
+		(in your case {{inviter_name}} has already done this). 
+	{% endif %}
+
+</li>
 <li>Everyone in this small group can access the group's web page. This page starts out empty, but people in the group can add messages and pictures to the page.</li>
 <li>Everyone in the group can see what everyone else has added. All in all, it's a fun, safe, and very easy way for a group of people to share the good things in life!</li>
 </ol></p>
@@ -48,7 +58,7 @@ You can move the mouse over an orange button and click, to make the website do s
 <h2>How to I start?</h2>
 {% if method=='email' %}
 {{company_name}} have sent you an email on behalf of {{inviter_name}}, with an 'invitation link' for you to click. By clicking this link, you will be taken to a screen where you can set your password.
-{% else %}
+{% elif method=='behalf' %}
 {{inviter_name}} has set up a 'username' and a 'password' for you. Your username is '{{name}}', and {{inviter_name}} will have to tell you your password. To get going, you can type the following address into your web browser:
 {{company_website}}/enter/{{network_clean}}.
 PICTURE
@@ -58,6 +68,8 @@ PICTURE
 
 Next, click on your name from the list. Once you have done this, some text will appear asking you to enter your password. Type in the password, then press the 'Enter' button below the password. Then you're in!
 PICTURE
+{% else %}
+As the creator of the group, you have been able to invite other users. You can continue to add more in future by navigating to 'Settings', and then clicking on the 'Users' button. You then have the option to edit the existing users, and add more using the link at the bottom of the page.
 {% endif %}
 
 <h2>How do I access the {{network}} group on {{company_name}} again in future?</h2>
@@ -107,7 +119,9 @@ All content sent by group members is stored on the main group page, one above th
 Alternatively, you can use the 'scrollbar' on the browser (or the wheel on your mouse) if this is something you are already comfortable with.
 
 <h2>How can I add other friends or family?</h2>
-If you would like to add friends to your existing group, and you are not an 'administrator' for the group, you need to ask a group administrator (for example, {{inviter_name}}) to add members to the group. They can do this within their 'Settings' section.
+If you would like to add friends to your existing group, and you are not an 'administrator' for the group, you need to ask a group administrator 
+{% if method !='admin' %}(for example, {{inviter_name}}) {% endif %}
+to add members to the group. They can do this within their 'Settings' section.
 
 If you would like to create your own group, go the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.
 
