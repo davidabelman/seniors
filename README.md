@@ -7,9 +7,9 @@ A mini social-network designed for use by small groups (e.g. families) and in pa
 The app is built in Flask. The main routing file is seniors.py (on a local machine run python seniors.py runserver to run on the Flask server). Database currently uses mongohq. Templates all contained in one place. Each HTML template has a corresponding Javascript file, and also links to a common Javascript file with general functions in. Most functionality on site is result of AJAX calls to seniors.py.
 
 ## Functionality
-Functionality (current): Create account and network, add other users to network (by email and create account on behalf), login, usernames/networks have tolerance for capitalisation and punctuation errors, user icons, post text, automatically see others' posts appearing, add image from internet search (bing), add image from webcam, timestamps, change all settings, email notifications once per day of new posts since login (with unsubscribe option), add older posts button, analytics tracking via mixpanel, responsive design, 
+Functionality (current): Create account and network, add other users to network (by email and create account on behalf), login, usernames/networks have tolerance for capitalisation and punctuation errors, user icons, post text, automatically see others' posts appearing, add image from internet search (bing), add image from webcam, add image from computer, dictate text, timestamps, change all settings, email notifications once per day of new posts since login (with unsubscribe option), add older posts button, analytics tracking via mixpanel, responsive design, make other users admin, delete users
 
-TODO: add image from computer, add sound file, add video, dictate text, synthesise text, forgot password feature, colour new messages, make other users admin, delete users, webcam photo as profile icon(?)
+TODO: add sound file, add video, synthesise text, forgot password feature, colour new messages, webcam photo as profile icon(?)
 
 ## seniors.py
 Loads Flask modules and other modules created within project. Passwords stored in os.environ. Before each request we create a user object (global USER) based on session['user'] where the user is loaded when they signup or login (using load_user(Users, {'name':username, 'network':network}) ). This allows us to easily check for logged in and admin status etc. within routes. USER has a method of underscore which just returns the value inside the session_variable dictionary. E.g. a user pulled from the database will be in format:
@@ -73,6 +73,12 @@ Allows user to change settings, all via AJAX callbacks. Client and serverside va
 
 ### help
 Basic help screens
+
+### edit_users
+Admin rights to edit users
+
+### instructions
+Personalised instructions based on user
 
 ### logout
 session.clear() and return to home screen
