@@ -12,7 +12,8 @@ Instructions
 {% block body %}
 {{ super() }}
 
-<div style='padding:30px 50px'>
+<div style='padding:30px 50px' id='print-instructions-page'>
+
 {% block feedbacktab %}
 <!-- Removes the feedback tab from this page -->
 {% endblock %}
@@ -23,6 +24,7 @@ Instructions
 	Click to print this document
 </a>
 </div>
+
 
 {% if method!='admin' %}
 
@@ -35,7 +37,6 @@ Instructions
 	<p>These simple instructions are designed to show you how {{company_name}} works. Note that each user can see their own personalised instructions through their own help page, or you can print them on their behalf by visiting '<strong>Settings > Users (admin only)</strong>' and selecting the relevant user. Note also that we recommend Google Chrome for users of this site - this allows dictation, and photo uploads. Feel free to help other users install Google Chrome from <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>, and also help them bookmark the {{company_name}} website ({{company_website}})!
 
 {% endif %}
-
 
 
 <h2>What is {{company_name}}?</h2>
@@ -119,13 +120,13 @@ As the creator of the group, you have been able to invite other users. You can c
 <p>Note that this functionality will only work if you are using the 'Google Chrome' browser (which we recommend). You can download this by typing the following in your browser address bar: <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>.</p>
 
 <h2>How do I add a picture?</h2>
-<p>From your group's page, click on the orange button that says 'Picture'.</p>
+<p>From your group's page, click on the orange button that says 'Pictures'.</p>
 <img src='https://dl.dropboxusercontent.com/s/4ps6bos47b9clbw/picture1.jpg' class='instructions-img'><br>
 
 <p>You are presented with three options for adding a picture.</p>
 <ul>
-	<li><strong>Taking a photo</strong>: If you have a webcam connected to your computer, you can take a photo using this and send it directly to the group. Follow the instructions on the screen to give us permission to use your webcam, and then click the orange 'Take a photo' button to take your photo.</li>
-	<li><strong>Typing a description</strong>: If you would like to include a picture of something (let's say, 'The Queen') you can type 'The Queen' into the orange box as shown below, and we will find you a selection of pictures matching your description. To share one of these photos with the group, you can simply click on it.</li>
+	<li><strong>Taking a photo</strong>: If you have a webcam connected to your computer, you can take a photo using this and send it directly to the group. Follow the instructions that will appear on the screen to give us permission to use your webcam, and then click the orange 'Take a photo' button to take your photo.</li>
+	<li><strong>Typing a description</strong>: If you would like to include a picture of something (let's say, 'The Queen') you can type 'The Queen' into the orange box, and we will find you a selection of pictures matching your description. To share one of these photos with the group, you can simply click on it.</li>
 	<li><strong>Using a photo on your computer</strong>: If you wish to share a photo that already exists on your computer, you can! Just click the 'Select files' button, choose your photo, and click the green button asking you to share it with the group.</li>
 </ul>
 
@@ -139,7 +140,7 @@ As the creator of the group, you have been able to invite other users. You can c
 {% if method !='admin' %}(for example, {{inviter_name}}) {% endif %}
 to add members to the group. They can do this within their 'Settings' section.</p>
 
-<p>If you would like to create your own group, go the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.</p>
+<p>If you would like to create your own group, go to the homepage (if you are 'logged in', click 'Exit', to log out), click on the green 'Create a new group' button, and follow the instructions from there. As the group creator you will be the official 'administrator', and can add people to this group yourself.</p>
 
 <h2>Do I need any special programs on my computer?</h2>
 <p>No - just by typing {{company_website}} into your browser you will be able to see the web page. Basic functionality works whichever browser you are using - however, some features (such as dictation) require you to use the 'Google Chrome' browser. You can download that by typing this in your address bar: <a href='http://www.google.com/chrome/browser'><strong>http://www.google.com/chrome/browser</strong></a>.</p>
@@ -148,8 +149,11 @@ to add members to the group. They can do this within their 'Settings' section.</
 <h2>Can I contact you for help, or provide feedback?</h2>
 <p>We love to help, and we love feedback! If you would like to contact us, you can email <strong>{{company_email}}</strong>. Alternatively, you can find a button on the website which will allow you to provide feedback from the site.<p>
 
-</div>
-<div class='filler'>
+<div class='filler'></div>
+
+</div> <!-- end main container -->
+
+
 {% endblock %}
 
 {% block scripts_bottom %}
