@@ -9,7 +9,7 @@ if ( window.location.origin=="http://localhost:5000" ) {
 	// var token = "a54d273360d0c16af87f3eaacb84c2e4"
 	var token = "6fe9a2b63dfcdc26327bd00857dab569"  // Staging account
 	mixpanel.init(token, {cross_subdomain_cookie : false﻿})﻿;
-} else if ( window.location.origin == "http://salt-and-pepper.herokuapp.com") {
+} else if ( window.location.origin == "http://salt-and-pepper.herokuapp.com" || window.location.origin =="http://www.saltpepper.club") {
 	var token = "2824f3108a78ba0550ffc6e8bc239c78"  // Separate production account
 	mixpanel.init(token, {cross_subdomain_cookie : false﻿})﻿;
 }
