@@ -656,6 +656,12 @@ a.disabled {
 	.vertical-line-sm {
 		border-left: 0px solid #ddd;
 	}
+	#about-button {
+		display: none;
+	}
+	#home-left {
+		display: none;
+	}
 }
 
 

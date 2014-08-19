@@ -7,7 +7,7 @@ import urllib
 
 SENIORS_MAILGUN_KEY = os.environ.get('SENIORS_MAILGUN_KEY')
 company_name = "Salt & Pepper"
-company_url = 'http://salt-and-pepper.herokuapp.com'
+company_url = 'http://saltpepper.club'
 
 
 ########################################## FEEDBACK #########################################
