@@ -28,7 +28,7 @@ Posts = db.posts
 
 # TOKENS
 token_expiry_days = 30
-base_url = "http://salt-and-pepper.herokuapp.com"
+base_url = "http://saltpepper.club"
 company_name = "Salt & Pepper"
 company_email = "saltandpepperit@gmail.com"
 
