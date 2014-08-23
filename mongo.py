@@ -53,6 +53,21 @@ def update_last_seen_for_user(Users, name, network):
 		{ '$set': {	'last_seen': datetime.datetime.utcnow() } }
 	)
 
+def backup_all_data(db):
+	"""
+	Copies all data from db.users and db.posts into backup databases
+	Removes contents of backup then remakes it. Note that there are users_backup2/posts_backup2 collections that aren't touched here, can manually backup occasionally
+	"""
+	# Copy all users data across
+	all_users_data = list(db.users.find())
+	db.users_backup.remove()
+	db.users_backup.insert(all_users_data)
+
+	# Copy all posts data across
+	all_posts_data = list(db.posts.find())
+	db.posts_backup.remove()
+	db.posts_backup.insert(all_posts_data)
+
 
 def delete_all_data(db):
 	u = raw_input("Do you wish to delete all users? (Type 'y' to delete...) ")

@@ -871,8 +871,13 @@ def delete_user():
 		change_network = Users.find_one({'_id': ObjectId(user_id)})['network_clean']
 		if change_network == USER._('network_clean'):
 			print "Check: Yes, they are in the same network"
-			Users.remove({'_id': ObjectId(user_id)})
-			return json.dumps({'status':1})
+			# Final check to make sure only 1 user removed
+			if len(list(Users.find({'_id': ObjectId(user_id)})))==1:
+				Users.remove({'_id': ObjectId(user_id)})
+				return json.dumps({'status':1})
+			else:
+				print "Error: # of users to remove != 1"
+				return json.dumps({'status':0, 'data':"More/less than 1 user with this ID"})
 
 		else:
 			print "Error: Not the correct network"
