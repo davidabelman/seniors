@@ -76,7 +76,7 @@ def home():
 
 
 	if USER.is_a_user() and session['logged_in']:
-		return render_template('posts.html')
+		return render_template('posts.html', admin = USER._('role'))
 	else:
 
 		return render_template('info.html')

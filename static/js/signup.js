@@ -56,7 +56,7 @@ function validate_password() {
                         $('#success-password').fadeOut( function() {
                           $('#success-password').text("Success!").fadeIn( function() {
                             setTimeout( function() {
-                              fade_page_in_out('out', "/add_users")
+                              fade_page_in_out('out', "/")
                             }, 300) // end set timeout
                           }) // end fadeIn
                         }) // end fadeOut
